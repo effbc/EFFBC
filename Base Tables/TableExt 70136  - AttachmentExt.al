@@ -5,7 +5,7 @@ tableextension 70136 AttachmentExt extends Attachment
     fields
     {
 
-        //Unsupported feature: Change NotBlank on ""No."(Field 1)". Please convert manually.
+
 
 
         //Unsupported feature: Change OptionString on ""Storage Type"(Field 3)". Please convert manually.

@@ -8,7 +8,7 @@ tableextension 70153 DimensionSetEntryExt extends "Dimension Set Entry"
 
 
 
-        //Unsupported feature: Change TableRelation on ""Dimension Value Code"(Field 3)". Please convert manually.
+
 
 
         //Unsupported feature: Change NotBlank on ""Dimension Value Code"(Field 3)". Please convert manually.

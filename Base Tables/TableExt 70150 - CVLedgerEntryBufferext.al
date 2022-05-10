@@ -11,7 +11,7 @@ tableextension 70150 CVLedgerEntryBufferext extends "CV Ledger Entry Buffer"
 
 
 
-        //Unsupported feature: Change TableRelation on ""Global Dimension 1 Code"(Field 23)". Please convert manually.
+
 
 
         //Unsupported feature: Change TableRelation on ""Global Dimension 2 Code"(Field 24)". Please convert manually.

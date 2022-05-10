@@ -5,15 +5,6 @@ tableextension 70137 AverageCostCalcOverviewExt extends "Average Cost Calc. Over
     fields
     {
 
-        //Unsupported feature: Change OptionString on "Type(Field 2)". Please convert manually.
-
-
-        //Unsupported feature: Change TableRelation on ""Variant Code"(Field 6)". Please convert manually.
-
-
-        //Unsupported feature: Change OptionString on ""Entry Type"(Field 23)". Please convert manually.
-
-
         //Unsupported feature: Change OptionString on ""Document Type"(Field 24)". Please convert manually.
 
     }

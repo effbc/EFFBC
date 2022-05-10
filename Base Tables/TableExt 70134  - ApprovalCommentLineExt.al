@@ -5,7 +5,7 @@ tableextension 70134 ApprovalCommentLineExt extends "Approval Comment Line"
     fields
     {
 
-        //Unsupported feature: Change Editable on ""Entry No."(Field 1)". Please convert manually.
+
 
 
         //Unsupported feature: Change Editable on ""Table ID"(Field 2)". Please convert manually.

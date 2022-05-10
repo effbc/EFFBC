@@ -5,7 +5,7 @@ tableextension 70133 AnalysisViewEntryExt extends "Analysis View Entry"
     fields
     {
 
-        //Unsupported feature: Change TableRelation on ""Analysis View Code"(Field 1)". Please convert manually.
+
 
 
         //Unsupported feature: Change NotBlank on ""Analysis View Code"(Field 1)". Please convert manually.

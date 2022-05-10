@@ -5,7 +5,7 @@ tableextension 70135 ApprovalEntryExt extends "Approval Entry"
     fields
     {
 
-        //Unsupported feature: Change OptionString on ""Document Type"(Field 2)". Please convert manually.
+
 
 
         //Unsupported feature: Change TestTableRelation on ""Sender ID"(Field 6)". Please convert manually.
