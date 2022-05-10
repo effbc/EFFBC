@@ -127,14 +127,14 @@ tableextension 70107 ServiceShipmentLineExt extends "Service Shipment Line"
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+            // TableRelation = "Excise Bus. Posting Group";
         }
         field(16502; "Excise Prod. Posting Group"; Code[10])
         {
             CaptionML = ENU = 'Excise Prod. Posting Group',
                         ENN = 'Excise Prod. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Prod. Posting Group";
+            //     TableRelation = "Excise Prod. Posting Group";
         }
         field(16503; "Excise Amount"; Decimal)
         {
@@ -279,7 +279,7 @@ tableextension 70107 ServiceShipmentLineExt extends "Service Shipment Line"
             CaptionML = ENU = 'Service Tax Group',
                         ENN = 'Service Tax Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Service Tax Groups".Code;
+            //    TableRelation = "Service Tax Groups".Code;
         }
         field(16530; "ADET Amount"; Decimal)
         {
@@ -421,7 +421,7 @@ tableextension 70107 ServiceShipmentLineExt extends "Service Shipment Line"
             CaptionML = ENU = 'GST Group Code',
                         ENN = 'GST Group Code';
             DataClassification = ToBeClassified;
-            TableRelation = "GST Group";
+            //   TableRelation = "GST Group";
         }
         field(16603; "GST Group Type"; Option)
         {
@@ -495,7 +495,7 @@ tableextension 70107 ServiceShipmentLineExt extends "Service Shipment Line"
 
             trigger OnValidate();
             var
-                GSTGroup: Record "GST Group";
+            // GSTGroup: Record "GST Group";
             begin
             end;
         }
@@ -521,7 +521,7 @@ tableextension 70107 ServiceShipmentLineExt extends "Service Shipment Line"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -555,30 +555,30 @@ tableextension 70107 ServiceShipmentLineExt extends "Service Shipment Line"
 
         //Unsupported feature: Deletion on ""Contract No."(Key)". Please convert manually.
 
-        key(Key1; "Document No.", "Line No.")
-        {
-        }
-        key(Key2; "Order No.", "Order Line No.")
-        {
-        }
-        key(Key3; "Item Shpt. Entry No.")
-        {
-        }
-        key(Key4; "Service Item No.", Type, "Posting Date")
-        {
-        }
-        key(Key5; "Customer No.")
-        {
-        }
-        key(Key6; "Bill-to Customer No.")
-        {
-        }
-        key(Key7; "Fault Reason Code")
-        {
-        }
-        key(Key8; "Contract No.")
-        {
-        }
+        /* key(Key1; "Document No.", "Line No.")
+         {
+         }
+         key(Key2; "Order No.", "Order Line No.")
+         {
+         }
+         key(Key3; "Item Shpt. Entry No.")
+         {
+         }
+         key(Key4; "Service Item No.", Type, "Posting Date")
+         {
+         }
+         key(Key5; "Customer No.")
+         {
+         }
+         key(Key6; "Bill-to Customer No.")
+         {
+         }
+         key(Key7; "Fault Reason Code")
+         {
+         }
+         key(Key8; "Contract No.")
+         {
+         }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.
