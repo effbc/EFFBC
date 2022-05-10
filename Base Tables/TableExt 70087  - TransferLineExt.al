@@ -1215,14 +1215,14 @@ tableextension 70087 TransferLineExt extends "Transfer Line"
             CaptionML = ENU = 'Excise Prod. Posting Group',
                         ENN = 'Excise Prod. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Prod. Posting Group";
+            //TableRelation = "Excise Prod. Posting Group";
         }
         field(13728; "Excise Bus. Posting Group"; Code[10])
         {
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+            //TableRelation = "Excise Bus. Posting Group";
         }
         field(13730; "Capital Item"; Boolean)
         {
@@ -1358,8 +1358,8 @@ tableextension 70087 TransferLineExt extends "Transfer Line"
             trigger OnValidate();
             begin
                 TestField("Quantity Received", 0);
-                GetLocation("Transfer-to Code");
-                Location.TestField("Trading Location", false);
+                // GetLocation("Transfer-to Code");
+                // Location.TestField("Trading Location", false);
             end;
         }
         field(16507; "Captive Consumption %"; Decimal)
@@ -1411,11 +1411,11 @@ tableextension 70087 TransferLineExt extends "Transfer Line"
             CaptionML = ENU = 'Applies-to Entry (RG 23 D)',
                         ENN = 'Applies-to Entry (RG 23 D)';
             DataClassification = ToBeClassified;
-            TableRelation = "RG 23 D"."Entry No." WHERE("Location Code" = FIELD("Transfer-from Code"),
-                                                         "Item No." = FIELD("Item No."),
-                                                         Closed = FILTER(false),
-                                                         "Transaction Type" = FILTER(Purchase),
-                                                         "Item Ledg. Entry No." = FIELD("Applies-to Entry (Ship)"));
+            /* TableRelation = "RG 23 D"."Entry No." WHERE("Location Code" = FIELD("Transfer-from Code"),
+                                                          "Item No." = FIELD("Item No."),
+                                                          Closed = FILTER(false),
+                                                          "Transaction Type" = FILTER(Purchase),
+                                                          "Item Ledg. Entry No." = FIELD("Applies-to Entry (Ship)"));*/
         }
         field(16513; "Cost of Production"; Decimal)
         {
@@ -1486,7 +1486,7 @@ tableextension 70087 TransferLineExt extends "Transfer Line"
             CaptionML = ENU = 'GST Group Code',
                         ENN = 'GST Group Code';
             DataClassification = ToBeClassified;
-            TableRelation = "GST Group";
+            // TableRelation = "GST Group";
         }
         field(16525; "HSN/SAC Code"; Code[8])
         {
@@ -1624,7 +1624,7 @@ tableextension 70087 TransferLineExt extends "Transfer Line"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -1657,7 +1657,7 @@ tableextension 70087 TransferLineExt extends "Transfer Line"
         }
         field(60105; Station; Code[10])
         {
-            TableRelation = Station;
+            //TableRelation = Station;
         }
         field(60106; "Required Date"; Date)
         {
@@ -1685,22 +1685,22 @@ tableextension 70087 TransferLineExt extends "Transfer Line"
         field(33000250; "Spec ID"; Code[20])
         {
             Description = 'QC1.0';
-            TableRelation = "Specification Header";
+            //TableRelation = "Specification Header";
         }
         field(33000251; "Quantity Accepted"; Decimal)
         {
-            CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
-                                                                     "Order Line No." = FIELD("Line No."),
-                                                                     "Entry Type" = FILTER(Accepted)));
+            /* CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
+                                                                      "Order Line No." = FIELD("Line No."),
+                                                                      "Entry Type" = FILTER(Accepted)));*/
             Description = 'QC1.0';
             Editable = false;
             FieldClass = FlowField;
         }
         field(33000252; "Quantity Rejected"; Decimal)
         {
-            CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
+            /*CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
                                                                      "Order Line No." = FIELD("Line No."),
-                                                                     "Entry Type" = CONST(Reject)));
+                                                                     "Entry Type" = CONST(Reject)));*/
             Description = 'QC1.0';
             Editable = false;
             FieldClass = FlowField;
@@ -1748,7 +1748,7 @@ tableextension 70087 TransferLineExt extends "Transfer Line"
         }
         field(33000259; "Spec Version"; Code[20])
         {
-            TableRelation = "Specification Version"."Version Code" WHERE("Specification No." = FIELD("Spec ID"));
+            // TableRelation = "Specification Version"."Version Code" WHERE("Specification No." = FIELD("Spec ID"));
         }
     }
     keys
@@ -1770,33 +1770,33 @@ tableextension 70087 TransferLineExt extends "Transfer Line"
 
 
         //Unsupported feature: Deletion on ""Transfer-from Code,Shipment Date,Item No.,Variant Code"(Key)". Please convert manually.
-
-        key(Key1; "Document No.", "Line No.")
-        {
-        }
-        key(Key2; "Transfer-to Code", Status, "Derived From Line No.", "Item No.", "Variant Code", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Receipt Date", "In-Transit Code")
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Qty. in Transit (Base)", "Outstanding Qty. (Base)";
-        }
-        key(Key3; "Transfer-from Code", Status, "Derived From Line No.", "Item No.", "Variant Code", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Shipment Date", "In-Transit Code")
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Outstanding Qty. (Base)";
-        }
-        key(Key4; "Item No.", "Variant Code")
-        {
-        }
-        key(Key5; "Transfer-to Code", "Receipt Date", "Item No.", "Variant Code")
-        {
-        }
-        key(Key6; "Transfer-from Code", "Shipment Date", "Item No.", "Variant Code")
-        {
-        }
-        key(Key7; "Prod. Order No.", "Prod. Order Line No.", "Prod. Order Comp. Line No.")
-        {
-            SumIndexFields = Quantity;
-        }
+        /*
+                key(Key1; "Document No.", "Line No.")
+                {
+                }
+                key(Key2; "Transfer-to Code", Status, "Derived From Line No.", "Item No.", "Variant Code", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Receipt Date", "In-Transit Code")
+                {
+                    MaintainSIFTIndex = false;
+                    SumIndexFields = "Qty. in Transit (Base)", "Outstanding Qty. (Base)";
+                }
+                key(Key3; "Transfer-from Code", Status, "Derived From Line No.", "Item No.", "Variant Code", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Shipment Date", "In-Transit Code")
+                {
+                    MaintainSIFTIndex = false;
+                    SumIndexFields = "Outstanding Qty. (Base)";
+                }
+                key(Key4; "Item No.", "Variant Code")
+                {
+                }
+                key(Key5; "Transfer-to Code", "Receipt Date", "Item No.", "Variant Code")
+                {
+                }
+                key(Key6; "Transfer-from Code", "Shipment Date", "Item No.", "Variant Code")
+                {
+                }
+                key(Key7; "Prod. Order No.", "Prod. Order Line No.", "Prod. Order Comp. Line No.")
+                {
+                    SumIndexFields = Quantity;
+                }*/
     }
 
 
@@ -1933,11 +1933,11 @@ tableextension 70087 TransferLineExt extends "Transfer Line"
     //Variable type has not been exported.
 
     var
-        Location: Record Location;
+    //Location: Record Location;
 
     var
-        TransferHeader: Record "Transfer Header";
-        Location: Record Location;
+    // TransferHeader: Record "Transfer Header";
+    //Location: Record Location;
 
 
     //Unsupported feature: PropertyModification on "Description(Field 13).OnValidate.Item(Variable 1001)". Please convert manually.

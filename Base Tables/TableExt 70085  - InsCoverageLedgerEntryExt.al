@@ -31,7 +31,7 @@ tableextension 70085 InsCoverageLedgerEntryExt extends "Ins. Coverage Ledger Ent
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -59,27 +59,28 @@ tableextension 70085 InsCoverageLedgerEntryExt extends "Ins. Coverage Ledger Ent
 
         //Unsupported feature: Deletion on ""Document No.,Posting Date"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
-        {
-        }
-        key(Key2; "Insurance No.", "Posting Date")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key3; "Insurance No.", "Disposed FA", "Posting Date")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key4; "FA No.", "Insurance No.", "Disposed FA", "Posting Date")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key5; "FA No.", "Disposed FA", "Posting Date")
-        {
-        }
-        key(Key6; "Document No.", "Posting Date")
-        {
-        }
+        /*        key(Key1; "Entry No.")
+                {
+                }
+                key(Key2; "Insurance No.", "Posting Date")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key3; "Insurance No.", "Disposed FA", "Posting Date")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key4; "FA No.", "Insurance No.", "Disposed FA", "Posting Date")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key5; "FA No.", "Disposed FA", "Posting Date")
+                {
+                }
+                key(Key6; "Document No.", "Posting Date")
+                {
+                }
+                */
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.
