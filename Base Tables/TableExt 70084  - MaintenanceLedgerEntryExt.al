@@ -49,7 +49,7 @@ tableextension 70084 MaintenanceLedgerEntryExt extends "Maintenance Ledger Entry
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -85,38 +85,38 @@ tableextension 70084 MaintenanceLedgerEntryExt extends "Maintenance Ledger Entry
 
 
         //Unsupported feature: Deletion on ""FA No.,Depreciation Book Code,Document No."(Key)". Please convert manually.
-
-        key(Key1; "Entry No.")
-        {
-        }
-        key(Key2; "FA No.", "Depreciation Book Code", "FA Posting Date")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key3; "FA No.", "Depreciation Book Code", "Posting Date")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key4; "FA No.", "Depreciation Book Code", "Maintenance Code", "FA Posting Date")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key5; "FA No.", "Depreciation Book Code", "Maintenance Code", "Posting Date")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key6; "Document No.", "Posting Date")
-        {
-        }
-        key(Key7; "G/L Entry No.")
-        {
-        }
-        key(Key8; "Transaction No.")
-        {
-        }
-        key(Key9; "FA No.", "Depreciation Book Code", "Document No.")
-        {
-        }
+        /*
+                key(Key1; "Entry No.")
+                {
+                }
+                key(Key2; "FA No.", "Depreciation Book Code", "FA Posting Date")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key3; "FA No.", "Depreciation Book Code", "Posting Date")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key4; "FA No.", "Depreciation Book Code", "Maintenance Code", "FA Posting Date")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key5; "FA No.", "Depreciation Book Code", "Maintenance Code", "Posting Date")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key6; "Document No.", "Posting Date")
+                {
+                }
+                key(Key7; "G/L Entry No.")
+                {
+                }
+                key(Key8; "Transaction No.")
+                {
+                }
+                key(Key9; "FA No.", "Depreciation Book Code", "Document No.")
+                {
+                }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

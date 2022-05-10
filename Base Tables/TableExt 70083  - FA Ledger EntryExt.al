@@ -66,7 +66,7 @@ tableextension 70083 FALedgerEntryExt extends "FA Ledger Entry"
             CaptionML = ENU = 'FA Block Code',
                         ENN = 'FA Block Code';
             DataClassification = ToBeClassified;
-            TableRelation = "FA Block".Code WHERE("FA Class Code" = FIELD("FA Class Code"));
+            // TableRelation = "FA Block".Code WHERE("FA Class Code" = FIELD("FA Class Code"));
         }
         field(16501; "FA Book Type"; Option)
         {
@@ -146,7 +146,7 @@ tableextension 70083 FALedgerEntryExt extends "FA Ledger Entry"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -192,47 +192,48 @@ tableextension 70083 FALedgerEntryExt extends "FA Ledger Entry"
 
         //Unsupported feature: Deletion on ""FA No.,Depreciation Book Code,FA Posting Category,FA Posting Type,Document No."(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
-        {
-        }
-        key(Key2; "FA No.", "Depreciation Book Code", "FA Posting Date")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key3; "FA No.", "Depreciation Book Code", "FA Posting Category", "FA Posting Type", "FA Posting Date", "Part of Book Value", "Reclassification Entry")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key4; "FA No.", "Depreciation Book Code", "Part of Book Value", "FA Posting Date")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key5; "FA No.", "Depreciation Book Code", "Part of Depreciable Basis", "FA Posting Date")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key6; "FA No.", "Depreciation Book Code", "FA Posting Category", "FA Posting Type", "Posting Date")
-        {
-            SumIndexFields = Amount;
-        }
-        key(Key7; "Canceled from FA No.", "Depreciation Book Code", "FA Posting Date")
-        {
-        }
-        key(Key8; "Document No.", "Posting Date")
-        {
-        }
-        key(Key9; "G/L Entry No.")
-        {
-        }
-        key(Key10; "Document Type", "Document No.")
-        {
-        }
-        key(Key11; "Transaction No.")
-        {
-        }
-        key(Key12; "FA No.", "Depreciation Book Code", "FA Posting Category", "FA Posting Type", "Document No.")
-        {
-        }
+        /*        key(Key1; "Entry No.")
+                {
+                }
+                key(Key2; "FA No.", "Depreciation Book Code", "FA Posting Date")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key3; "FA No.", "Depreciation Book Code", "FA Posting Category", "FA Posting Type", "FA Posting Date", "Part of Book Value", "Reclassification Entry")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key4; "FA No.", "Depreciation Book Code", "Part of Book Value", "FA Posting Date")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key5; "FA No.", "Depreciation Book Code", "Part of Depreciable Basis", "FA Posting Date")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key6; "FA No.", "Depreciation Book Code", "FA Posting Category", "FA Posting Type", "Posting Date")
+                {
+                    SumIndexFields = Amount;
+                }
+                key(Key7; "Canceled from FA No.", "Depreciation Book Code", "FA Posting Date")
+                {
+                }
+                key(Key8; "Document No.", "Posting Date")
+                {
+                }
+                key(Key9; "G/L Entry No.")
+                {
+                }
+                key(Key10; "Document Type", "Document No.")
+                {
+                }
+                key(Key11; "Transaction No.")
+                {
+                }
+                key(Key12; "FA No.", "Depreciation Book Code", "FA Posting Category", "FA Posting Type", "Document No.")
+                {
+                }
+                */
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.
