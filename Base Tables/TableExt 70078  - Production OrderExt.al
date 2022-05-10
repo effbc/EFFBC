@@ -919,14 +919,14 @@ tableextension 70078 ProductionOrderExt extends "Production Order"
         }
         field(60011; "Shortage Items"; Integer)
         {
-            CalcFormula = Count("Production Order Shortage Item" WHERE("Production Order" = FIELD("No.")));
+            //CalcFormula = Count("Production Order Shortage Item" WHERE("Production Order" = FIELD("No.")));
             FieldClass = FlowField;
         }
         field(60091; "OLD Dim Set ID"; Integer)
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -1126,7 +1126,7 @@ tableextension 70078 ProductionOrderExt extends "Production Order"
                                         "Prod. Order Component"."Material Requisition Date" := "Prod. Order Component"."Production Plan Date"
                                     else begin
                                         //"Prod. Order Component"."Material Requisition Date" := CALCDATE(FORMAT("Prod. Order Component"."Material Required Day" - 1) +'D',"Prod. Order Component"."Production Plan Date");
-                                        "Prod. Order Component"."Material Requisition Date" := CalMngmt.CalcDateBOC('+' + Format("Prod. Order Component"."Material Required Day" - 1) + 'D', "Prod. Order Component"."Production Plan Date", 3, 'PROD', '', 3, 'PROD', '', false);  //pranavi
+                                        // "Prod. Order Component"."Material Requisition Date" := CalMngmt.CalcDateBOC('+' + Format("Prod. Order Component"."Material Required Day" - 1) + 'D', "Prod. Order Component"."Production Plan Date", 3, 'PROD', '', 3, 'PROD', '', false);  //pranavi
                                     end;
                                 "Prod. Order Component".Modify;
                             until "Prod. Order Component".Next = 0;
@@ -1210,48 +1210,49 @@ tableextension 70078 ProductionOrderExt extends "Production Order"
 
 
         //Unsupported feature: Deletion on ""Starting Date"(Key)". Please convert manually.
-
-        key(Key1; Status, "No.")
-        {
-        }
-        key(Key2; "No.", Status)
-        {
-        }
-        key(Key3; "Search Description")
-        {
-        }
-        key(Key4; "Low-Level Code", "Replan Ref. No.", "Replan Ref. Status")
-        {
-        }
-        key(Key5; "Source Type", "Source No.")
-        {
-            Enabled = false;
-        }
-        key(Key6; "Source No.")
-        {
-        }
-        key(Key7; "Starting Date")
-        {
-        }
-        key(Key8; "Prod Start date")
-        {
-        }
-        key(Key9; "Sales Order No.", "Item Sub Group Code")
-        {
-        }
-        key(Key10; "No.")
-        {
-            Enabled = false;
-        }
-        key(Key11; "Sales Order No.", "Source No.", "Prod Start date")
-        {
-        }
-        key(Key12; Week, "Sales Order No.", "Source No.")
-        {
-        }
-        key(Key13; Status, "Prod Start date", "No.")
-        {
-        }
+        /*
+                key(Key1; Status, "No.")
+                {
+                }
+                key(Key2; "No.", Status)
+                {
+                }
+                key(Key3; "Search Description")
+                {
+                }
+                key(Key4; "Low-Level Code", "Replan Ref. No.", "Replan Ref. Status")
+                {
+                }
+                key(Key5; "Source Type", "Source No.")
+                {
+                    Enabled = false;
+                }
+                key(Key6; "Source No.")
+                {
+                }
+                key(Key7; "Starting Date")
+                {
+                }
+                key(Key8; "Prod Start date")
+                {
+                }
+                key(Key9; "Sales Order No.", "Item Sub Group Code")
+                {
+                }
+                key(Key10; "No.")
+                {
+                    Enabled = false;
+                }
+                key(Key11; "Sales Order No.", "Source No.", "Prod Start date")
+                {
+                }
+                key(Key12; Week, "Sales Order No.", "Source No.")
+                {
+                }
+                key(Key13; Status, "Prod Start date", "No.")
+                {
+                }
+                */
     }
 
 

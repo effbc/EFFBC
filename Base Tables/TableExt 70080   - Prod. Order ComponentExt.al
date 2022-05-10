@@ -1064,7 +1064,7 @@ tableextension 70080 ProdOrderComponentExt extends "Prod. Order Component"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -1120,7 +1120,7 @@ tableextension 70080 ProdOrderComponentExt extends "Prod. Order Component"
         }
         field(60108; "Product Group Code"; Code[20])
         {
-            CalcFormula = Lookup(Item."Product Group Code" WHERE("No." = FIELD("Item No.")));
+            // CalcFormula = Lookup(Item."Product Group Code" WHERE("No." = FIELD("Item No.")));
             FieldClass = FlowField;
         }
         field(60109; "Type of Solder2"; Text[10])
@@ -1172,63 +1172,64 @@ tableextension 70080 ProdOrderComponentExt extends "Prod. Order Component"
 
         //Unsupported feature: Deletion on ""Supplied-by Line No."(Key)". Please convert manually.
 
-        key(Key1; Status, "Prod. Order No.", "Prod. Order Line No.", "Line No.")
-        {
-        }
-        key(Key2; "Prod. Order No.", "Prod. Order Line No.", "Line No.", Status)
-        {
-        }
-        key(Key3; Status, "Prod. Order No.", "Prod. Order Line No.", "Due Date")
-        {
-            SumIndexFields = "Expected Quantity", "Cost Amount";
-        }
-        key(Key4; Status, "Prod. Order No.", "Prod. Order Line No.", "Item No.", "Line No.")
-        {
-            MaintainSQLIndex = false;
-        }
-        key(Key5; Status, "Item No.", "Variant Code", "Location Code", "Due Date")
-        {
-            SumIndexFields = "Expected Quantity", "Remaining Qty. (Base)", "Cost Amount", "Overhead Amount";
-        }
-        key(Key6; "Item No.", "Variant Code", "Location Code", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Due Date")
-        {
-            Enabled = false;
-            SumIndexFields = "Expected Quantity", "Remaining Qty. (Base)", "Cost Amount", "Overhead Amount";
-        }
-        key(Key7; Status, "Prod. Order No.", "Routing Link Code", "Flushing Method")
-        {
-        }
-        key(Key8; Status, "Prod. Order No.", "Location Code")
-        {
-        }
-        key(Key9; "Item No.", "Variant Code", "Location Code", Status, "Due Date")
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Expected Qty. (Base)", "Remaining Qty. (Base)", "Cost Amount", "Overhead Amount", "Qty. Picked (Base)";
-        }
-        key(Key10; Status, "Prod. Order No.", "Prod. Order Line No.", "Item Low-Level Code")
-        {
-            MaintainSQLIndex = false;
-        }
-        key(Key11; "Supplied-by Line No.")
-        {
-        }
-        key(Key12; "Item No.", "Prod. Order No.", "Prod. Order Line No.", "Line No.", Status)
-        {
-        }
-        key(Key13; "Item No.")
-        {
-        }
-        key(Key14; "Item No.", "Location Code")
-        {
-        }
-        key(Key15; "Prod. Order No.", "Item No.", "Material Required Day")
-        {
-        }
-        key(Key16; "Production Plan Date", "Item No.", "Prod. Order No.")
-        {
-            SumIndexFields = "Expected Quantity";
-        }
+        /*        key(Key1; Status, "Prod. Order No.", "Prod. Order Line No.", "Line No.")
+                {
+                }
+                key(Key2; "Prod. Order No.", "Prod. Order Line No.", "Line No.", Status)
+                {
+                }
+                key(Key3; Status, "Prod. Order No.", "Prod. Order Line No.", "Due Date")
+                {
+                    SumIndexFields = "Expected Quantity", "Cost Amount";
+                }
+                key(Key4; Status, "Prod. Order No.", "Prod. Order Line No.", "Item No.", "Line No.")
+                {
+                    MaintainSQLIndex = false;
+                }
+                key(Key5; Status, "Item No.", "Variant Code", "Location Code", "Due Date")
+                {
+                    SumIndexFields = "Expected Quantity", "Remaining Qty. (Base)", "Cost Amount", "Overhead Amount";
+                }
+                key(Key6; "Item No.", "Variant Code", "Location Code", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Due Date")
+                {
+                    Enabled = false;
+                    SumIndexFields = "Expected Quantity", "Remaining Qty. (Base)", "Cost Amount", "Overhead Amount";
+                }
+                key(Key7; Status, "Prod. Order No.", "Routing Link Code", "Flushing Method")
+                {
+                }
+                key(Key8; Status, "Prod. Order No.", "Location Code")
+                {
+                }
+                key(Key9; "Item No.", "Variant Code", "Location Code", Status, "Due Date")
+                {
+                    MaintainSIFTIndex = false;
+                    SumIndexFields = "Expected Qty. (Base)", "Remaining Qty. (Base)", "Cost Amount", "Overhead Amount", "Qty. Picked (Base)";
+                }
+                key(Key10; Status, "Prod. Order No.", "Prod. Order Line No.", "Item Low-Level Code")
+                {
+                    MaintainSQLIndex = false;
+                }
+                key(Key11; "Supplied-by Line No.")
+                {
+                }
+                key(Key12; "Item No.", "Prod. Order No.", "Prod. Order Line No.", "Line No.", Status)
+                {
+                }
+                key(Key13; "Item No.")
+                {
+                }
+                key(Key14; "Item No.", "Location Code")
+                {
+                }
+                key(Key15; "Prod. Order No.", "Item No.", "Material Required Day")
+                {
+                }
+                key(Key16; "Production Plan Date", "Item No.", "Prod. Order No.")
+                {
+                    SumIndexFields = "Expected Quantity";
+                }
+                */
     }
 
 

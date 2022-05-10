@@ -97,12 +97,12 @@ tableextension 70077 ItemVariantExt extends "Item Variant"
 
         //Unsupported feature: Deletion on "Code(Key)". Please convert manually.
 
-        key(Key1; "Item No.", Priority, Make)
-        {
-        }
-        key(Key2; Make)
-        {
-        }
+        /* key(Key1; "Item No.", Priority, Make)
+         {
+         }
+         key(Key2; Make)
+         {
+         }*/
     }
 
 

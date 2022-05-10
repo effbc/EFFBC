@@ -858,7 +858,7 @@ tableextension 70079 ProdOrderLineExt extends "Prod. Order Line"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -875,7 +875,7 @@ tableextension 70079 ProdOrderLineExt extends "Prod. Order Line"
         }
         field(33000251; "WIP Spec Id"; Code[20])
         {
-            TableRelation = "Specification Header";
+            // TableRelation = "Specification Header";
         }
         field(33000252; "Quantity Sent To Quality"; Decimal)
         {
@@ -887,35 +887,35 @@ tableextension 70079 ProdOrderLineExt extends "Prod. Order Line"
         }
         field(33000254; "Quantity Accepted"; Decimal)
         {
-            CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Source Type" = FILTER(WIP),
-                                                                     "Order No." = FIELD("Prod. Order No."),
-                                                                     "Order Line No." = FIELD("Line No."),
-                                                                     "Entry Type" = FILTER(Accepted),
-                                                                     "Operation No." = FILTER(= '')));
+            /* CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Source Type" = FILTER(WIP),
+                                                                      "Order No." = FIELD("Prod. Order No."),
+                                                                      "Order Line No." = FIELD("Line No."),
+                                                                      "Entry Type" = FILTER(Accepted),
+                                                                      "Operation No." = FILTER(= '')));*/
             Editable = false;
             FieldClass = FlowField;
         }
         field(33000255; "Quantity Rejected"; Decimal)
         {
-            CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Source Type" = FILTER(WIP),
-                                                                     "Order No." = FIELD("Prod. Order No."),
-                                                                     "Order Line No." = FIELD("Line No."),
-                                                                     "Entry Type" = FILTER(Reject),
-                                                                     "Operation No." = FILTER('')));
+            /* CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Source Type" = FILTER(WIP),
+                                                                      "Order No." = FIELD("Prod. Order No."),
+                                                                      "Order Line No." = FIELD("Line No."),
+                                                                      "Entry Type" = FILTER(Reject),
+                                                                      "Operation No." = FILTER('')));*/
             FieldClass = FlowField;
         }
         field(33000256; "Quantity Rework"; Decimal)
         {
-            CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Source Type" = FILTER(WIP),
-                                                                     "Order No." = FIELD("Prod. Order No."),
-                                                                     "Order Line No." = FIELD("Line No."),
-                                                                     "Entry Type" = FILTER(Rework),
-                                                                     "Operation No." = FILTER('')));
+            /* CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Source Type" = FILTER(WIP),
+                                                                      "Order No." = FIELD("Prod. Order No."),
+                                                                      "Order Line No." = FIELD("Line No."),
+                                                                      "Entry Type" = FILTER(Rework),
+                                                                      "Operation No." = FILTER('')));*/
             FieldClass = FlowField;
         }
         field(33000257; "Spec Version Code"; Code[20])
         {
-            TableRelation = "Specification Version"."Version Code" WHERE("Specification No." = FIELD("WIP Spec Id"));
+            // TableRelation = "Specification Version"."Version Code" WHERE("Specification No." = FIELD("WIP Spec Id"));
         }
     }
     keys
@@ -956,57 +956,58 @@ tableextension 70079 ProdOrderLineExt extends "Prod. Order Line"
 
         //Unsupported feature: Deletion on ""Item No.,Variant Code,Location Code,Status,Due Date"(Key)". Please convert manually.
 
-        key(Key1; Status, "Prod. Order No.", "Line No.")
-        {
-        }
-        key(Key2; "Prod. Order No.", "Line No.", Status)
-        {
-        }
-        key(Key3; Status, "Item No.", "Variant Code", "Location Code", "Ending Date")
-        {
-            SumIndexFields = "Remaining Qty. (Base)", "Cost Amount";
-        }
-        key(Key4; Status, "Item No.", "Variant Code", "Location Code", "Starting Date")
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Remaining Qty. (Base)";
-        }
-        key(Key5; Status, "Item No.", "Variant Code", "Location Code", "Due Date")
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Remaining Qty. (Base)";
-        }
-        key(Key6; Status, "Item No.", "Variant Code", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Location Code", "Due Date")
-        {
-            Enabled = false;
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Remaining Qty. (Base)";
-        }
-        key(Key7; Status, "Prod. Order No.", "Item No.")
-        {
-        }
-        key(Key8; Status, "Prod. Order No.", "Routing No.", "Routing Reference No.")
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = Quantity, "Finished Quantity";
-        }
-        key(Key9; Status, "Prod. Order No.", "Planning Level Code")
-        {
-        }
-        key(Key10; "Planning Level Code", Priority)
-        {
-            Enabled = false;
-        }
-        key(Key11; "Item No.", "Variant Code", "Location Code", Status, "Ending Date")
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Remaining Qty. (Base)";
-        }
-        key(Key12; "Item No.", "Variant Code", "Location Code", Status, "Due Date")
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Remaining Qty. (Base)";
-        }
+        /* key(Key1; Status, "Prod. Order No.", "Line No.")
+         {
+         }
+         key(Key2; "Prod. Order No.", "Line No.", Status)
+         {
+         }
+         key(Key3; Status, "Item No.", "Variant Code", "Location Code", "Ending Date")
+         {
+             SumIndexFields = "Remaining Qty. (Base)", "Cost Amount";
+         }
+         key(Key4; Status, "Item No.", "Variant Code", "Location Code", "Starting Date")
+         {
+             MaintainSIFTIndex = false;
+             SumIndexFields = "Remaining Qty. (Base)";
+         }
+         key(Key5; Status, "Item No.", "Variant Code", "Location Code", "Due Date")
+         {
+             MaintainSIFTIndex = false;
+             SumIndexFields = "Remaining Qty. (Base)";
+         }
+         key(Key6; Status, "Item No.", "Variant Code", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Location Code", "Due Date")
+         {
+             Enabled = false;
+             MaintainSIFTIndex = false;
+             SumIndexFields = "Remaining Qty. (Base)";
+         }
+         key(Key7; Status, "Prod. Order No.", "Item No.")
+         {
+         }
+         key(Key8; Status, "Prod. Order No.", "Routing No.", "Routing Reference No.")
+         {
+             MaintainSIFTIndex = false;
+             SumIndexFields = Quantity, "Finished Quantity";
+         }
+         key(Key9; Status, "Prod. Order No.", "Planning Level Code")
+         {
+         }
+         key(Key10; "Planning Level Code", Priority)
+         {
+             Enabled = false;
+         }
+         key(Key11; "Item No.", "Variant Code", "Location Code", Status, "Ending Date")
+         {
+             MaintainSIFTIndex = false;
+             SumIndexFields = "Remaining Qty. (Base)";
+         }
+         key(Key12; "Item No.", "Variant Code", "Location Code", Status, "Due Date")
+         {
+             MaintainSIFTIndex = false;
+             SumIndexFields = "Remaining Qty. (Base)";
+         }
+         */
     }
 
 

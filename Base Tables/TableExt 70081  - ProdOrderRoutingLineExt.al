@@ -151,28 +151,28 @@ tableextension 70081 ProdOrderRoutingLineExt extends "Prod. Order Routing Line"
         }
         field(60101; "Person.2"; Code[20])
         {
-            TableRelation = IF (Type = CONST(Work Center)) "Work Center" ELSE IF (Type=CONST(Machine Center)) "Machine Center";
+            //TableRelation = IF (Type = CONST(Work Center)) "Work Center" ELSE IF (Type=CONST(Machine Center)) "Machine Center";
         }
         field(60102; "Allocated Qty.2"; Code[20])
         {
         }
         field(60103; "Person.3"; Code[20])
         {
-            TableRelation = IF (Type = CONST(Work Center)) "Work Center" ELSE IF (Type=CONST(Machine Center)) "Machine Center";
+            // TableRelation = IF (Type = CONST(Work Center)) "Work Center" ELSE IF (Type=CONST(Machine Center)) "Machine Center";
         }
         field(60104; "Allocated Qty.3"; Code[20])
         {
         }
         field(60105; "Person.4"; Code[20])
         {
-            TableRelation = IF (Type = CONST(Work Center)) "Work Center" ELSE IF (Type=CONST(Machine Center)) "Machine Center";
+            // TableRelation = IF (Type = CONST(Work Center)) "Work Center" ELSE IF (Type=CONST(Machine Center)) "Machine Center";
         }
         field(60106; "Allocated Qty.4"; Code[20])
         {
         }
         field(60107; "Person.5"; Code[20])
         {
-            TableRelation = IF (Type = CONST(Work Center)) "Work Center" ELSE IF (Type=CONST(Machine Center)) "Machine Center";
+            //TableRelation = IF (Type = CONST(Work Center)) "Work Center" ELSE IF (Type=CONST(Machine Center)) "Machine Center";
         }
         field(60108; "Allocated Qty.5"; Code[20])
         {
@@ -184,7 +184,7 @@ tableextension 70081 ProdOrderRoutingLineExt extends "Prod. Order Routing Line"
         }
         field(33000250; "Sub Assembly"; Code[20])
         {
-            TableRelation = "Sub Assembly";
+            // TableRelation = "Sub Assembly";
 
             trigger OnValidate();
             begin
@@ -192,6 +192,7 @@ tableextension 70081 ProdOrderRoutingLineExt extends "Prod. Order Routing Line"
                     "Spec Id" := '';
                     "QC Enabled" := FALSE;
                 END ELSE BEGIN
+                    /*
                     SubAssembly.GET("Sub Assembly");
                     "Spec Id" := SubAssembly."Spec Id";
                     //B2B
@@ -201,7 +202,7 @@ tableextension 70081 ProdOrderRoutingLineExt extends "Prod. Order Routing Line"
                     //Hot Fix 1.0
                     //B2B
                     "QC Enabled" := SubAssembly."QC Enabled";
-                    "Sub Assembly Description" := SubAssembly.Description;
+                    "Sub Assembly Description" := SubAssembly.Description;*/
                 END;
             end;
         }
@@ -210,14 +211,14 @@ tableextension 70081 ProdOrderRoutingLineExt extends "Prod. Order Routing Line"
         }
         field(33000252; "Spec Id"; Code[20])
         {
-            TableRelation = "Specification Header";
+            // TableRelation = "Specification Header";
         }
         field(33000253; "QC Enabled"; Boolean)
         {
         }
         field(33000254; "Sub Assembly Unit Of Meas.Code"; Code[20])
         {
-            TableRelation = "Sub Assembly Unit of Measure".Code;
+            // TableRelation = "Sub Assembly Unit of Measure".Code;
         }
         field(33000255; "Qty.To Produce"; Decimal)
         {
@@ -250,28 +251,28 @@ tableextension 70081 ProdOrderRoutingLineExt extends "Prod. Order Routing Line"
         }
         field(33000260; "Quantity Accepted"; Decimal)
         {
-            CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE(Source Type=FILTER(WIP), Order No.=FIELD(Prod. Order No.), Order Line No.=FIELD(Routing Reference No.), Entry Type=FILTER(Accepted), Operation No.=FIELD(Operation No.)));
+            // CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE(Source Type=FILTER(WIP), Order No.=FIELD(Prod. Order No.), Order Line No.=FIELD(Routing Reference No.), Entry Type=FILTER(Accepted), Operation No.=FIELD(Operation No.)));
             Description = 'B2B 1.1';
             Editable = false;
             FieldClass = FlowField;
         }
-        field(33000261;"Quantity Rejected";Decimal)
+        field(33000261; "Quantity Rejected"; Decimal)
         {
             Description = 'B2B 1.1';
         }
-        field(33000262;"Quantity Rework";Decimal)
+        field(33000262; "Quantity Rework"; Decimal)
         {
             Description = 'B2B 1.1';
         }
-        field(33000263;"Newly Added Opearation";Boolean)
+        field(33000263; "Newly Added Opearation"; Boolean)
         {
             Description = 'B2B 1.1,QCB2B1.2';
         }
-        field(33000264;"Prev. Qty";Decimal)
+        field(33000264; "Prev. Qty"; Decimal)
         {
             Description = 'B2B 1.1,QCB2B1.2';
         }
-        field(33000265;"QAS/MPR";Option)
+        field(33000265; "QAS/MPR"; Option)
         {
             Description = 'B2B 1.1,QCB2B1.2';
             OptionCaption = '" ,QAS,MPR"';
@@ -316,55 +317,55 @@ tableextension 70081 ProdOrderRoutingLineExt extends "Prod. Order Routing Line"
 
         //Unsupported feature: Deletion on ""Type,No.,Status"(Key)". Please convert manually.
 
-        key(Key1;Status,"Prod. Order No.","Routing Reference No.","Routing No.","Operation No.")
-        {
-        }
-        key(Key2;"Prod. Order No.","Routing Reference No.",Status,"Routing No.","Operation No.")
-        {
-        }
-        key(Key3;Status,"Prod. Order No.","Routing Reference No.","Routing No.","Sequence No. (Forward)")
-        {
-        }
-        key(Key4;Status,"Prod. Order No.","Routing Reference No.","Routing No.","Sequence No. (Backward)")
-        {
-        }
-        key(Key5;Status,"Prod. Order No.","Routing Reference No.","Routing No.","Sequence No. (Actual)")
-        {
-            SumIndexFields = "Expected Operation Cost Amt.";
-        }
-        key(Key6;"Work Center No.")
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Expected Operation Cost Amt.";
-        }
-        key(Key7;Type,"No.","Starting Date")
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Expected Operation Cost Amt.";
-        }
-        key(Key8;Status,"Work Center No.")
-        {
-            SumIndexFields = "Expected Operation Cost Amt.";
-        }
-        key(Key9;"Prod. Order No.",Status,"Flushing Method")
-        {
-        }
-        key(Key10;"Starting Date","Starting Time","Routing Status")
-        {
-        }
-        key(Key11;"Ending Date","Ending Time","Routing Status")
-        {
-        }
-        key(Key12;Type,"No.",Status)
-        {
-            SumIndexFields = "Expected Operation Cost Amt.";
-        }
-        key(Key13;Status,"Prod. Order No.","Routing Reference No.","Starting Date")
-        {
-        }
-        key(Key14;Status,"Starting Date","Routing Reference No.","Operation No.")
-        {
-        }
+        /*        key(Key1; Status, "Prod. Order No.", "Routing Reference No.", "Routing No.", "Operation No.")
+                {
+                }
+                key(Key2; "Prod. Order No.", "Routing Reference No.", Status, "Routing No.", "Operation No.")
+                {
+                }
+                key(Key3; Status, "Prod. Order No.", "Routing Reference No.", "Routing No.", "Sequence No. (Forward)")
+                {
+                }
+                key(Key4; Status, "Prod. Order No.", "Routing Reference No.", "Routing No.", "Sequence No. (Backward)")
+                {
+                }
+                key(Key5; Status, "Prod. Order No.", "Routing Reference No.", "Routing No.", "Sequence No. (Actual)")
+                {
+                    SumIndexFields = "Expected Operation Cost Amt.";
+                }
+                key(Key6; "Work Center No.")
+                {
+                    MaintainSIFTIndex = false;
+                    SumIndexFields = "Expected Operation Cost Amt.";
+                }
+                key(Key7; Type, "No.", "Starting Date")
+                {
+                    MaintainSIFTIndex = false;
+                    SumIndexFields = "Expected Operation Cost Amt.";
+                }
+                key(Key8; Status, "Work Center No.")
+                {
+                    SumIndexFields = "Expected Operation Cost Amt.";
+                }
+                key(Key9; "Prod. Order No.", Status, "Flushing Method")
+                {
+                }
+                key(Key10; "Starting Date", "Starting Time", "Routing Status")
+                {
+                }
+                key(Key11; "Ending Date", "Ending Time", "Routing Status")
+                {
+                }
+                key(Key12; Type, "No.", Status)
+                {
+                    SumIndexFields = "Expected Operation Cost Amt.";
+                }
+                key(Key13; Status, "Prod. Order No.", "Routing Reference No.", "Starting Date")
+                {
+                }
+                key(Key14; Status, "Starting Date", "Routing Reference No.", "Operation No.")
+                {
+                }*/
     }
 
 
@@ -374,22 +375,22 @@ tableextension 70081 ProdOrderRoutingLineExt extends "Prod. Order Routing Line"
     //Parameters and return type have not been exported.
     //>>>> ORIGINAL CODE:
     //begin
-        /*
-        IF Status = Status::Finished THEN
-          ERROR(Text006,Status,TABLECAPTION);
+    /*
+    IF Status = Status::Finished THEN
+      ERROR(Text006,Status,TABLECAPTION);
 
-        UpdateComponentsBin(1); // from trigger = modify
-        */
+    UpdateComponentsBin(1); // from trigger = modify
+    */
     //end;
     //>>>> MODIFIED CODE:
     //begin
-        /*
-        {
-        IF Status = Status::Finished THEN
-          ERROR(Text006,Status,TABLECAPTION);
-        }
-        UpdateComponentsBin(1); // from trigger = modify
-        */
+    /*
+    {
+    IF Status = Status::Finished THEN
+      ERROR(Text006,Status,TABLECAPTION);
+    }
+    UpdateComponentsBin(1); // from trigger = modify
+    */
     //end;
 
 
@@ -399,15 +400,15 @@ tableextension 70081 ProdOrderRoutingLineExt extends "Prod. Order Routing Line"
     //Parameters and return type have not been exported.
     //>>>> ORIGINAL CODE:
     //begin
-        /*
-        ERROR(Text001,TABLECAPTION);
-        */
+    /*
+    ERROR(Text001,TABLECAPTION);
+    */
     //end;
     //>>>> MODIFIED CODE:
     //begin
-        /*
-        {ERROR(Text001,TABLECAPTION);}
-        */
+    /*
+    {ERROR(Text001,TABLECAPTION);}
+    */
     //end;
 
     //Unsupported feature: PropertyChange. Please convert manually.
@@ -420,446 +421,446 @@ tableextension 70081 ProdOrderRoutingLineExt extends "Prod. Order Routing Line"
     //Unsupported feature: PropertyModification on ""Standard Task Code"(Field 35).OnValidate.StandardTask(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Standard Task Code" : 99000778;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Standard Task Code" : "Standard Task";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Standard Task Code" : 99000778;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Standard Task Code" : "Standard Task";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Standard Task Code"(Field 35).OnValidate.StdTaskTool(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Standard Task Code" : 99000781;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Standard Task Code" : "Standard Task Tool";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Standard Task Code" : 99000781;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Standard Task Code" : "Standard Task Tool";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Standard Task Code"(Field 35).OnValidate.StdTaskPersonnel(Variable 1002)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Standard Task Code" : 99000782;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Standard Task Code" : "Standard Task Personnel";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Standard Task Code" : 99000782;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Standard Task Code" : "Standard Task Personnel";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Standard Task Code"(Field 35).OnValidate.StdTaskQltyMeasure(Variable 1003)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Standard Task Code" : 99000784;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Standard Task Code" : "Standard Task Quality Measure";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Standard Task Code" : 99000784;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Standard Task Code" : "Standard Task Quality Measure";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Standard Task Code"(Field 35).OnValidate.StdTaskComment(Variable 1004)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Standard Task Code" : 99000783;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Standard Task Code" : "Standard Task Description";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Standard Task Code" : 99000783;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Standard Task Code" : "Standard Task Description";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Routing Status"(Field 79).OnValidate.ProdOrderCapacityNeed(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Routing Status" : 5410;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Routing Status" : "Prod. Order Capacity Need";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Routing Status" : 5410;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Routing Status" : "Prod. Order Capacity Need";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "OnDelete.CapLedgEntry(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //OnDelete.CapLedgEntry : 5832;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //OnDelete.CapLedgEntry : "Capacity Ledger Entry";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //OnDelete.CapLedgEntry : 5832;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //OnDelete.CapLedgEntry : "Capacity Ledger Entry";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "Caption(PROCEDURE 12).ProdOrder(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //Caption : 5405;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //Caption : "Production Order";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //Caption : 5405;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //Caption : "Production Order";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CalcStartingEndingDates(PROCEDURE 17).ReservationCheckDateConfl(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CalcStartingEndingDates : 99000815;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CalcStartingEndingDates : "Reservation-Check Date Confl.";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CalcStartingEndingDates : 99000815;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CalcStartingEndingDates : "Reservation-Check Date Confl.";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CalculateRoutingBack(PROCEDURE 10).ProdOrderLine(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CalculateRoutingBack : 5406;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CalculateRoutingBack : "Prod. Order Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CalculateRoutingBack : 5406;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CalculateRoutingBack : "Prod. Order Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CalculateRoutingBack(PROCEDURE 10).ProdOrderRtngLine(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CalculateRoutingBack : 5409;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CalculateRoutingBack : "Prod. Order Routing Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CalculateRoutingBack : 5409;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CalculateRoutingBack : "Prod. Order Routing Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CalculateRoutingForward(PROCEDURE 9).ProdOrderLine(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CalculateRoutingForward : 5406;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CalculateRoutingForward : "Prod. Order Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CalculateRoutingForward : 5406;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CalculateRoutingForward : "Prod. Order Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CalculateRoutingForward(PROCEDURE 9).ProdOrderRtngLine(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CalculateRoutingForward : 5409;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CalculateRoutingForward : "Prod. Order Routing Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CalculateRoutingForward : 5409;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CalculateRoutingForward : "Prod. Order Routing Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "AdjustComponents(PROCEDURE 14).ProdOrderComp(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //AdjustComponents : 5407;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //AdjustComponents : "Prod. Order Component";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //AdjustComponents : 5407;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //AdjustComponents : "Prod. Order Component";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CheckPreviousAndNext(PROCEDURE 18).ProdOrderRtngLine(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CheckPreviousAndNext : 5409;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CheckPreviousAndNext : "Prod. Order Routing Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CheckPreviousAndNext : 5409;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CheckPreviousAndNext : "Prod. Order Routing Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CheckPreviousAndNext(PROCEDURE 18).TempDeletedProdOrderRtngLine(Variable 1002)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CheckPreviousAndNext : 5409;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CheckPreviousAndNext : "Prod. Order Routing Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CheckPreviousAndNext : 5409;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CheckPreviousAndNext : "Prod. Order Routing Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CheckPreviousAndNext(PROCEDURE 18).TempRemainingProdOrderRtngLine(Variable 1003)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CheckPreviousAndNext : 5409;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CheckPreviousAndNext : "Prod. Order Routing Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CheckPreviousAndNext : 5409;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CheckPreviousAndNext : "Prod. Order Routing Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CheckPreviousAndNext(PROCEDURE 18).ProdOrderRoutingForm(Variable 1006)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CheckPreviousAndNext : 99000817;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CheckPreviousAndNext : "Prod. Order Routing";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CheckPreviousAndNext : 99000817;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CheckPreviousAndNext : "Prod. Order Routing";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "SetPreviousAndNext(PROCEDURE 34).ProdOrderRtngLine(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //SetPreviousAndNext : 5409;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //SetPreviousAndNext : "Prod. Order Routing Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //SetPreviousAndNext : 5409;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //SetPreviousAndNext : "Prod. Order Routing Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "SetNextOperations(PROCEDURE 4).RtngLine2(Variable 1003)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //SetNextOperations : 5409;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //SetNextOperations : "Prod. Order Routing Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //SetNextOperations : 5409;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //SetNextOperations : "Prod. Order Routing Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "UpdateComponentsBin(PROCEDURE 16).TempProdOrderRtngLine(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //UpdateComponentsBin : 5409;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //UpdateComponentsBin : "Prod. Order Routing Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //UpdateComponentsBin : 5409;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //UpdateComponentsBin : "Prod. Order Routing Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "PopulateNewRoutingLineSet(PROCEDURE 20).ProdOrderRtngLine2(Variable 1002)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //PopulateNewRoutingLineSet : 5409;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //PopulateNewRoutingLineSet : "Prod. Order Routing Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //PopulateNewRoutingLineSet : 5409;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //PopulateNewRoutingLineSet : "Prod. Order Routing Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ShiftTimeForwardOnParentProdOrderLines(PROCEDURE 29).ParentProdOrderLine(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ShiftTimeForwardOnParentProdOrderLines : 5406;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ShiftTimeForwardOnParentProdOrderLines : "Prod. Order Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ShiftTimeForwardOnParentProdOrderLines : 5406;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ShiftTimeForwardOnParentProdOrderLines : "Prod. Order Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ShiftTimeForwardOnParentProdOrderLines(PROCEDURE 29).ProdOrderComponent(Variable 1003)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ShiftTimeForwardOnParentProdOrderLines : 5407;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ShiftTimeForwardOnParentProdOrderLines : "Prod. Order Component";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ShiftTimeForwardOnParentProdOrderLines : 5407;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ShiftTimeForwardOnParentProdOrderLines : "Prod. Order Component";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ShiftTimeForwardOnParentProdOrderLines(PROCEDURE 29).ReservationCheckDateConfl(Variable 1002)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ShiftTimeForwardOnParentProdOrderLines : 99000815;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ShiftTimeForwardOnParentProdOrderLines : "Reservation-Check Date Confl.";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ShiftTimeForwardOnParentProdOrderLines : 99000815;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ShiftTimeForwardOnParentProdOrderLines : "Reservation-Check Date Confl.";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "NoTerminationProcessesExist(PROCEDURE 32).ProdOrderRoutingLine(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //NoTerminationProcessesExist : 5409;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //NoTerminationProcessesExist : "Prod. Order Routing Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //NoTerminationProcessesExist : 5409;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //NoTerminationProcessesExist : "Prod. Order Routing Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "WorkCenter(Variable 1006)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //WorkCenter : 99000754;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //WorkCenter : "Work Center";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //WorkCenter : 99000754;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //WorkCenter : "Work Center";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "MachineCenter(Variable 1007)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //MachineCenter : 99000758;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //MachineCenter : "Machine Center";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //MachineCenter : 99000758;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //MachineCenter : "Machine Center";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ProdOrderLine(Variable 1008)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ProdOrderLine : 5406;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ProdOrderLine : "Prod. Order Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ProdOrderLine : 5406;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ProdOrderLine : "Prod. Order Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ProdOrderRtngLine(Variable 1009)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ProdOrderRtngLine : 5409;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ProdOrderRtngLine : "Prod. Order Routing Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ProdOrderRtngLine : 5409;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ProdOrderRtngLine : "Prod. Order Routing Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ProdOrderRoutTool(Variable 1010)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ProdOrderRoutTool : 5411;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ProdOrderRoutTool : "Prod. Order Routing Tool";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ProdOrderRoutTool : 5411;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ProdOrderRoutTool : "Prod. Order Routing Tool";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ProdOrderRtngPersonnel(Variable 1011)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ProdOrderRtngPersonnel : 5412;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ProdOrderRtngPersonnel : "Prod. Order Routing Personnel";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ProdOrderRtngPersonnel : 5412;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ProdOrderRtngPersonnel : "Prod. Order Routing Personnel";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ProdOrderRtngQltyMeas(Variable 1012)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ProdOrderRtngQltyMeas : 5413;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ProdOrderRtngQltyMeas : "Prod. Order Rtng Qlty Meas.";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ProdOrderRtngQltyMeas : 5413;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ProdOrderRtngQltyMeas : "Prod. Order Rtng Qlty Meas.";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ProdOrderRtngComment(Variable 1013)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ProdOrderRtngComment : 5415;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ProdOrderRtngComment : "Prod. Order Rtng Comment Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ProdOrderRtngComment : 5415;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ProdOrderRtngComment : "Prod. Order Rtng Comment Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "GLSetup(Variable 1005)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //GLSetup : 98;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //GLSetup : "General Ledger Setup";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //GLSetup : 98;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //GLSetup : "General Ledger Setup";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ProdOrderCapNeed(Variable 1014)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ProdOrderCapNeed : 5410;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ProdOrderCapNeed : "Prod. Order Capacity Need";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ProdOrderCapNeed : 5410;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ProdOrderCapNeed : "Prod. Order Capacity Need";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "PurchLine(Variable 1021)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //PurchLine : 39;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //PurchLine : "Purchase Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //PurchLine : 39;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //PurchLine : "Purchase Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "TempErrorMessage(Variable 1026)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //TempErrorMessage : 700;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //TempErrorMessage : "Error Message";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //TempErrorMessage : 700;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //TempErrorMessage : "Error Message";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CalcProdOrder(Variable 1015)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CalcProdOrder : 99000773;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CalcProdOrder : "Calculate Prod. Order";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CalcProdOrder : 99000773;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CalcProdOrder : "Calculate Prod. Order";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ProdOrderRouteMgt(Variable 1016)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ProdOrderRouteMgt : 99000772;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ProdOrderRouteMgt : "Prod. Order Route Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ProdOrderRouteMgt : 99000772;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ProdOrderRouteMgt : "Prod. Order Route Management";
+    //Variable type has not been exported.
 
     var
-        "--QC1--" : Integer;
-        SubAssembly : Record "Sub Assembly";
-        "------" : Integer;
-        "Prod.OrderLine" : Record "Prod. Order Line";
+        "--QC1--": Integer;
+        //SubAssembly: Record "Sub Assembly";
+        "------": Integer;
+        "Prod.OrderLine": Record "Prod. Order Line";
 }
 

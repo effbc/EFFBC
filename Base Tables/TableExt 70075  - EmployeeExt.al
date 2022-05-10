@@ -240,7 +240,7 @@ tableextension 70075 EmployeeExt extends Employee
 
         field(50010; "Job Title/Grade"; Code[10])
         {
-            TableRelation = "Pay Grade"."Designation Code";
+            //TableRelation = "Pay Grade"."Designation Code";
         }
         field(50011; "Department Code"; Code[20])
         {
@@ -263,7 +263,7 @@ tableextension 70075 EmployeeExt extends Employee
         }
         field(50016; "Skill Code"; Code[10])
         {
-            TableRelation = "Pay Skill".Code;
+            //TableRelation = "Pay Skill".Code;
         }
         field(50017; "Branch Code"; Code[20])
         {
@@ -363,17 +363,17 @@ tableextension 70075 EmployeeExt extends Employee
         field(50063; "Grade Filter"; Code[10])
         {
             FieldClass = FlowFilter;
-            TableRelation = "Pay Grade";
+            //TableRelation = "Pay Grade";
         }
         field(50064; "Pay Element Filter"; Code[10])
         {
             FieldClass = FlowFilter;
-            TableRelation = "Pay Elements";
+            // TableRelation = "Pay Elements";
         }
         field(50065; "Qualification Filter"; Code[10])
         {
             FieldClass = FlowFilter;
-            TableRelation = "Pay Holidays";
+            //TableRelation = "Pay Holidays";
         }
         field(50066; MonthFilter; Integer)
         {
@@ -413,10 +413,10 @@ tableextension 70075 EmployeeExt extends Employee
         }
         field(50081; MonthlyEmolumentTotal; Decimal)
         {
-            CalcFormula = Sum("Pay Employee Pay Details"."Payable Amount" WHERE("Employee No" = FIELD("Employee No. Filter"),
-                                                                                 Year = FIELD(YearFilter),
-                                                                                 Month = FIELD(MonthFilter),
-                                                                                 Type = FIELD(TypeFilter)));
+            /* CalcFormula = Sum("Pay Employee Pay Details"."Payable Amount" WHERE("Employee No" = FIELD("Employee No. Filter"),
+                                                                                  Year = FIELD(YearFilter),
+                                                                                  Month = FIELD(MonthFilter),
+                                                                                  Type = FIELD(TypeFilter)));*/
             FieldClass = FlowField;
         }
         field(50082; QualfiedForStatement217; Boolean)
@@ -454,7 +454,7 @@ tableextension 70075 EmployeeExt extends Employee
         }
         field(50105; "Occupation Code"; Code[20])
         {
-            TableRelation = "Pay Occupation Classification";
+            //TableRelation = "Pay Occupation Classification";
         }
         field(50111; "ECS Bank Code No."; Text[9])
         {
@@ -492,7 +492,7 @@ tableextension 70075 EmployeeExt extends Employee
         }
         field(50126; "Job Title Code"; Code[30])
         {
-            TableRelation = "Job Titles"."Job Code";
+            // TableRelation = "Job Titles"."Job Code";
         }
         field(50130; "PF Deduction on Actual Salary"; Boolean)
         {
@@ -566,46 +566,46 @@ tableextension 70075 EmployeeExt extends Employee
         field(50148; "Employee Bus. Posting Group"; Code[10])
         {
             Caption = 'Employee Bus. Posting Group';
-            TableRelation = "Pay Business Posting Group";
+            //TableRelation = "Pay Business Posting Group";
         }
         field(50149; "Balance 2"; Decimal)
         {
-            CalcFormula = Sum("Detailed Employee Ledg. Entry".Amount WHERE("Employee No." = FIELD("No.")));
+            //CalcFormula = Sum("Detailed Employee Ledg. Entry".Amount WHERE("Employee No." = FIELD("No.")));
             FieldClass = FlowField;
         }
         field(50150; "Balance (LCY)"; Decimal)
         {
-            CalcFormula = Sum("Detailed Employee Ledg. Entry"."Amount (LCY)" WHERE("Employee No." = FIELD("No.")));
+            //CalcFormula = Sum("Detailed Employee Ledg. Entry"."Amount (LCY)" WHERE("Employee No." = FIELD("No.")));
             Caption = 'Balance (LCY)';
             FieldClass = FlowField;
         }
         field(50151; "Net Change"; Decimal)
         {
-            CalcFormula = - Sum("Detailed Employee Ledg. Entry".Amount WHERE("Employee No." = FIELD("No."),
-                                                                             "Posting Date" = FIELD("Date Filter")));
+            /*CalcFormula = - Sum("Detailed Employee Ledg. Entry".Amount WHERE("Employee No." = FIELD("No."),
+                                                                             "Posting Date" = FIELD("Date Filter")));*/
             Caption = 'Net Change';
             FieldClass = FlowField;
         }
         field(50152; "Net Change (LCY)"; Decimal)
         {
-            CalcFormula = - Sum("Detailed Employee Ledg. Entry"."Amount (LCY)" WHERE("Employee No." = FIELD("No."),
-                                                                                     "Posting Date" = FIELD("Date Filter")));
+            /* CalcFormula = - Sum("Detailed Employee Ledg. Entry"."Amount (LCY)" WHERE("Employee No." = FIELD("No."),
+                                                                                      "Posting Date" = FIELD("Date Filter")));*/
             Caption = 'Net Change (LCY)';
             FieldClass = FlowField;
         }
         field(50153; "Balance Due"; Decimal)
         {
-            CalcFormula = - Sum("Detailed Employee Ledg. Entry".Amount WHERE("Employee No." = FIELD("No."),
+            /*CalcFormula = - Sum("Detailed Employee Ledg. Entry".Amount WHERE("Employee No." = FIELD("No."),
                                                                              "Initial Entry Due Date" = FIELD("Date Filter"),
-                                                                             "Posting Date" = FIELD("Date Filter")));
+                                                                             "Posting Date" = FIELD("Date Filter")));*/
             Caption = 'Balance Due';
             FieldClass = FlowField;
         }
         field(50154; "Balance Due (LCY)"; Decimal)
         {
-            CalcFormula = - Sum("Detailed Employee Ledg. Entry"."Amount (LCY)" WHERE("Employee No." = FIELD("No."),
+            /*CalcFormula = - Sum("Detailed Employee Ledg. Entry"."Amount (LCY)" WHERE("Employee No." = FIELD("No."),
                                                                                      "Initial Entry Due Date" = FIELD("Date Filter"),
-                                                                                     "Posting Date" = FIELD("Date Filter")));
+                                                                                     "Posting Date" = FIELD("Date Filter")));*/
             Caption = 'Balance Due (LCY)';
             FieldClass = FlowField;
         }
@@ -634,21 +634,21 @@ tableextension 70075 EmployeeExt extends Employee
 
         //Unsupported feature: Deletion on ""Last Name,First Name,Middle Name"(Key)". Please convert manually.
 
-        key(Key1; "No.")
-        {
-        }
-        key(Key2; "Search Name")
-        {
-        }
-        key(Key3; Status, "Union Code")
-        {
-        }
-        key(Key4; Status, "Emplymt. Contract Code")
-        {
-        }
-        key(Key5; "Last Name", "First Name", "Middle Name")
-        {
-        }
+        /*        key(Key1; "No.")
+                {
+                }
+                key(Key2; "Search Name")
+                {
+                }
+                key(Key3; Status, "Union Code")
+                {
+                }
+                key(Key4; Status, "Emplymt. Contract Code")
+                {
+                }
+                key(Key5; "Last Name", "First Name", "Middle Name")
+                {
+                }*/
     }
 
 

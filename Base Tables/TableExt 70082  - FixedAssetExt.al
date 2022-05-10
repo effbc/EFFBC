@@ -168,47 +168,47 @@ tableextension 70082 FixedAssetExt extends "Fixed Asset"
 
         //trigger OnValidate();
         //Parameters and return type have not been exported.
-    var
-        FixedAssetTransfer: Record "Fixed Asset Transfer";
-        NextEntryNo: Integer;
-        Text051: Label 'Enter the transfer reason';
-    //begin
-    /*
-    FixedAssetTransfer.Reset;
-    FixedAssetTransfer.LockTable;
-    if FixedAssetTransfer.Find('+') then
-      NextEntryNo := FixedAssetTransfer."Entry No."
-    else
-      NextEntryNo := 0;
+        /* var
+             FixedAssetTransfer: Record "Fixed Asset Transfer";
+             NextEntryNo: Integer;
+             Text051: Label 'Enter the transfer reason';*/
+        //begin
+        /*
+        FixedAssetTransfer.Reset;
+        FixedAssetTransfer.LockTable;
+        if FixedAssetTransfer.Find('+') then
+          NextEntryNo := FixedAssetTransfer."Entry No."
+        else
+          NextEntryNo := 0;
 
-    if "FA Location Code"<>xRec."FA Location Code" then begin
-      FixedAssetTransfer.Init;
-      FixedAssetTransfer."Entry No." := NextEntryNo + 1;
-      FixedAssetTransfer."Fixed Asset No." := "No.";
-      FixedAssetTransfer."FA Location" := xRec."FA Location Code";
-      FixedAssetTransfer."FA New Location" := "FA Location Code";
-      FixedAssetTransfer.Date := WorkDate;
-      FixedAssetTransfer."User id" := UserId;
-      FixedAssetTransfer."Location Trns. Reason" := '';
-      FixedAssetTransfer.Insert;
-      Commit;
-      FixedAssetTransfer.SetRange(FixedAssetTransfer."Fixed Asset No.","No.");
-      FixedAssetTransfer.SetRange(FixedAssetTransfer."Entry No.",FixedAssetTransfer."Entry No.");
-      if FixedAssetTransfer.Find('-') then
-        if PAGE.RunModal(60006,FixedAssetTransfer) = ACTION::LookupOK then;
-    end;
-    */
-    //end;
+        if "FA Location Code"<>xRec."FA Location Code" then begin
+          FixedAssetTransfer.Init;
+          FixedAssetTransfer."Entry No." := NextEntryNo + 1;
+          FixedAssetTransfer."Fixed Asset No." := "No.";
+          FixedAssetTransfer."FA Location" := xRec."FA Location Code";
+          FixedAssetTransfer."FA New Location" := "FA Location Code";
+          FixedAssetTransfer.Date := WorkDate;
+          FixedAssetTransfer."User id" := UserId;
+          FixedAssetTransfer."Location Trns. Reason" := '';
+          FixedAssetTransfer.Insert;
+          Commit;
+          FixedAssetTransfer.SetRange(FixedAssetTransfer."Fixed Asset No.","No.");
+          FixedAssetTransfer.SetRange(FixedAssetTransfer."Entry No.",FixedAssetTransfer."Entry No.");
+          if FixedAssetTransfer.Find('-') then
+            if PAGE.RunModal(60006,FixedAssetTransfer) = ACTION::LookupOK then;
+        end;
+        */
+        //end;
 
 
-    //Unsupported feature: CodeInsertion on ""Responsible Employee"(Field 16)". Please convert manually.
+        //Unsupported feature: CodeInsertion on ""Responsible Employee"(Field 16)". Please convert manually.
 
-    //trigger OnValidate();
-    //Parameters and return type have not been exported.
-    var
-        FixedAssetTransfer: Record "Fixed Asset Transfer";
-        NextEntryNo: Integer;
-        Text060: Label 'Please Enter the Transfer Reason';
+        //trigger OnValidate();
+        //Parameters and return type have not been exported.
+        /*var
+            FixedAssetTransfer: Record "Fixed Asset Transfer";
+            NextEntryNo: Integer;
+            Text060: Label 'Please Enter the Transfer Reason';*/
         //begin
         /*
         FixedAssetTransfer.Reset;
@@ -262,21 +262,21 @@ tableextension 70082 FixedAssetExt extends "Fixed Asset"
         end;
         */
         //end;
-        field(13701;"Excise Prod. Posting Group";
+        field(13701; "Excise Prod. Posting Group";
         Code[10])
         {
-            CaptionML = ENU='Excise Prod. Posting Group',
-                        ENN='Excise Prod. Posting Group';
+            CaptionML = ENU = 'Excise Prod. Posting Group',
+                        ENN = 'Excise Prod. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Prod. Posting Group".Code;
+            //TableRelation = "Excise Prod. Posting Group".Code;
         }
-        field(13702;"Excise Accounting Type";Option)
+        field(13702; "Excise Accounting Type"; Option)
         {
-            CaptionML = ENU='Excise Accounting Type',
-                        ENN='Excise Accounting Type';
+            CaptionML = ENU = 'Excise Accounting Type',
+                        ENN = 'Excise Accounting Type';
             DataClassification = ToBeClassified;
-            OptionCaptionML = ENU='With CENTVAT,Without CENTVAT',
-                              ENN='With CENTVAT,Without CENTVAT';
+            OptionCaptionML = ENU = 'With CENTVAT,Without CENTVAT',
+                              ENN = 'With CENTVAT,Without CENTVAT';
             OptionMembers = "With CENTVAT","Without CENTVAT";
 
             trigger OnValidate();
@@ -284,37 +284,37 @@ tableextension 70082 FixedAssetExt extends "Fixed Asset"
                 //TestNoEntriesExists(FIELDCAPTION("Excise Accounting Type"));
             end;
         }
-        field(13703;"Gen. Prod. Posting Group";Code[10])
+        field(13703; "Gen. Prod. Posting Group"; Code[10])
         {
-            CaptionML = ENU='Gen. Prod. Posting Group',
-                        ENN='Gen. Prod. Posting Group';
+            CaptionML = ENU = 'Gen. Prod. Posting Group',
+                        ENN = 'Gen. Prod. Posting Group';
             DataClassification = ToBeClassified;
             TableRelation = "Gen. Product Posting Group".Code;
         }
-        field(13708;"Tax Group Code";Code[10])
+        field(13708; "Tax Group Code"; Code[10])
         {
-            CaptionML = ENU='Tax Group Code',
-                        ENN='Tax Group Code';
+            CaptionML = ENU = 'Tax Group Code',
+                        ENN = 'Tax Group Code';
             DataClassification = ToBeClassified;
             TableRelation = "Tax Group".Code;
         }
-        field(16351;"VAT Product Posting Group";Code[10])
+        field(16351; "VAT Product Posting Group"; Code[10])
         {
-            CaptionML = ENU='VAT Product Posting Group',
-                        ENN='VAT Product Posting Group';
+            CaptionML = ENU = 'VAT Product Posting Group',
+                        ENN = 'VAT Product Posting Group';
             DataClassification = ToBeClassified;
             TableRelation = "VAT Product Posting Group";
         }
-        field(16500;"FA Block Code";Code[10])
+        field(16500; "FA Block Code"; Code[10])
         {
-            CaptionML = ENU='FA Block Code',
-                        ENN='FA Block Code';
+            CaptionML = ENU = 'FA Block Code',
+                        ENN = 'FA Block Code';
             DataClassification = ToBeClassified;
-            TableRelation = "FA Block".Code WHERE ("FA Class Code"=FIELD("FA Class Code"));
+            // TableRelation = "FA Block".Code WHERE("FA Class Code" = FIELD("FA Class Code"));
 
             trigger OnValidate();
             var
-                FaDeprBook2 : Record "FA Depreciation Book";
+                FaDeprBook2: Record "FA Depreciation Book";
             begin
                 /*IF (xRec."FA Block Code" <> '' ) AND (Rec."FA Block Code" = '') THEN BEGIN
                   FaDeprBook2.RESET;
@@ -333,102 +333,102 @@ tableextension 70082 FixedAssetExt extends "Fixed Asset"
 
             end;
         }
-        field(16501;"Add. Depr. Applicable";Boolean)
+        field(16501; "Add. Depr. Applicable"; Boolean)
         {
-            CaptionML = ENU='Add. Depr. Applicable',
-                        ENN='Add. Depr. Applicable';
+            CaptionML = ENU = 'Add. Depr. Applicable',
+                        ENN = 'Add. Depr. Applicable';
             DataClassification = ToBeClassified;
         }
-        field(16602;"GST Group Code";Code[20])
+        field(16602; "GST Group Code"; Code[20])
         {
-            CaptionML = ENU='GST Group Code',
-                        ENN='GST Group Code';
+            CaptionML = ENU = 'GST Group Code',
+                        ENN = 'GST Group Code';
             DataClassification = ToBeClassified;
-            TableRelation = "GST Group";
+            //TableRelation = "GST Group";
 
             trigger OnValidate();
             begin
                 //"HSN/SAC Code" := '';
             end;
         }
-        field(16604;"HSN/SAC Code";Code[8])
+        field(16604; "HSN/SAC Code"; Code[8])
         {
-            CaptionML = ENU='HSN/SAC Code',
-                        ENN='HSN/SAC Code';
+            CaptionML = ENU = 'HSN/SAC Code',
+                        ENN = 'HSN/SAC Code';
             DataClassification = ToBeClassified;
-            TableRelation = "HSN/SAC".Code WHERE ("GST Group Code"=FIELD("GST Group Code"));
+            TableRelation = "HSN/SAC".Code WHERE("GST Group Code" = FIELD("GST Group Code"));
         }
-        field(16607;"GST Credit";Option)
+        field(16607; "GST Credit"; Option)
         {
-            CaptionML = ENU='GST Credit',
-                        ENN='GST Credit';
+            CaptionML = ENU = 'GST Credit',
+                        ENN = 'GST Credit';
             DataClassification = ToBeClassified;
-            OptionCaptionML = ENU='Availment,Non-Availment',
-                              ENN='Availment,Non-Availment';
+            OptionCaptionML = ENU = 'Availment,Non-Availment',
+                              ENN = 'Availment,Non-Availment';
             OptionMembers = Availment,"Non-Availment";
         }
-        field(16608;Exempted;Boolean)
+        field(16608; Exempted; Boolean)
         {
-            CaptionML = ENU='Exempted',
-                        ENN='Exempted';
+            CaptionML = ENU = 'Exempted',
+                        ENN = 'Exempted';
             DataClassification = ToBeClassified;
         }
-        field(16609;"GST Calc. Option on Transfer";Option)
+        field(16609; "GST Calc. Option on Transfer"; Option)
         {
-            CaptionML = ENU='GST Calc. Option on Transfer',
-                        ENN='GST Calc. Option on Transfer';
+            CaptionML = ENU = 'GST Calc. Option on Transfer',
+                        ENN = 'GST Calc. Option on Transfer';
             DataClassification = ToBeClassified;
-            OptionCaptionML = ENU=' ,Book Value,Other Value',
-                              ENN=' ,Book Value,Other Value';
+            OptionCaptionML = ENU = ' ,Book Value,Other Value',
+                              ENN = ' ,Book Value,Other Value';
             OptionMembers = " ","Book Value","Other Value";
         }
-        field(60001;"Location Trns. Reason";Text[100])
+        field(60001; "Location Trns. Reason"; Text[100])
         {
             Description = 'B2B';
         }
-        field(60002;"Employee Trns. Reason";Text[100])
+        field(60002; "Employee Trns. Reason"; Text[100])
         {
             Description = 'B2B';
         }
-        field(60003;"AMC No.";Code[20])
+        field(60003; "AMC No."; Code[20])
         {
             Description = 'B2B';
         }
-        field(60004;"AMC Date";Date)
+        field(60004; "AMC Date"; Date)
         {
             Description = 'B2B';
         }
-        field(60005;"Service Tax Group Code";Code[20])
+        field(60005; "Service Tax Group Code"; Code[20])
         {
-            TableRelation = "Service Tax Groups".Code;
+            //TableRelation = "Service Tax Groups".Code;
         }
-        field(60006;Verified;Boolean)
+        field(60006; Verified; Boolean)
         {
 
             trigger OnValidate();
             begin
                 if Verified then
-                "Verified Date":=Today;
+                    "Verified Date" := Today;
             end;
         }
-        field(60007;"Verified Date";Date)
+        field(60007; "Verified Date"; Date)
         {
         }
-        field(60008;"QR Code";Code[50])
+        field(60008; "QR Code"; Code[50])
         {
         }
-        field(60009;"Item Sub Sub Group Code";Code[30])
+        field(60009; "Item Sub Sub Group Code"; Code[30])
         {
-            TableRelation = "Item Sub Sub Group".Code WHERE ("Item Sub Group Code"=FIELD("Item Sub Group Code"));
+            TableRelation = "Item Sub Sub Group".Code WHERE("Item Sub Group Code" = FIELD("Item Sub Group Code"));
         }
-        field(60010;"Item Sub Group Code";Code[20])
+        field(60010; "Item Sub Group Code"; Code[20])
         {
-            TableRelation = "Item Sub Group".Code WHERE ("Product Group Code"=CONST('B OUT'));
+            TableRelation = "Item Sub Group".Code WHERE("Product Group Code" = CONST('B OUT'));
         }
-        field(60011;"Responsible Emp Name";Text[50])
+        field(60011; "Responsible Emp Name"; Text[50])
         {
-            CalcFormula = Lookup("Dimension Value".Name WHERE ("Dimension Code"=CONST('EMPLOYEE CODES'),
-                                                               Code=FIELD("Responsible Employee")));
+            CalcFormula = Lookup("Dimension Value".Name WHERE("Dimension Code" = CONST('EMPLOYEE CODES'),
+                                                               Code = FIELD("Responsible Employee")));
             FieldClass = FlowField;
         }
     }
@@ -461,33 +461,33 @@ tableextension 70082 FixedAssetExt extends "Fixed Asset"
 
         //Unsupported feature: Deletion on ""FA Posting Group"(Key)". Please convert manually.
 
-        key(Key1;"No.")
-        {
-        }
-        key(Key2;"Search Description")
-        {
-        }
-        key(Key3;"FA Class Code")
-        {
-        }
-        key(Key4;"FA Subclass Code")
-        {
-        }
-        key(Key5;"Component of Main Asset","Main Asset/Component")
-        {
-        }
-        key(Key6;"FA Location Code")
-        {
-        }
-        key(Key7;"Global Dimension 1 Code")
-        {
-        }
-        key(Key8;"Global Dimension 2 Code")
-        {
-        }
-        key(Key9;"FA Posting Group")
-        {
-        }
+        /*        key(Key1; "No.")
+                {
+                }
+                key(Key2; "Search Description")
+                {
+                }
+                key(Key3; "FA Class Code")
+                {
+                }
+                key(Key4; "FA Subclass Code")
+                {
+                }
+                key(Key5; "Component of Main Asset", "Main Asset/Component")
+                {
+                }
+                key(Key6; "FA Location Code")
+                {
+                }
+                key(Key7; "Global Dimension 1 Code")
+                {
+                }
+                key(Key8; "Global Dimension 2 Code")
+                {
+                }
+                key(Key9; "FA Posting Group")
+                {
+                }*/
     }
 
 
@@ -497,85 +497,85 @@ tableextension 70082 FixedAssetExt extends "Fixed Asset"
     //Parameters and return type have not been exported.
     //>>>> ORIGINAL CODE:
     //begin
-        /*
-        LOCKTABLE;
-        MainAssetComp.LOCKTABLE;
-        InsCoverageLedgEntry.LOCKTABLE;
-        IF "Main Asset/Component" = "Main Asset/Component"::"Main Asset" THEN
-          ERROR(Text000);
-        FAMoveEntries.MoveFAInsuranceEntries("No.");
-        FADeprBook.SETRANGE("FA No.","No.");
-        FADeprBook.DELETEALL(TRUE);
-        IF NOT FADeprBook.ISEMPTY THEN
-          ERROR(Text001,TABLECAPTION,"No.");
+    /*
+    LOCKTABLE;
+    MainAssetComp.LOCKTABLE;
+    InsCoverageLedgEntry.LOCKTABLE;
+    IF "Main Asset/Component" = "Main Asset/Component"::"Main Asset" THEN
+      ERROR(Text000);
+    FAMoveEntries.MoveFAInsuranceEntries("No.");
+    FADeprBook.SETRANGE("FA No.","No.");
+    FADeprBook.DELETEALL(TRUE);
+    IF NOT FADeprBook.ISEMPTY THEN
+      ERROR(Text001,TABLECAPTION,"No.");
 
-        MainAssetComp.SETCURRENTKEY("FA No.");
-        MainAssetComp.SETRANGE("FA No.","No.");
-        MainAssetComp.DELETEALL;
-        IF "Main Asset/Component" = "Main Asset/Component"::Component THEN BEGIN
-          MainAssetComp.RESET;
-          MainAssetComp.SETRANGE("Main Asset No.","Component of Main Asset");
-          MainAssetComp.SETRANGE("FA No.",'');
-          MainAssetComp.DELETEALL;
-          MainAssetComp.SETRANGE("FA No.");
-          IF NOT MainAssetComp.FINDFIRST THEN BEGIN
-            FA.GET("Component of Main Asset");
-            FA."Main Asset/Component" := FA."Main Asset/Component"::" ";
-            FA."Component of Main Asset" := '';
-            FA.MODIFY;
-          END;
-        END;
+    MainAssetComp.SETCURRENTKEY("FA No.");
+    MainAssetComp.SETRANGE("FA No.","No.");
+    MainAssetComp.DELETEALL;
+    IF "Main Asset/Component" = "Main Asset/Component"::Component THEN BEGIN
+      MainAssetComp.RESET;
+      MainAssetComp.SETRANGE("Main Asset No.","Component of Main Asset");
+      MainAssetComp.SETRANGE("FA No.",'');
+      MainAssetComp.DELETEALL;
+      MainAssetComp.SETRANGE("FA No.");
+      IF NOT MainAssetComp.FINDFIRST THEN BEGIN
+        FA.GET("Component of Main Asset");
+        FA."Main Asset/Component" := FA."Main Asset/Component"::" ";
+        FA."Component of Main Asset" := '';
+        FA.MODIFY;
+      END;
+    END;
 
-        MaintenanceRegistration.SETRANGE("FA No.","No.");
-        MaintenanceRegistration.DELETEALL;
+    MaintenanceRegistration.SETRANGE("FA No.","No.");
+    MaintenanceRegistration.DELETEALL;
 
-        CommentLine.SETRANGE("Table Name",CommentLine."Table Name"::"Fixed Asset");
-        CommentLine.SETRANGE("No.","No.");
-        CommentLine.DELETEALL;
+    CommentLine.SETRANGE("Table Name",CommentLine."Table Name"::"Fixed Asset");
+    CommentLine.SETRANGE("No.","No.");
+    CommentLine.DELETEALL;
 
-        DimMgt.DeleteDefaultDim(DATABASE::"Fixed Asset","No.");
-        */
+    DimMgt.DeleteDefaultDim(DATABASE::"Fixed Asset","No.");
+    */
     //end;
     //>>>> MODIFIED CODE:
     //begin
-        /*
-        LockTable;
-        MainAssetComp.LockTable;
-        InsCoverageLedgEntry.LockTable;
-        if "Main Asset/Component" = "Main Asset/Component"::"Main Asset" then
-          Error(Text000);
-        FAMoveEntries.MoveFAInsuranceEntries("No.");
-        FADeprBook.SetRange("FA No.","No.");
-        FADeprBook.DeleteAll(true);
-        if not FADeprBook.IsEmpty then
-          Error(Text001,TableCaption,"No.");
+    /*
+    LockTable;
+    MainAssetComp.LockTable;
+    InsCoverageLedgEntry.LockTable;
+    if "Main Asset/Component" = "Main Asset/Component"::"Main Asset" then
+      Error(Text000);
+    FAMoveEntries.MoveFAInsuranceEntries("No.");
+    FADeprBook.SetRange("FA No.","No.");
+    FADeprBook.DeleteAll(true);
+    if not FADeprBook.IsEmpty then
+      Error(Text001,TableCaption,"No.");
 
-        MainAssetComp.SetCurrentKey("FA No.");
-        MainAssetComp.SetRange("FA No.","No.");
-        MainAssetComp.DeleteAll;
-        if "Main Asset/Component" = "Main Asset/Component"::Component then begin
-          MainAssetComp.Reset;
-          MainAssetComp.SetRange("Main Asset No.","Component of Main Asset");
-          MainAssetComp.SetRange("FA No.",'');
-          MainAssetComp.DeleteAll;
-          MainAssetComp.SetRange("FA No.");
-          if not MainAssetComp.FindFirst then begin
-            FA.Get("Component of Main Asset");
-            FA."Main Asset/Component" := FA."Main Asset/Component"::" ";
-            FA."Component of Main Asset" := '';
-            FA.Modify;
-          end;
-        end;
+    MainAssetComp.SetCurrentKey("FA No.");
+    MainAssetComp.SetRange("FA No.","No.");
+    MainAssetComp.DeleteAll;
+    if "Main Asset/Component" = "Main Asset/Component"::Component then begin
+      MainAssetComp.Reset;
+      MainAssetComp.SetRange("Main Asset No.","Component of Main Asset");
+      MainAssetComp.SetRange("FA No.",'');
+      MainAssetComp.DeleteAll;
+      MainAssetComp.SetRange("FA No.");
+      if not MainAssetComp.FindFirst then begin
+        FA.Get("Component of Main Asset");
+        FA."Main Asset/Component" := FA."Main Asset/Component"::" ";
+        FA."Component of Main Asset" := '';
+        FA.Modify;
+      end;
+    end;
 
-        MaintenanceRegistration.SetRange("FA No.","No.");
-        MaintenanceRegistration.DeleteAll;
+    MaintenanceRegistration.SetRange("FA No.","No.");
+    MaintenanceRegistration.DeleteAll;
 
-        CommentLine.SetRange("Table Name",CommentLine."Table Name"::"Fixed Asset");
-        CommentLine.SetRange("No.","No.");
-        CommentLine.DeleteAll;
+    CommentLine.SetRange("Table Name",CommentLine."Table Name"::"Fixed Asset");
+    CommentLine.SetRange("No.","No.");
+    CommentLine.DeleteAll;
 
-        DimMgt.DeleteDefaultDim(DATABASE::"Fixed Asset","No.");
-        */
+    DimMgt.DeleteDefaultDim(DATABASE::"Fixed Asset","No.");
+    */
     //end;
 
 
@@ -585,15 +585,15 @@ tableextension 70082 FixedAssetExt extends "Fixed Asset"
     //Parameters and return type have not been exported.
     //>>>> ORIGINAL CODE:
     //begin
-        /*
-        "Last Date Modified" := TODAY;
-        */
+    /*
+    "Last Date Modified" := TODAY;
+    */
     //end;
     //>>>> MODIFIED CODE:
     //begin
-        /*
-        "Last Date Modified" := Today;
-        */
+    /*
+    "Last Date Modified" := Today;
+    */
     //end;
 
 
@@ -603,20 +603,20 @@ tableextension 70082 FixedAssetExt extends "Fixed Asset"
     //Parameters and return type have not been exported.
     //>>>> ORIGINAL CODE:
     //begin
-        /*
-        SalesLine.RenameNo(SalesLine.Type::"Fixed Asset",xRec."No.","No.");
-        PurchaseLine.RenameNo(PurchaseLine.Type::"Fixed Asset",xRec."No.","No.");
-        DimMgt.RenameDefaultDim(DATABASE::"Fixed Asset",xRec."No.","No.");
+    /*
+    SalesLine.RenameNo(SalesLine.Type::"Fixed Asset",xRec."No.","No.");
+    PurchaseLine.RenameNo(PurchaseLine.Type::"Fixed Asset",xRec."No.","No.");
+    DimMgt.RenameDefaultDim(DATABASE::"Fixed Asset",xRec."No.","No.");
 
-        "Last Date Modified" := TODAY;
-        */
+    "Last Date Modified" := TODAY;
+    */
     //end;
     //>>>> MODIFIED CODE:
     //begin
-        /*
-        #1..4
-        "Last Date Modified" := Today;
-        */
+    /*
+    #1..4
+    "Last Date Modified" := Today;
+    */
     //end;
 
     //Unsupported feature: InsertAfter on "Documentation". Please convert manually.
@@ -641,212 +641,212 @@ tableextension 70082 FixedAssetExt extends "Fixed Asset"
     //Unsupported feature: PropertyModification on "Description(Field 2).OnValidate.FADeprBook(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //Description : 5612;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //Description : "FA Depreciation Book";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //Description : 5612;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //Description : "FA Depreciation Book";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""FA Class Code"(Field 5).OnValidate.FASubclass(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"FA Class Code" : 5608;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"FA Class Code" : "FA Subclass";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"FA Class Code" : 5608;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"FA Class Code" : "FA Subclass";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""FA Subclass Code"(Field 6).OnValidate.FASubclass(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"FA Subclass Code" : 5608;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"FA Subclass Code" : "FA Subclass";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"FA Subclass Code" : 5608;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"FA Subclass Code" : "FA Subclass";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""FA Posting Group"(Field 29).OnValidate.FALedgerEntry(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"FA Posting Group" : 5601;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"FA Posting Group" : "FA Ledger Entry";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"FA Posting Group" : 5601;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"FA Posting Group" : "FA Ledger Entry";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "OnDelete.FADeprBook(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //OnDelete.FADeprBook : 5612;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //OnDelete.FADeprBook : "FA Depreciation Book";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //OnDelete.FADeprBook : 5612;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //OnDelete.FADeprBook : "FA Depreciation Book";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "OnRename.SalesLine(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //OnRename.SalesLine : 37;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //OnRename.SalesLine : "Sales Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //OnRename.SalesLine : 37;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //OnRename.SalesLine : "Sales Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "OnRename.PurchaseLine(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //OnRename.PurchaseLine : 39;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //OnRename.PurchaseLine : "Purchase Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //OnRename.PurchaseLine : 39;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //OnRename.PurchaseLine : "Purchase Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ShowAcquireWizardNotification(PROCEDURE 3).NotificationLifecycleMgt(Variable 1002)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ShowAcquireWizardNotification : 1511;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ShowAcquireWizardNotification : "Notification Lifecycle Mgt.";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ShowAcquireWizardNotification : 1511;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ShowAcquireWizardNotification : "Notification Lifecycle Mgt.";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ShowAcquireWizardNotification(PROCEDURE 3).FixedAssetAcquisitionWizard(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ShowAcquireWizardNotification : 5550;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ShowAcquireWizardNotification : "Fixed Asset Acquisition Wizard";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ShowAcquireWizardNotification : 5550;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ShowAcquireWizardNotification : "Fixed Asset Acquisition Wizard";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "RecallNotificationForCurrentUser(PROCEDURE 9).NotificationLifecycleMgt(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //RecallNotificationForCurrentUser : 1511;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //RecallNotificationForCurrentUser : "Notification Lifecycle Mgt.";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //RecallNotificationForCurrentUser : 1511;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //RecallNotificationForCurrentUser : "Notification Lifecycle Mgt.";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CommentLine(Variable 1002)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CommentLine : 97;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CommentLine : "Comment Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CommentLine : 97;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CommentLine : "Comment Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "FA(Variable 1003)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //FA : 5600;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //FA : "Fixed Asset";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //FA : 5600;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //FA : "Fixed Asset";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "FASetup(Variable 1004)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //FASetup : 5603;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //FASetup : "FA Setup";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //FASetup : 5603;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //FASetup : "FA Setup";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "MaintenanceRegistration(Variable 1005)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //MaintenanceRegistration : 5616;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //MaintenanceRegistration : "Maintenance Registration";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //MaintenanceRegistration : 5616;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //MaintenanceRegistration : "Maintenance Registration";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "MainAssetComp(Variable 1007)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //MainAssetComp : 5640;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //MainAssetComp : "Main Asset Component";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //MainAssetComp : 5640;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //MainAssetComp : "Main Asset Component";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "InsCoverageLedgEntry(Variable 1008)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //InsCoverageLedgEntry : 5629;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //InsCoverageLedgEntry : "Ins. Coverage Ledger Entry";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //InsCoverageLedgEntry : 5629;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //InsCoverageLedgEntry : "Ins. Coverage Ledger Entry";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "FAMoveEntries(Variable 1009)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //FAMoveEntries : 5623;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //FAMoveEntries : "FA MoveEntries";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //FAMoveEntries : 5623;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //FAMoveEntries : "FA MoveEntries";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "NoSeriesMgt(Variable 1010)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //NoSeriesMgt : 396;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //NoSeriesMgt : NoSeriesManagement;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //NoSeriesMgt : 396;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //NoSeriesMgt : NoSeriesManagement;
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "DimMgt(Variable 1011)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //DimMgt : 408;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //DimMgt : DimensionManagement;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //DimMgt : 408;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //DimMgt : DimensionManagement;
+    //Variable type has not been exported.
 
     var
-        FADeprBook1 : Record "FA Depreciation Book";
+        FADeprBook1: Record "FA Depreciation Book";
 }
 
