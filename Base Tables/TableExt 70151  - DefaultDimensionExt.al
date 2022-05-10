@@ -5,10 +5,10 @@ tableextension 70151 DefaultDimensionExt extends "Default Dimension"
     fields
     {
 
-        //Unsupported feature: Change TableRelation on ""Table ID"(Field 1)". Please convert manually.
 
 
-        //Unsupported feature: Change NotBlank on ""Table ID"(Field 1)". Please convert manually.
+
+
 
 
         //Unsupported feature: Change TableRelation on ""No."(Field 2)". Please convert manually.

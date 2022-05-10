@@ -5,7 +5,7 @@ tableextension 70147 ConfidentialExt extends Confidential
     fields
     {
 
-        //Unsupported feature: PropertyDeletion on "Description(Field 2)". Please convert manually.
+
 
         field(60100; description; Text[30])
         {

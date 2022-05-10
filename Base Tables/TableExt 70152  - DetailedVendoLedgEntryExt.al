@@ -5,10 +5,10 @@ tableextension 70152 DetailedVendoLedgEntryExt extends "Detailed Vendor Ledg. En
     fields
     {
 
-        //Unsupported feature: Change OptionString on ""Entry Type"(Field 3)". Please convert manually.
 
 
-        //Unsupported feature: Change OptionString on ""Document Type"(Field 5)". Please convert manually.
+
+
 
 
         //Unsupported feature: Change TestTableRelation on ""User ID"(Field 11)". Please convert manually.

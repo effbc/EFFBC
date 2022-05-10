@@ -5,10 +5,10 @@ tableextension 70150 CVLedgerEntryBufferext extends "CV Ledger Entry Buffer"
     fields
     {
 
-        //Unsupported feature: Change OptionString on ""Document Type"(Field 5)". Please convert manually.
 
 
-        //Unsupported feature: Change Data type on "Description(Field 7)". Please convert manually.
+
+
 
 
         //Unsupported feature: Change TableRelation on ""Global Dimension 1 Code"(Field 23)". Please convert manually.
