@@ -78,14 +78,14 @@ tableextension 70090 TransferReceiptHeaderExt extends "Transfer Receipt Header"
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+            //TableRelation = "Excise Bus. Posting Group";
         }
         field(13723; "Form Code"; Code[10])
         {
             CaptionML = ENU = 'Form Code',
                         ENN = 'Form Code';
             DataClassification = ToBeClassified;
-            TableRelation = "Form Codes";
+            //TableRelation = "Form Codes";
         }
         field(13724; "Form No."; Code[10])
         {
@@ -99,7 +99,7 @@ tableextension 70090 TransferReceiptHeaderExt extends "Transfer Receipt Header"
             CaptionML = ENU = 'Structure',
                         ENN = 'Structure';
             DataClassification = ToBeClassified;
-            TableRelation = "Structure Header".Code;
+            //TableRelation = "Structure Header".Code;
 
             trigger OnValidate();
             var
@@ -263,7 +263,7 @@ tableextension 70090 TransferReceiptHeaderExt extends "Transfer Receipt Header"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -279,12 +279,12 @@ tableextension 70090 TransferReceiptHeaderExt extends "Transfer Receipt Header"
 
         //Unsupported feature: Deletion on ""Posting Date"(Key)". Please convert manually.
 
-        key(Key1; "No.")
-        {
-        }
-        key(Key2; "Posting Date")
-        {
-        }
+        /*        key(Key1; "No.")
+                {
+                }
+                key(Key2; "Posting Date")
+                {
+                }*/
     }
 
 

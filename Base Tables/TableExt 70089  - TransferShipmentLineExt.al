@@ -145,14 +145,14 @@ tableextension 70089 TransferShipmentLineExt extends "Transfer Shipment Line"
             CaptionML = ENU = 'Excise Prod. Posting Group',
                         ENN = 'Excise Prod. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Prod. Posting Group";
+            // TableRelation = "Excise Prod. Posting Group";
         }
         field(13728; "Excise Bus. Posting Group"; Code[10])
         {
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+            // TableRelation = "Excise Bus. Posting Group";
         }
         field(13730; "Capital Item"; Boolean)
         {
@@ -323,10 +323,10 @@ tableextension 70089 TransferShipmentLineExt extends "Transfer Shipment Line"
             CaptionML = ENU = 'Applies-to Entry (RG 23 D)',
                         ENN = 'Applies-to Entry (RG 23 D)';
             DataClassification = ToBeClassified;
-            TableRelation = "RG 23 D"."Entry No." WHERE("Location Code" = FIELD("Transfer-from Code"),
-                                                         "Item No." = FIELD("Item No."),
-                                                         Closed = FILTER(false),
-                                                         "Transaction Type" = FILTER(Purchase));
+            /* TableRelation = "RG 23 D"."Entry No." WHERE("Location Code" = FIELD("Transfer-from Code"),
+                                                          "Item No." = FIELD("Item No."),
+                                                          Closed = FILTER(false),
+                                                          "Transaction Type" = FILTER(Purchase));*/
         }
         field(16513; "Cost of Production"; Decimal)
         {
@@ -385,7 +385,7 @@ tableextension 70089 TransferShipmentLineExt extends "Transfer Shipment Line"
                         ENN = 'GST Group Code';
             DataClassification = ToBeClassified;
             Editable = false;
-            TableRelation = "GST Group";
+            //TableRelation = "GST Group";
         }
         field(16525; "HSN/SAC Code"; Code[8])
         {
@@ -483,7 +483,7 @@ tableextension 70089 TransferShipmentLineExt extends "Transfer Shipment Line"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -493,22 +493,22 @@ tableextension 70089 TransferShipmentLineExt extends "Transfer Shipment Line"
         field(33000250; "Spec ID"; Code[20])
         {
             Description = 'QC1.0';
-            TableRelation = "Specification Header";
+            //TableRelation = "Specification Header";
         }
         field(33000251; "Quantity Accepted"; Decimal)
         {
-            CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
-                                                                     "Order Line No." = FIELD("Line No."),
-                                                                     "Entry Type" = FILTER(Accepted)));
+            /* CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
+                                                                      "Order Line No." = FIELD("Line No."),
+                                                                      "Entry Type" = FILTER(Accepted)));*/
             Description = 'QC1.0';
             Editable = false;
             FieldClass = FlowField;
         }
         field(33000252; "Quantity Rejected"; Decimal)
         {
-            CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
-                                                                     "Order Line No." = FIELD("Line No."),
-                                                                     "Entry Type" = CONST(Reject)));
+            /* CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
+                                                                      "Order Line No." = FIELD("Line No."),
+                                                                      "Entry Type" = CONST(Reject)));*/
             Description = 'QC1.0';
             Editable = false;
             FieldClass = FlowField;
@@ -551,7 +551,7 @@ tableextension 70089 TransferShipmentLineExt extends "Transfer Shipment Line"
         field(33000259; "Spec Version"; Code[20])
         {
             Description = 'QC1.0';
-            TableRelation = "Specification Version"."Version Code" WHERE("Specification No." = FIELD("Spec ID"));
+            //TableRelation = "Specification Version"."Version Code" WHERE("Specification No." = FIELD("Spec ID"));
         }
     }
     keys
@@ -561,17 +561,17 @@ tableextension 70089 TransferShipmentLineExt extends "Transfer Shipment Line"
 
 
         //Unsupported feature: Deletion on ""Transfer Order No.,Item No.,Shipment Date"(Key)". Please convert manually.
-
-        key(Key1; "Document No.", "Line No.")
-        {
-        }
-        key(Key2; "Transfer Order No.", "Item No.", "Shipment Date")
-        {
-        }
-        key(Key3; "Prod. Order No.", "Prod. Order Line No.", "Prod. Order Comp. Line No.")
-        {
-            SumIndexFields = Quantity;
-        }
+        /*
+          key(Key1; "Document No.", "Line No.")
+          {
+          }
+          key(Key2; "Transfer Order No.", "Item No.", "Shipment Date")
+          {
+          }
+          key(Key3; "Prod. Order No.", "Prod. Order Line No.", "Prod. Order Comp. Line No.")
+          {
+              SumIndexFields = Quantity;
+          }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.
