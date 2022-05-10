@@ -892,9 +892,9 @@ tableextension 70216 StandardItemJournalLineExt extends "Standard Item Journal L
 
         //Unsupported feature: Deletion on ""Journal Template Name,Standard Journal Code,Line No."(Key)". Please convert manually.
 
-        key(Key1; "Journal Template Name", "Standard Journal Code", "Line No.")
+       /* key(Key1; "Journal Template Name", "Standard Journal Code", "Line No.")
         {
-        }
+        }*/
     }
 
 
