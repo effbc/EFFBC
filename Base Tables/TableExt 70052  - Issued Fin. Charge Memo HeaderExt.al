@@ -168,7 +168,7 @@ tableextension 70052 IssuedFinChargeMemoHeaderExt extends "Issued Fin. Charge Me
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -184,10 +184,10 @@ tableextension 70052 IssuedFinChargeMemoHeaderExt extends "Issued Fin. Charge Me
 
         //Unsupported feature: Deletion on ""Customer No.,Posting Date"(Key)". Please convert manually.
 
-        key(Key1; "No.")
+        key(No1; "No.")
         {
         }
-        key(Key2; "Customer No.", "Posting Date")
+        key(Customer2; "Customer No.", "Posting Date")
         {
         }
     }

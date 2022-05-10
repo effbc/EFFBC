@@ -94,8 +94,8 @@ tableextension 70057 TrackingSpecificationExt extends "Tracking Specification"
 
         //trigger OnValidate();
         //Parameters and return type have not been exported.
-    var
-        ReservationEntry: Record "Reservation Entry";
+        /* var
+             ReservationEntry: Record "Reservation Entry";*/
         //begin
         /*
 
@@ -502,7 +502,7 @@ tableextension 70057 TrackingSpecificationExt extends "Tracking Specification"
         OnAfterValidateApplFromItemEntry(Rec,ItemLedgEntry,IsReclass);
         */
         //end;
-        field(60002;"Item Entry No.";
+        field(60002; "Item Entry No.";
         Integer)
         {
             Description = 'B2B';
@@ -519,28 +519,28 @@ tableextension 70057 TrackingSpecificationExt extends "Tracking Specification"
 
         //Unsupported feature: Deletion on ""Lot No.,Serial No."(Key)". Please convert manually.
 
-        key(Key1;"Entry No.")
+        key(Entry1; "Entry No.")
         {
         }
-        key(Key2;"Source ID","Source Type","Source Subtype","Source Batch Name","Source Prod. Order Line","Source Ref. No.")
+        key(Source2; "Source ID", "Source Type", "Source Subtype", "Source Batch Name", "Source Prod. Order Line", "Source Ref. No.")
         {
             MaintainSIFTIndex = false;
             MaintainSQLIndex = false;
-            SumIndexFields = "Qty. to Handle (Base)","Qty. to Invoice (Base)","Quantity Handled (Base)","Quantity Invoiced (Base)";
+            SumIndexFields = "Qty. to Handle (Base)", "Qty. to Invoice (Base)", "Quantity Handled (Base)", "Quantity Invoiced (Base)";
         }
-        key(Key3;"Lot No.","Serial No.")
+        key(Lot3; "Lot No.", "Serial No.")
         {
         }
-        key(Key4;"Source ID")
+        key(Source4; "Source ID")
         {
         }
-        key(Key5;"Source Type")
+        key(Source5; "Source Type")
         {
         }
-        key(Key6;"Item No.","Lot No.","Serial No.")
+        key(ItemNO6; "Item No.", "Lot No.", "Serial No.")
         {
         }
-        key(Key7;"Source ID","Item No.")
+        key(SourceID7; "Source ID", "Item No.")
         {
         }
     }
@@ -552,19 +552,19 @@ tableextension 70057 TrackingSpecificationExt extends "Tracking Specification"
     //Parameters and return type have not been exported.
     //>>>> ORIGINAL CODE:
     //begin
-        /*
-        TESTFIELD("Quantity Handled (Base)",0);
-        TESTFIELD("Quantity Invoiced (Base)",0);
-        */
+    /*
+    TESTFIELD("Quantity Handled (Base)",0);
+    TESTFIELD("Quantity Invoiced (Base)",0);
+    */
     //end;
     //>>>> MODIFIED CODE:
     //begin
-        /*
-        {
-        TESTFIELD("Quantity Handled (Base)",0);
-        TESTFIELD("Quantity Invoiced (Base)",0);
-        }
-        */
+    /*
+    {
+    TESTFIELD("Quantity Handled (Base)",0);
+    TESTFIELD("Quantity Invoiced (Base)",0);
+    }
+    */
     //end;
 
 
@@ -573,9 +573,9 @@ tableextension 70057 TrackingSpecificationExt extends "Tracking Specification"
     //trigger OnInsert();
     //Parameters and return type have not been exported.
     //begin
-        /*
-        Message('Inserting');
-        */
+    /*
+    Message('Inserting');
+    */
     //end;
 
     //Unsupported feature: PropertyChange. Please convert manually.
@@ -585,146 +585,146 @@ tableextension 70057 TrackingSpecificationExt extends "Tracking Specification"
     //Unsupported feature: PropertyModification on ""Appl.-to Item Entry"(Field 38).OnLookup.ItemLedgEntry(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Appl.-to Item Entry" : 32;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Appl.-to Item Entry" : "Item Ledger Entry";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Appl.-to Item Entry" : 32;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Appl.-to Item Entry" : "Item Ledger Entry";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Appl.-to Item Entry"(Field 38).OnValidate.ItemLedgEntry(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Appl.-to Item Entry" : 32;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Appl.-to Item Entry" : "Item Ledger Entry";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Appl.-to Item Entry" : 32;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Appl.-to Item Entry" : "Item Ledger Entry";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Expiration Date"(Field 41).OnValidate.ItemTrackingMgt(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Expiration Date" : 6500;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Expiration Date" : "Item Tracking Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Expiration Date" : 6500;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Expiration Date" : "Item Tracking Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Appl.-from Item Entry"(Field 5811).OnLookup.ItemLedgEntry(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Appl.-from Item Entry" : 32;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Appl.-from Item Entry" : "Item Ledger Entry";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Appl.-from Item Entry" : 32;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Appl.-from Item Entry" : "Item Ledger Entry";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Appl.-from Item Entry"(Field 5811).OnValidate.ItemLedgEntry(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Appl.-from Item Entry" : 32;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Appl.-from Item Entry" : "Item Ledger Entry";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Appl.-from Item Entry" : 32;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Appl.-from Item Entry" : "Item Ledger Entry";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "InsertSpecification(PROCEDURE 135).TrackingSpecification(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //InsertSpecification : 336;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //InsertSpecification : "Tracking Specification";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //InsertSpecification : 336;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //InsertSpecification : "Tracking Specification";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "InitExpirationDate(PROCEDURE 2).ItemTrackingMgt(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //InitExpirationDate : 6500;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //InitExpirationDate : "Item Tracking Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //InitExpirationDate : 6500;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //InitExpirationDate : "Item Tracking Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "TestApplyToItemLedgEntryNo(PROCEDURE 71).ItemJnlLine(Variable 1002)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //TestApplyToItemLedgEntryNo : 83;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //TestApplyToItemLedgEntryNo : "Item Journal Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //TestApplyToItemLedgEntryNo : 83;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //TestApplyToItemLedgEntryNo : "Item Journal Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CheckItemTrackingQuantity(PROCEDURE 6).ReservationEntry(Variable 1005)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CheckItemTrackingQuantity : 337;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CheckItemTrackingQuantity : "Reservation Entry";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CheckItemTrackingQuantity : 337;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CheckItemTrackingQuantity : "Reservation Entry";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CheckItemTrackingByType(PROCEDURE 12).TrackingSpecification(Variable 1009)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CheckItemTrackingByType : 336;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CheckItemTrackingByType : "Tracking Specification";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CheckItemTrackingByType : 336;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CheckItemTrackingByType : "Tracking Specification";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "QuantityToInvoiceIsSufficient(PROCEDURE 9).SalesLine(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //QuantityToInvoiceIsSufficient : 37;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //QuantityToInvoiceIsSufficient : "Sales Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //QuantityToInvoiceIsSufficient : 37;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //QuantityToInvoiceIsSufficient : "Sales Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "WMSManagement(Variable 1005)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //WMSManagement : 7302;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //WMSManagement : "WMS Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //WMSManagement : 7302;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //WMSManagement : "WMS Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "UOMMgt(Variable 1008)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //UOMMgt : 5402;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //UOMMgt : "Unit of Measure Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //UOMMgt : 5402;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //UOMMgt : "Unit of Measure Management";
+    //Variable type has not been exported.
 
     var
-        ILE : Record "Item Ledger Entry";
+        ILE: Record "Item Ledger Entry";
 }
 

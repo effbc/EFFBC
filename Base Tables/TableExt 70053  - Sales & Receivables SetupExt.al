@@ -297,7 +297,7 @@ tableextension 70053 SalesReceivablesSetupExt extends "Sales & Receivables Setup
 
         //Unsupported feature: Deletion on ""Primary Key"(Key)". Please convert manually.
 
-        key(Key1; "Primary Key")
+        key(Primary1; "Primary Key")
         {
         }
     }

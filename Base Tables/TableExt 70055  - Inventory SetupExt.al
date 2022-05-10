@@ -345,7 +345,7 @@ tableextension 70055 InventorySetupExt extends "Inventory Setup"
         field(60003; "Packing Charge Group"; Code[20])
         {
             Description = 'B2B';
-            TableRelation = "Tax/Charge Group";
+            //TableRelation = "Tax/Charge Group";
         }
         field(60004; "Material Issues No."; Code[20])
         {
@@ -363,7 +363,7 @@ tableextension 70055 InventorySetupExt extends "Inventory Setup"
 
         //Unsupported feature: Deletion on ""Primary Key"(Key)". Please convert manually.
 
-        key(Key1; "Primary Key")
+        key(Primary1; "Primary Key")
         {
         }
     }

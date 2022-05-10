@@ -149,7 +149,7 @@ tableextension 70056 TaxJurisdictionExt extends "Tax Jurisdiction"
             CaptionML = ENU = 'Tax Component',
                         ENN = 'Tax Component';
             DataClassification = ToBeClassified;
-            TableRelation = "Tax Component";
+            //TableRelation = "Tax Component";
         }
         field(80000; "Tax Type 2"; Option)
         {
@@ -165,7 +165,7 @@ tableextension 70056 TaxJurisdictionExt extends "Tax Jurisdiction"
 
         //Unsupported feature: Deletion on ""Report-to Jurisdiction"(Key)". Please convert manually.
 
-        key(Key1; "Report-to Jurisdiction")
+        key(Report1; "Report-to Jurisdiction")
         {
         }
     }
