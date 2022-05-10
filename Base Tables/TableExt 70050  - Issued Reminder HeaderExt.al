@@ -82,7 +82,7 @@ tableextension 70050 IssuedReminderHeaderExt extends "Issued Reminder Header"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -98,10 +98,10 @@ tableextension 70050 IssuedReminderHeaderExt extends "Issued Reminder Header"
 
         //Unsupported feature: Deletion on ""Customer No.,Posting Date"(Key)". Please convert manually.
 
-        key(Key1; "No.")
+        key(NO1; "No.")
         {
         }
-        key(Key2; "Customer No.", "Posting Date")
+        key(Customer2; "Customer No.", "Posting Date")
         {
         }
     }

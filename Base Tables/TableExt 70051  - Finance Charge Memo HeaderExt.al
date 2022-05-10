@@ -565,7 +565,7 @@ tableextension 70051 FinanceChargeMemoHeaderExt extends "Finance Charge Memo Hea
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -581,10 +581,10 @@ tableextension 70051 FinanceChargeMemoHeaderExt extends "Finance Charge Memo Hea
 
         //Unsupported feature: Deletion on ""Customer No.,Currency Code"(Key)". Please convert manually.
 
-        key(Key1; "No.")
+        key(No1; "No.")
         {
         }
-        key(Key2; "Customer No.", "Currency Code")
+        key(Customer2; "Customer No.", "Currency Code")
         {
         }
     }
