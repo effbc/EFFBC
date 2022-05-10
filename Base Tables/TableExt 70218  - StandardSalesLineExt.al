@@ -274,10 +274,9 @@ tableextension 70218 StandardSalesLineExt extends "Standard Sales Line"
     {
 
         //Unsupported feature: Deletion on ""Standard Sales Code,Line No."(Key)". Please convert manually.
-
-        key(Key1; "Standard Sales Code", "Line No.")
+/* key(Key1; "Standard Sales Code", "Line No.")
         {
-        }
+        }*/
     }
 
 

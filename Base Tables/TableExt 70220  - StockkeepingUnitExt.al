@@ -644,7 +644,7 @@ tableextension 70220 StockkeepingUnitExt extends "Stockkeeping Unit"
 
         //Unsupported feature: Deletion on ""Item No.,Transfer-Level Code"(Key)". Please convert manually.
 
-        key(Key1; "Location Code", "Item No.", "Variant Code")
+   /*     key(Key1; "Location Code", "Item No.", "Variant Code")
         {
         }
         key(Key2; "Replenishment System", "Vendor No.", "Transfer-from Code")
@@ -655,7 +655,7 @@ tableextension 70220 StockkeepingUnitExt extends "Stockkeeping Unit"
         }
         key(Key4; "Item No.", "Transfer-Level Code")
         {
-        }
+        }*/
     }
 
 

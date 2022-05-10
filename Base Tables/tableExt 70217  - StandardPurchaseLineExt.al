@@ -263,9 +263,9 @@ tableextension 70217 StandardPurchaseLineExt extends "Standard Purchase Line"
 
         //Unsupported feature: Deletion on ""Standard Purchase Code,Line No."(Key)". Please convert manually.
 
-        key(Key1; "Standard Purchase Code", "Line No.")
+       /*key(Key1; "Standard Purchase Code", "Line No.")
         {
-        }
+        }*/
     }
 
 

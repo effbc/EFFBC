@@ -22,9 +22,9 @@ tableextension 70219 StockkeepingUnitCommentLineExt extends "Stockkeeping Unit C
 
         //Unsupported feature: Deletion on ""Item No.,Variant Code,Location Code,Line No."(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code", "Location Code", "Line No.")
+       /* key(Key1; "Item No.", "Variant Code", "Location Code", "Line No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.
