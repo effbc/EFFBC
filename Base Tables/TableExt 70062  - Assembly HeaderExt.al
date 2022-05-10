@@ -713,7 +713,7 @@ tableextension 70062 AssemblyHeaderExt extends "Assembly Header"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -729,10 +729,10 @@ tableextension 70062 AssemblyHeaderExt extends "Assembly Header"
 
         //Unsupported feature: Deletion on ""Document Type,Item No.,Variant Code,Location Code,Due Date"(Key)". Please convert manually.
 
-        key(Key1; "Document Type", "No.")
+        key(Doctype1; "Document Type", "No.")
         {
         }
-        key(Key2; "Document Type", "Item No.", "Variant Code", "Location Code", "Due Date")
+        key(ItemNo2; "Document Type", "Item No.", "Variant Code", "Location Code", "Due Date")
         {
             SumIndexFields = "Remaining Quantity (Base)";
         }

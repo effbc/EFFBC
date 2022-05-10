@@ -148,61 +148,61 @@ tableextension 70061 DetailedCustLedgEntryExt extends "Detailed Cust. Ledg. Entr
 
         //Unsupported feature: Deletion on ""Customer No.,Initial Entry Due Date"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
-        {
-        }
-        key(Key2; "Cust. Ledger Entry No.", "Posting Date")
-        {
-        }
-        key(Key3; "Cust. Ledger Entry No.", "Entry Type", "Posting Date")
-        {
-            SumIndexFields = Amount, "Amount (LCY)";
-        }
-        key(Key4; "Ledger Entry Amount", "Cust. Ledger Entry No.", "Posting Date")
-        {
-            MaintainSQLIndex = false;
-            SumIndexFields = Amount, "Amount (LCY)", "Debit Amount", "Debit Amount (LCY)", "Credit Amount", "Credit Amount (LCY)";
-        }
-        key(Key5; "Initial Document Type", "Entry Type", "Customer No.", "Currency Code", "Initial Entry Global Dim. 1", "Initial Entry Global Dim. 2", "Posting Date")
-        {
-            SumIndexFields = Amount, "Amount (LCY)";
-        }
-        key(Key6; "Customer No.", "Currency Code", "Initial Entry Global Dim. 1", "Initial Entry Global Dim. 2", "Initial Entry Due Date", "Posting Date")
-        {
-            SumIndexFields = Amount, "Amount (LCY)";
-        }
-        key(Key7; "Document No.", "Document Type", "Posting Date")
-        {
-        }
-        key(Key8; "Applied Cust. Ledger Entry No.", "Entry Type")
-        {
-        }
-        key(Key9; "Transaction No.", "Customer No.", "Entry Type")
-        {
-        }
-        key(Key10; "Application No.", "Customer No.", "Entry Type")
-        {
-        }
-        key(Key11; "Customer No.", "Entry Type", "Posting Date", "Initial Document Type")
-        {
-            SumIndexFields = Amount, "Amount (LCY)";
-        }
-        key(Key12; "Document Type")
-        {
-            SumIndexFields = "Amount (LCY)";
-        }
-        key(Key13; "Initial Document Type", "Initial Entry Due Date")
-        {
-            SumIndexFields = "Amount (LCY)";
-        }
-        key(Key14; "Customer No.", "Initial Entry Due Date")
-        {
-            SumIndexFields = "Amount (LCY)";
-        }
-        key(Key15; "Customer No.", "Posting Date", "Initial Entry Global Dim. 1", "Entry Type")
-        {
-            SumIndexFields = Amount, "Amount (LCY)", "Debit Amount", "Credit Amount", "Debit Amount (LCY)", "Credit Amount (LCY)";
-        }
+        /*        key(Key1; "Entry No.")
+                {
+                }
+                key(Key2; "Cust. Ledger Entry No.", "Posting Date")
+                {
+                }
+                key(Key3; "Cust. Ledger Entry No.", "Entry Type", "Posting Date")
+                {
+                    SumIndexFields = Amount, "Amount (LCY)";
+                }
+                key(Key4; "Ledger Entry Amount", "Cust. Ledger Entry No.", "Posting Date")
+                {
+                    MaintainSQLIndex = false;
+                    SumIndexFields = Amount, "Amount (LCY)", "Debit Amount", "Debit Amount (LCY)", "Credit Amount", "Credit Amount (LCY)";
+                }
+                key(Key5; "Initial Document Type", "Entry Type", "Customer No.", "Currency Code", "Initial Entry Global Dim. 1", "Initial Entry Global Dim. 2", "Posting Date")
+                {
+                    SumIndexFields = Amount, "Amount (LCY)";
+                }
+                key(Key6; "Customer No.", "Currency Code", "Initial Entry Global Dim. 1", "Initial Entry Global Dim. 2", "Initial Entry Due Date", "Posting Date")
+                {
+                    SumIndexFields = Amount, "Amount (LCY)";
+                }
+                key(Key7; "Document No.", "Document Type", "Posting Date")
+                {
+                }
+                key(Key8; "Applied Cust. Ledger Entry No.", "Entry Type")
+                {
+                }
+                key(Key9; "Transaction No.", "Customer No.", "Entry Type")
+                {
+                }
+                key(Key10; "Application No.", "Customer No.", "Entry Type")
+                {
+                }
+                key(Key11; "Customer No.", "Entry Type", "Posting Date", "Initial Document Type")
+                {
+                    SumIndexFields = Amount, "Amount (LCY)";
+                }
+                key(Key12; "Document Type")
+                {
+                    SumIndexFields = "Amount (LCY)";
+                }
+                key(Key13; "Initial Document Type", "Initial Entry Due Date")
+                {
+                    SumIndexFields = "Amount (LCY)";
+                }
+                key(Key14; "Customer No.", "Initial Entry Due Date")
+                {
+                    SumIndexFields = "Amount (LCY)";
+                }
+                key(Key15; "Customer No.", "Posting Date", "Initial Entry Global Dim. 1", "Entry Type")
+                {
+                    SumIndexFields = Amount, "Amount (LCY)", "Debit Amount", "Credit Amount", "Debit Amount (LCY)", "Credit Amount (LCY)";
+                }*/
     }
 
 

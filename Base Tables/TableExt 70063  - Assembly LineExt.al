@@ -769,7 +769,7 @@ tableextension 70063 AssemblyLineExt extends "Assembly Line"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -791,18 +791,18 @@ tableextension 70063 AssemblyLineExt extends "Assembly Line"
 
         //Unsupported feature: Deletion on ""Type,No."(Key)". Please convert manually.
 
-        key(Key1; "Document Type", "Document No.", "Line No.")
+        key(Docu1; "Document Type", "Document No.", "Line No.")
         {
         }
-        key(Key2; "Document Type", "Document No.", Type, "Location Code")
+        key(DocNo2; "Document Type", "Document No.", Type, "Location Code")
         {
             SumIndexFields = "Cost Amount", Quantity;
         }
-        key(Key3; "Document Type", Type, "No.", "Variant Code", "Location Code", "Due Date")
+        key(VAriant3; "Document Type", Type, "No.", "Variant Code", "Location Code", "Due Date")
         {
             SumIndexFields = "Remaining Quantity (Base)", "Qty. Picked (Base)", "Consumed Quantity (Base)";
         }
-        key(Key4; Type, "No.")
+        key(NO4; Type, "No.")
         {
         }
     }

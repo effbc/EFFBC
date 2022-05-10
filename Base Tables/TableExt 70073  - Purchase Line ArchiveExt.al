@@ -231,7 +231,7 @@ tableextension 70073 PurchaseLineArchiveExt extends "Purchase Line Archive"
 
             trigger OnLookup();
             var
-                StateForm: Record "State Forms";
+            // StateForm: Record "State Forms";
             begin
             end;
         }
@@ -266,7 +266,7 @@ tableextension 70073 PurchaseLineArchiveExt extends "Purchase Line Archive"
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
             Editable = false;
-            TableRelation = "Excise Bus. Posting Group";
+            //TableRelation = "Excise Bus. Posting Group";
         }
         field(13714; "Excise Prod. Posting Group"; Code[10])
         {
@@ -274,7 +274,7 @@ tableextension 70073 PurchaseLineArchiveExt extends "Purchase Line Archive"
                         ENN = 'Excise Prod. Posting Group';
             DataClassification = ToBeClassified;
             Editable = false;
-            TableRelation = "Excise Prod. Posting Group";
+            // TableRelation = "Excise Prod. Posting Group";
         }
         field(13717; "Amount Including Excise"; Decimal)
         {
@@ -371,7 +371,7 @@ tableextension 70073 PurchaseLineArchiveExt extends "Purchase Line Archive"
                         ENN = 'Concessional Code';
             DataClassification = ToBeClassified;
             Editable = false;
-            TableRelation = "Concessional Codes";
+            // TableRelation = "Concessional Codes";
         }
         field(13738; "Excise Base Amount"; Decimal)
         {
@@ -404,7 +404,7 @@ tableextension 70073 PurchaseLineArchiveExt extends "Purchase Line Archive"
                         ENN = 'Assessee Code';
             DataClassification = ToBeClassified;
             Editable = false;
-            TableRelation = "Assessee Code";
+            // TableRelation = "Assessee Code";
         }
         field(13743; "TDS %"; Decimal)
         {
@@ -606,8 +606,8 @@ tableextension 70073 PurchaseLineArchiveExt extends "Purchase Line Archive"
         }
         field(16372; "Delivery Challan Posted"; Integer)
         {
-            CalcFormula = Count("Delivery Challan Header" WHERE("Sub. order No." = FIELD("Document No."),
-                                                                 "Sub. Order Line No." = FIELD("Line No.")));
+            /* CalcFormula = Count("Delivery Challan Header" WHERE("Sub. order No." = FIELD("Document No."),
+                                                                  "Sub. Order Line No." = FIELD("Line No.")));*/
             CaptionML = ENU = 'Delivery Challan Posted',
                         ENN = 'Delivery Challan Posted';
             Editable = false;
@@ -725,7 +725,7 @@ tableextension 70073 PurchaseLineArchiveExt extends "Purchase Line Archive"
             CaptionML = ENU = 'Service Tax Group',
                         ENN = 'Service Tax Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Service Tax Groups".Code;
+            // TableRelation = "Service Tax Groups".Code;
 
             trigger OnValidate();
             var
@@ -992,7 +992,7 @@ tableextension 70073 PurchaseLineArchiveExt extends "Purchase Line Archive"
             CaptionML = ENU = 'GST Group Code',
                         ENN = 'GST Group Code';
             DataClassification = ToBeClassified;
-            TableRelation = "GST Group";
+            // TableRelation = "GST Group";
         }
         field(16602; "GST Group Type"; Option)
         {
@@ -1110,7 +1110,7 @@ tableextension 70073 PurchaseLineArchiveExt extends "Purchase Line Archive"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -1137,18 +1137,18 @@ tableextension 70073 PurchaseLineArchiveExt extends "Purchase Line Archive"
 
         //Unsupported feature: Deletion on ""Pay-to Vendor No."(Key)". Please convert manually.
 
-        key(Key1; "Document Type", "Document No.", "Doc. No. Occurrence", "Version No.", "Line No.")
-        {
-        }
-        key(Key2; "Document Type", "Document No.", "Line No.", "Doc. No. Occurrence", "Version No.")
-        {
-        }
-        key(Key3; "Buy-from Vendor No.")
-        {
-        }
-        key(Key4; "Pay-to Vendor No.")
-        {
-        }
+        /* key(Key1; "Document Type", "Document No.", "Doc. No. Occurrence", "Version No.", "Line No.")
+         {
+         }
+         key(Key2; "Document Type", "Document No.", "Line No.", "Doc. No. Occurrence", "Version No.")
+         {
+         }
+         key(Key3; "Buy-from Vendor No.")
+         {
+         }
+         key(Key4; "Pay-to Vendor No.")
+         {
+         }*/
     }
 
 

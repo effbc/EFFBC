@@ -155,7 +155,7 @@ tableextension 70069 MarketingSetupExt extends "Marketing Setup"
 
         //Unsupported feature: Deletion on ""Primary Key"(Key)". Please convert manually.
 
-        key(Key1; "Primary Key")
+        key(Primary1; "Primary Key")
         {
         }
     }

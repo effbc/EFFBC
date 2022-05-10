@@ -550,7 +550,7 @@ tableextension 70068 SegmentLineExt extends "Segment Line"
 
         //Unsupported feature: Deletion on ""Campaign No.,Contact Company No.,Campaign Target"(Key)". Please convert manually.
 
-        key(Key1; "Segment No.", "Line No.")
+        /*key(Key1; "Segment No.", "Line No.")
         {
         }
         key(Key2; "Segment No.", "Campaign No.", Date)
@@ -565,6 +565,7 @@ tableextension 70068 SegmentLineExt extends "Segment Line"
         key(Key5; "Campaign No.", "Contact Company No.", "Campaign Target")
         {
         }
+        */
     }
 
 

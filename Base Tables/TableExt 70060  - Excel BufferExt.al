@@ -93,7 +93,7 @@ tableextension 70060 ExcelBufferExt extends "Excel Buffer"
 
         //Unsupported feature: Deletion on ""Row No.,Column No."(Key)". Please convert manually.
 
-        key(Key1; "Row No.", "Column No.")
+        key(RowNo1; "Row No.", "Column No.")
         {
         }
     }
@@ -272,7 +272,7 @@ tableextension 70060 ExcelBufferExt extends "Excel Buffer"
     var
         str: Text[100];
         fname1: Text[100];
-        XlRange: DotNet "'Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c'.Microsoft.Office.Interop.Excel.Range" RUNONCLIENT;
-        XlMerge: DotNet "'DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35'.DocumentFormat.OpenXml.Spreadsheet.MergeCells" RUNONCLIENT;
+    //XlRange: DotNet "'Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c'.Microsoft.Office.Interop.Excel.Range" RUNONCLIENT;
+    //XlMerge: DotNet "'DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35'.DocumentFormat.OpenXml.Spreadsheet.MergeCells" RUNONCLIENT;
 }
 

@@ -718,37 +718,37 @@ tableextension 70066 ContactExt extends Contact
 
 
         //Unsupported feature: Deletion on ""Phone No."(Key)". Please convert manually.
-
-        key(Key1; "No.")
-        {
-        }
-        key(Key2; "Search Name")
-        {
-        }
-        key(Key3; "Company Name", "Company No.", Type, Name)
-        {
-        }
-        key(Key4; "Company No.")
-        {
-        }
-        key(Key5; "Territory Code")
-        {
-        }
-        key(Key6; "Salesperson Code")
-        {
-        }
-        key(Key7; "VAT Registration No.")
-        {
-        }
-        key(Key8; "Search E-Mail")
-        {
-        }
-        key(Key9; "Post Code")
-        {
-        }
-        key(Key10; "Phone No.")
-        {
-        }
+        /*
+                key(Key1; "No.")
+                {
+                }
+                key(Key2; "Search Name")
+                {
+                }
+                key(Key3; "Company Name", "Company No.", Type, Name)
+                {
+                }
+                key(Key4; "Company No.")
+                {
+                }
+                key(Key5; "Territory Code")
+                {
+                }
+                key(Key6; "Salesperson Code")
+                {
+                }
+                key(Key7; "VAT Registration No.")
+                {
+                }
+                key(Key8; "Search E-Mail")
+                {
+                }
+                key(Key9; "Post Code")
+                {
+                }
+                key(Key10; "Phone No.")
+                {
+                }*/
     }
 
 

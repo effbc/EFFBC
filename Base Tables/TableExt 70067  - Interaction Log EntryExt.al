@@ -140,72 +140,72 @@ tableextension 70067 InteractionLogEntryExt extends "Interaction Log Entry"
 
         //Unsupported feature: Deletion on ""Opportunity No.,Date"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
-        {
-        }
-        key(Key2; "Contact Company No.", "Contact No.", Date, Postponed)
-        {
-            SumIndexFields = "Cost (LCY)", "Duration (Min.)";
-        }
-        key(Key3; "Contact Company No.", Date, "Contact No.", Canceled, "Initiated By", "Attempt Failed", Postponed)
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Cost (LCY)", "Duration (Min.)";
-        }
-        key(Key4; "Interaction Group Code", Date)
-        {
-        }
-        key(Key5; "Interaction Group Code", Canceled, Date, Postponed)
-        {
-            SumIndexFields = "Cost (LCY)", "Duration (Min.)";
-        }
-        key(Key6; "Interaction Template Code", Date)
-        {
-        }
-        key(Key7; "Interaction Template Code", Canceled, Date, Postponed)
-        {
-            SumIndexFields = "Cost (LCY)", "Duration (Min.)";
-        }
-        key(Key8; Canceled, "Campaign No.", "Campaign Entry No.", Date, Postponed)
-        {
-            SumIndexFields = "Cost (LCY)", "Duration (Min.)";
-        }
-        key(Key9; "Campaign No.", "Campaign Entry No.", Date, Postponed)
-        {
-            SumIndexFields = "Cost (LCY)", "Duration (Min.)";
-        }
-        key(Key10; "Salesperson Code", Date, Postponed)
-        {
-            SumIndexFields = "Cost (LCY)", "Duration (Min.)";
-        }
-        key(Key11; Canceled, "Salesperson Code", Date, Postponed)
-        {
-            SumIndexFields = "Cost (LCY)", "Duration (Min.)";
-        }
-        key(Key12; "Logged Segment Entry No.", Postponed)
-        {
-        }
-        key(Key13; "Attachment No.")
-        {
-        }
-        key(Key14; "To-do No.", Date)
-        {
-        }
-        key(Key15; "Contact No.", "Correspondence Type", "E-Mail Logged", Subject, Postponed)
-        {
-        }
-        key(Key16; "Campaign No.", "Campaign Target")
-        {
-        }
-        key(Key17; "Campaign No.", "Contact Company No.", "Campaign Target", Postponed)
-        {
-        }
-        key(Key18; "Opportunity No.", Date)
-        {
-        }
-        key(Key19; Date, "Contact No.", "Interaction Group Code", "Salesperson Code")
-        {
-        }
+        /* key(Key1; "Entry No.")
+         {
+         }
+         key(Key2; "Contact Company No.", "Contact No.", Date, Postponed)
+         {
+             SumIndexFields = "Cost (LCY)", "Duration (Min.)";
+         }
+         key(Key3; "Contact Company No.", Date, "Contact No.", Canceled, "Initiated By", "Attempt Failed", Postponed)
+         {
+             MaintainSIFTIndex = false;
+             SumIndexFields = "Cost (LCY)", "Duration (Min.)";
+         }
+         key(Key4; "Interaction Group Code", Date)
+         {
+         }
+         key(Key5; "Interaction Group Code", Canceled, Date, Postponed)
+         {
+             SumIndexFields = "Cost (LCY)", "Duration (Min.)";
+         }
+         key(Key6; "Interaction Template Code", Date)
+         {
+         }
+         key(Key7; "Interaction Template Code", Canceled, Date, Postponed)
+         {
+             SumIndexFields = "Cost (LCY)", "Duration (Min.)";
+         }
+         key(Key8; Canceled, "Campaign No.", "Campaign Entry No.", Date, Postponed)
+         {
+             SumIndexFields = "Cost (LCY)", "Duration (Min.)";
+         }
+         key(Key9; "Campaign No.", "Campaign Entry No.", Date, Postponed)
+         {
+             SumIndexFields = "Cost (LCY)", "Duration (Min.)";
+         }
+         key(Key10; "Salesperson Code", Date, Postponed)
+         {
+             SumIndexFields = "Cost (LCY)", "Duration (Min.)";
+         }
+         key(Key11; Canceled, "Salesperson Code", Date, Postponed)
+         {
+             SumIndexFields = "Cost (LCY)", "Duration (Min.)";
+         }
+         key(Key12; "Logged Segment Entry No.", Postponed)
+         {
+         }
+         key(Key13; "Attachment No.")
+         {
+         }
+         key(Key14; "To-do No.", Date)
+         {
+         }
+         key(Key15; "Contact No.", "Correspondence Type", "E-Mail Logged", Subject, Postponed)
+         {
+         }
+         key(Key16; "Campaign No.", "Campaign Target")
+         {
+         }
+         key(Key17; "Campaign No.", "Contact Company No.", "Campaign Target", Postponed)
+         {
+         }
+         key(Key18; "Opportunity No.", Date)
+         {
+         }
+         key(Key19; Date, "Contact No.", "Interaction Group Code", "Salesperson Code")
+         {
+         }*/
     }
 
 

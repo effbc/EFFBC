@@ -193,14 +193,14 @@ tableextension 70070 SalesHeaderArchiveExt extends "Sales Header Archive"
             CaptionML = ENU = 'Assessee Code',
                         ENN = 'Assessee Code';
             DataClassification = ToBeClassified;
-            TableRelation = "Assessee Code";
+            //TableRelation = "Assessee Code";
         }
         field(13706; "Excise Bus. Posting Group"; Code[10])
         {
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+            //TableRelation = "Excise Bus. Posting Group";
         }
         field(13731; "Amount to Customer"; Decimal)
         {
@@ -225,8 +225,8 @@ tableextension 70070 SalesHeaderArchiveExt extends "Sales Header Archive"
             CaptionML = ENU = 'Form Code',
                         ENN = 'Form Code';
             DataClassification = ToBeClassified;
-            TableRelation = "State Forms"."Form Code" WHERE(State = FIELD(State),
-                                                             "Transit Document" = CONST(false));
+            /* TableRelation = "State Forms"."Form Code" WHERE(State = FIELD(State),
+                                                              "Transit Document" = CONST(false));*/
         }
         field(13738; "Form No."; Code[10])
         {
@@ -252,14 +252,14 @@ tableextension 70070 SalesHeaderArchiveExt extends "Sales Header Archive"
             CaptionML = ENU = 'LC No.',
                         ENN = 'LC No.';
             DataClassification = ToBeClassified;
-            TableRelation = "LC Detail"."No." WHERE("Transaction Type" = CONST(Sale),
+            /*TableRelation = "LC Detail"."No." WHERE("Transaction Type" = CONST(Sale),
                                                      "Issued To/Received From" = FIELD("Bill-to Customer No."),
                                                      Closed = CONST(false),
-                                                     Released = CONST(true));
+                                                     Released = CONST(true));*/
 
             trigger OnValidate();
             var
-                LCDetail: Record "LC Detail";
+                //LCDetail: Record "LC Detail";
                 Text13700: TextConst ENU = 'The LC which you have selected is Foreign type you cannot utilise for this order.', ENN = 'The LC which you have selected is Foreign type you cannot utilise for this order.';
             begin
             end;
@@ -269,7 +269,7 @@ tableextension 70070 SalesHeaderArchiveExt extends "Sales Header Archive"
             CaptionML = ENU = 'Structure',
                         ENN = 'Structure';
             DataClassification = ToBeClassified;
-            TableRelation = "Structure Header";
+            //TableRelation = "Structure Header";
 
             trigger OnValidate();
             var
@@ -414,7 +414,7 @@ tableextension 70070 SalesHeaderArchiveExt extends "Sales Header Archive"
             CaptionML = ENU = 'e-Commerce Merchant Id',
                         ENN = 'e-Commerce Merchant Id';
             DataClassification = ToBeClassified;
-            TableRelation = "e-Commerce Merchant Id"."Merchant Id";
+            // TableRelation = "e-Commerce Merchant Id"."Merchant Id";
         }
         field(16610; "GST Bill-to State Code"; Code[10])
         {
@@ -713,8 +713,8 @@ tableextension 70070 SalesHeaderArchiveExt extends "Sales Header Archive"
         }
         field(60135; "Converted AMC Order"; Code[30])
         {
-            TableRelation = "Sales Header" WHERE("Document Type" = CONST(Amc),
-                                                  "Customer Posting Group" = CONST('RAILWAYS'));
+            /* TableRelation = "Sales Header" WHERE("Document Type" = CONST(Amc),
+                                                   "Customer Posting Group" = CONST('RAILWAYS'));*/
         }
         field(60136; "Warranty Exp Date"; Date)
         {
@@ -759,7 +759,7 @@ tableextension 70070 SalesHeaderArchiveExt extends "Sales Header Archive"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -776,7 +776,7 @@ tableextension 70070 SalesHeaderArchiveExt extends "Sales Header Archive"
         }
         field(80024; "Railway Division"; Code[10])
         {
-            TableRelation = Division."Division Code";
+            // TableRelation = Division."Division Code";
         }
         field(80025; "BG Fin Status"; Option)
         {
@@ -799,18 +799,18 @@ tableextension 70070 SalesHeaderArchiveExt extends "Sales Header Archive"
 
         //Unsupported feature: Deletion on ""Document Type,Bill-to Customer No."(Key)". Please convert manually.
 
-        key(Key1; "Document Type", "No.", "Doc. No. Occurrence", "Version No.")
-        {
-        }
-        key(Key2; "Document Type", "Sell-to Customer No.")
-        {
-        }
-        key(Key3; "Document Type", "Bill-to Customer No.")
-        {
-        }
-        key(Key4; "Document Type", "No.", "Date Archived", "Time Archived")
-        {
-        }
+        /* key(Key1; "Document Type", "No.", "Doc. No. Occurrence", "Version No.")
+         {
+         }
+         key(Key2; "Document Type", "Sell-to Customer No.")
+         {
+         }
+         key(Key3; "Document Type", "Bill-to Customer No.")
+         {
+         }
+         key(Key4; "Document Type", "No.", "Date Archived", "Time Archived")
+         {
+         }*/
     }
 
 

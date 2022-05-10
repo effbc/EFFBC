@@ -169,14 +169,14 @@ tableextension 70072 PurchaseHeaderArchiveExt extends "Purchase Header Archive"
             CaptionML = ENU = 'Assessee Code',
                         ENN = 'Assessee Code';
             DataClassification = ToBeClassified;
-            TableRelation = "Assessee Code";
+            //TableRelation = "Assessee Code";
         }
         field(13712; "Excise Bus. Posting Group"; Code[10])
         {
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+            // TableRelation = "Excise Bus. Posting Group";
         }
         field(13716; "Amount to Vendor"; Decimal)
         {
@@ -194,10 +194,10 @@ tableextension 70072 PurchaseHeaderArchiveExt extends "Purchase Header Archive"
             CaptionML = ENU = 'Form Code',
                         ENN = 'Form Code';
             DataClassification = ToBeClassified;
-            TableRelation = IF ("C Form" = CONST(false)) "State Forms"."Form Code" WHERE(State = FIELD(State),
-                                                                                        "Transit Document" = CONST(false))
-            ELSE
-            IF ("C Form" = CONST(true)) "Form Codes".Code WHERE("C Form" = CONST(true));
+            /* TableRelation = IF ("C Form" = CONST(false)) "State Forms"."Form Code" WHERE(State = FIELD(State),
+                                                                                         "Transit Document" = CONST(false))
+             ELSE
+             IF ("C Form" = CONST(true)) "Form Codes".Code WHERE("C Form" = CONST(true));*/
         }
         field(13724; "Form No."; Code[10])
         {
@@ -228,14 +228,14 @@ tableextension 70072 PurchaseHeaderArchiveExt extends "Purchase Header Archive"
             CaptionML = ENU = 'LC No.',
                         ENN = 'LC No.';
             DataClassification = ToBeClassified;
-            TableRelation = "LC Detail"."No." WHERE("Transaction Type" = CONST(Purchase),
-                                                     "Issued To/Received From" = FIELD("Pay-to Vendor No."),
-                                                     Closed = CONST(false),
-                                                     Released = CONST(true));
+            /* TableRelation = "LC Detail"."No." WHERE("Transaction Type" = CONST(Purchase),
+                                                      "Issued To/Received From" = FIELD("Pay-to Vendor No."),
+                                                      Closed = CONST(false),
+                                                      Released = CONST(true));*/
 
             trigger OnValidate();
             var
-                LCDetail: Record "LC Detail";
+                //LCDetail: Record "LC Detail";
                 Text13700: TextConst ENU = 'The LC which you have selected is Foreign type you cannot utilise for this order.', ENN = 'The LC which you have selected is Foreign type you cannot utilise for this order.';
             begin
             end;
@@ -252,7 +252,7 @@ tableextension 70072 PurchaseHeaderArchiveExt extends "Purchase Header Archive"
             CaptionML = ENU = 'Structure',
                         ENN = 'Structure';
             DataClassification = ToBeClassified;
-            TableRelation = "Structure Header";
+            //TableRelation = "Structure Header";
 
             trigger OnValidate();
             var
@@ -556,7 +556,7 @@ tableextension 70072 PurchaseHeaderArchiveExt extends "Purchase Header Archive"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -580,15 +580,15 @@ tableextension 70072 PurchaseHeaderArchiveExt extends "Purchase Header Archive"
 
         //Unsupported feature: Deletion on ""Document Type,Pay-to Vendor No."(Key)". Please convert manually.
 
-        key(Key1; "Document Type", "No.", "Doc. No. Occurrence", "Version No.")
-        {
-        }
-        key(Key2; "Document Type", "Buy-from Vendor No.")
-        {
-        }
-        key(Key3; "Document Type", "Pay-to Vendor No.")
-        {
-        }
+        /*        key(Key1; "Document Type", "No.", "Doc. No. Occurrence", "Version No.")
+                {
+                }
+                key(Key2; "Document Type", "Buy-from Vendor No.")
+                {
+                }
+                key(Key3; "Document Type", "Pay-to Vendor No.")
+                {
+                }*/
     }
 
 

@@ -234,14 +234,14 @@ tableextension 70071 SalesLineArchiveExt extends "Sales Line Archive"
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+            // TableRelation = "Excise Bus. Posting Group";
         }
         field(13703; "Excise Prod. Posting Group"; Code[10])
         {
             CaptionML = ENU = 'Excise Prod. Posting Group',
                         ENN = 'Excise Prod. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Prod. Posting Group";
+            //TableRelation = "Excise Prod. Posting Group";
         }
         field(13708; "Excise Amount"; Decimal)
         {
@@ -346,7 +346,7 @@ tableextension 70071 SalesLineArchiveExt extends "Sales Line Archive"
             CaptionML = ENU = 'Concessional Code',
                         ENN = 'Concessional Code';
             DataClassification = ToBeClassified;
-            TableRelation = "Concessional Codes";
+            // TableRelation = "Concessional Codes";
         }
         field(13742; "Assessee Code"; Code[10])
         {
@@ -354,7 +354,7 @@ tableextension 70071 SalesLineArchiveExt extends "Sales Line Archive"
                         ENN = 'Assessee Code';
             DataClassification = ToBeClassified;
             Editable = false;
-            TableRelation = "Assessee Code";
+            //TableRelation = "Assessee Code";
         }
         field(13743; "TDS %"; Decimal)
         {
@@ -456,7 +456,7 @@ tableextension 70071 SalesLineArchiveExt extends "Sales Line Archive"
 
             trigger OnLookup();
             var
-                StateForm: Record "State Forms";
+            //StateForm: Record "State Forms";
             begin
             end;
         }
@@ -521,7 +521,7 @@ tableextension 70071 SalesLineArchiveExt extends "Sales Line Archive"
             CaptionML = ENU = 'Service Tax Group',
                         ENN = 'Service Tax Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Service Tax Groups".Code;
+            //TableRelation = "Service Tax Groups".Code;
 
             trigger OnValidate();
             var
@@ -667,7 +667,7 @@ tableextension 70071 SalesLineArchiveExt extends "Sales Line Archive"
             CaptionML = ENU = 'Process Carried Out',
                         ENN = 'Process Carried Out';
             DataClassification = ToBeClassified;
-            TableRelation = "Process Carried Out".Code;
+            // TableRelation = "Process Carried Out".Code;
         }
         field(16529; "Identification Mark"; Text[30])
         {
@@ -738,7 +738,7 @@ tableextension 70071 SalesLineArchiveExt extends "Sales Line Archive"
             CaptionML = ENU = 'PIT Structure',
                         ENN = 'PIT Structure';
             DataClassification = ToBeClassified;
-            TableRelation = "Structure Header";
+            //TableRelation = "Structure Header";
         }
         field(16541; "Price Inclusive of Tax"; Boolean)
         {
@@ -820,7 +820,7 @@ tableextension 70071 SalesLineArchiveExt extends "Sales Line Archive"
             CaptionML = ENU = 'GST Group Code',
                         ENN = 'GST Group Code';
             DataClassification = ToBeClassified;
-            TableRelation = "GST Group";
+            // TableRelation = "GST Group";
         }
         field(16603; "GST Group Type"; Option)
         {
@@ -930,7 +930,7 @@ tableextension 70071 SalesLineArchiveExt extends "Sales Line Archive"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -1016,22 +1016,23 @@ tableextension 70071 SalesLineArchiveExt extends "Sales Line Archive"
 
 
         //Unsupported feature: Deletion on ""Type,No."(Key)". Please convert manually.
-
-        key(Key1; "Document Type", "Document No.", "Doc. No. Occurrence", "Version No.", "Line No.")
-        {
-        }
-        key(Key2; "Document Type", "Document No.", "Line No.", "Doc. No. Occurrence", "Version No.")
-        {
-        }
-        key(Key3; "Sell-to Customer No.")
-        {
-        }
-        key(Key4; "Bill-to Customer No.")
-        {
-        }
-        key(Key5; Type, "No.")
-        {
-        }
+        /* 
+         key(Key1; "Document Type", "Document No.", "Doc. No. Occurrence", "Version No.", "Line No.")
+          {
+          }
+          key(Key2; "Document Type", "Document No.", "Line No.", "Doc. No. Occurrence", "Version No.")
+          {
+          }
+          key(Key3; "Sell-to Customer No.")
+          {
+          }
+          key(Key4; "Bill-to Customer No.")
+          {
+          }
+          key(Key5; Type, "No.")
+          {
+          }
+          */
     }
 
 

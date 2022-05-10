@@ -97,7 +97,7 @@ tableextension 70074 SalesCommentLineArchiveExt extends "Sales Comment Line Arch
 
         //Unsupported feature: Deletion on ""Document Type,No.,Doc. No. Occurrence,Version No.,Document Line No.,Line No."(Key)". Please convert manually.
 
-        key(Key1; "Document Type", "No.", "Doc. No. Occurrence", "Version No.", "Document Line No.", "Line No.")
+        key(Doc1; "Document Type", "No.", "Doc. No. Occurrence", "Version No.", "Document Line No.", "Line No.")
         {
         }
     }

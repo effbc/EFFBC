@@ -163,10 +163,10 @@ tableextension 70059 DimensionValueExt extends "Dimension Value"
 
         //Unsupported feature: Deletion on ""Code,Global Dimension No."(Key)". Please convert manually.
 
-        key(Key1; "Dimension Code", "Code")
+        key(Dimension1; "Dimension Code", "Code")
         {
         }
-        key(Key2; "Code", "Global Dimension No.")
+        key(Global2; "Code", "Global Dimension No.")
         {
         }
     }

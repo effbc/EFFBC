@@ -58,7 +58,7 @@ tableextension 70064 PostedAssemblyHeaderExt extends "Posted Assembly Header"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -77,15 +77,15 @@ tableextension 70064 PostedAssemblyHeaderExt extends "Posted Assembly Header"
 
         //Unsupported feature: Deletion on ""Posting Date"(Key)". Please convert manually.
 
-        key(Key1; "No.")
-        {
-        }
-        key(Key2; "Order No.")
-        {
-        }
-        key(Key3; "Posting Date")
-        {
-        }
+        /*        key(Key1; "No.")
+                {
+                }
+                key(Key2; "Order No.")
+                {
+                }
+                key(Key3; "Posting Date")
+                {
+                }*/
     }
 
 

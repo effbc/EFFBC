@@ -72,8 +72,8 @@ tableextension 70058 EntrySummaryExt extends "Entry Summary"
         }
         field(60003; "External Dcument.no"; Code[20])
         {
-            CalcFormula = Lookup("Quality Item Ledger Entry"."External Document No." WHERE("Lot No." = FIELD("Lot No."),
-                                                                                            Quantity = FIELD("Total Quantity")));
+            /*CalcFormula = Lookup("Quality Item Ledger Entry"."External Document No." WHERE("Lot No." = FIELD("Lot No."),
+                                                                                            Quantity = FIELD("Total Quantity")));*/
             FieldClass = FlowField;
         }
     }
@@ -88,13 +88,13 @@ tableextension 70058 EntrySummaryExt extends "Entry Summary"
 
         //Unsupported feature: Deletion on ""Expiration Date"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+        key(Entry1; "Entry No.")
         {
         }
-        key(Key2; "Lot No.", "Serial No.")
+        key(Lot2; "Lot No.", "Serial No.")
         {
         }
-        key(Key3; "Expiration Date")
+        key(Expiration3; "Expiration Date")
         {
         }
     }
