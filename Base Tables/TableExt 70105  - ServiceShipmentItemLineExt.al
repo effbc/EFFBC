@@ -116,18 +116,18 @@ tableextension 70105 ServiceShipmentItemLineExt extends "Service Shipment Item L
 
         //Unsupported feature: Deletion on ""Service Price Group Code,Adjustment Type,Base Amount to Adjust,Customer No."(Key)". Please convert manually.
 
-        key(Key1; "No.", "Line No.")
-        {
-        }
-        key(Key2; "Service Item No.")
-        {
-        }
-        key(Key3; "Item No.", "Serial No.", "Loaner No.")
-        {
-        }
-        key(Key4; "Service Price Group Code", "Adjustment Type", "Base Amount to Adjust", "Customer No.")
-        {
-        }
+        /*        key(Key1; "No.", "Line No.")
+                {
+                }
+                key(Key2; "Service Item No.")
+                {
+                }
+                key(Key3; "Item No.", "Serial No.", "Loaner No.")
+                {
+                }
+                key(Key4; "Service Price Group Code", "Adjustment Type", "Base Amount to Adjust", "Customer No.")
+                {
+                }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.
