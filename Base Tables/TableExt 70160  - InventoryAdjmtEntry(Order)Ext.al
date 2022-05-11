@@ -25,12 +25,12 @@ tableextension 70160 InventoryAdjmtEntryExt extends "Inventory Adjmt. Entry (Ord
 
         //Unsupported feature: Deletion on ""Cost is Adjusted,Allow Online Adjustment"(Key)". Please convert manually.
 
-        key(Key1; "Order Type", "Order No.", "Order Line No.")
+      /*  key(Key1; "Order Type", "Order No.", "Order Line No.")
         {
         }
         key(Key2; "Cost is Adjusted", "Allow Online Adjustment")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

@@ -61,9 +61,9 @@ tableextension 70168 ItemIdentifierExt extends "Item Identifier"
 
         //Unsupported feature: Deletion on ""Item No.,Variant Code,Unit of Measure Code"(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code", "Unit of Measure Code")
+        /*key(Key1; "Item No.", "Variant Code", "Unit of Measure Code")
         {
-        }
+        }*/
     }
 
 

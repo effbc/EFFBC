@@ -92,7 +92,7 @@ tableextension 70166 ItemCrossReferenceExt extends "Item Cross Reference"
 
         //Unsupported feature: Deletion on ""Cross-Reference Type,Cross-Reference Type No."(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code", "Unit of Measure", "Cross-Reference Type", "Cross-Reference Type No.", "Cross-Reference No.")
+       /* key(Key1; "Item No.", "Variant Code", "Unit of Measure", "Cross-Reference Type", "Cross-Reference Type No.", "Cross-Reference No.")
         {
         }
         key(Key2; "Cross-Reference No.")
@@ -109,7 +109,7 @@ tableextension 70166 ItemCrossReferenceExt extends "Item Cross Reference"
         }
         key(Key6; "Cross-Reference Type", "Cross-Reference Type No.")
         {
-        }
+        }*/
     }
 
 

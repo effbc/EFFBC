@@ -51,12 +51,12 @@ tableextension 70173 ItemUnitofMeasureExt extends "Item Unit of Measure"
 
         //Unsupported feature: Deletion on ""Item No.,Qty. per Unit of Measure"(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Code")
-        {
-        }
-        key(Key2; "Item No.", "Qty. per Unit of Measure")
-        {
-        }
+        /*   key(Key1; "Item No.", "Code")
+            {
+            }
+            key(Key2; "Item No.", "Qty. per Unit of Measure")
+            {
+            }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

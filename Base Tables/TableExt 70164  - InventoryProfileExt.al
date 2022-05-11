@@ -67,7 +67,7 @@ tableextension 70164 InventoryProfileExt extends "Inventory Profile"
 
         //Unsupported feature: Deletion on ""Source Type,Source Order Status,Source ID,Source Batch Name,Source Ref. No.,Source Prod. Order Line,IsSupply,Due Date"(Key)". Please convert manually.
 
-        key(Key1; "Line No.")
+        /*key(Key1; "Line No.")
         {
         }
         key(Key2; "Item No.", "Variant Code", "Location Code", "Due Date", "Attribute Priority", "Order Priority")
@@ -78,7 +78,7 @@ tableextension 70164 InventoryProfileExt extends "Inventory Profile"
         }
         key(Key4; "Source Type", "Source Order Status", "Source ID", "Source Batch Name", "Source Ref. No.", "Source Prod. Order Line", IsSupply, "Due Date")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

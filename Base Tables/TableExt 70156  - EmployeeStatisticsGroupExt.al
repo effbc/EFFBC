@@ -47,12 +47,12 @@ tableextension 70156 EmployeeStatisticsGroupExt extends "Employee Statistics Gro
 
         //Unsupported feature: Deletion on "Code(Key)". Please convert manually.
 
-        key(Key1; "Division Code")
+       /* key(Key1; "Division Code")
         {
         }
         key(Key2; "Project Manager", "Division Code", "Zone code")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

@@ -16,9 +16,9 @@ tableextension 70157 FaultCodeExt extends "Fault Code"
 
         //Unsupported feature: Deletion on ""Fault Area Code,Symptom Code,Code"(Key)". Please convert manually.
 
-        key(Key1; "Fault Area Code", "Symptom Code", "Code")
+      /*  key(Key1; "Fault Area Code", "Symptom Code", "Code")
         {
-        }
+        }*/
     }
 
 

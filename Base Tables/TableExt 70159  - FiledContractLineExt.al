@@ -46,9 +46,9 @@ tableextension 70159 FiledContractLineExt extends "Filed Contract Line"
 
         //Unsupported feature: Deletion on ""Entry No.,Line No."(Key)". Please convert manually.
 
-        key(Key1; "Entry No.", "Line No.")
+       /* key(Key1; "Entry No.", "Line No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

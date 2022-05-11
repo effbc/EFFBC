@@ -90,7 +90,7 @@ tableextension 70153 DimensionSetEntryExt extends "Dimension Set Entry"
 
         //Unsupported feature: Deletion on ""Dimension Code,Dimension Value Code,Dimension Set ID"(Key)". Please convert manually.
 
-        key(Key1; "Dimension Set ID", "Dimension Code")
+       /* key(Key1; "Dimension Set ID", "Dimension Code")
         {
         }
         key(Key2; "Dimension Value ID")
@@ -98,7 +98,7 @@ tableextension 70153 DimensionSetEntryExt extends "Dimension Set Entry"
         }
         key(Key3; "Dimension Code", "Dimension Value Code", "Dimension Set ID")
         {
-        }
+        }*/
     }
 
 
@@ -265,7 +265,7 @@ tableextension 70153 DimensionSetEntryExt extends "Dimension Set Entry"
         Mail_To: Text;
         Mail_From: Text;
         Mail: Codeunit Mail;
-        SMTP_MAIL: Codeunit "SMTP Mail";
+        //SMTP_MAIL: Codeunit "SMTP Mail";
         OldDim: Record "Dimension Value";
         NewDim: Record "Dimension Value";
         OldDimValName: Text;

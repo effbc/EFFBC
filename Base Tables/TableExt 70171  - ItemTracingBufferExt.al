@@ -106,7 +106,7 @@ tableextension 70171 ItemTracingBufferExt extends "Item Tracing Buffer"
 
         //Unsupported feature: Deletion on ""Item No.,Item Ledger Entry No."(Key)". Please convert manually.
 
-        key(Key1; "Line No.")
+       /* key(Key1; "Line No.")
         {
         }
         key(Key2; "Item Ledger Entry No.")
@@ -120,7 +120,7 @@ tableextension 70171 ItemTracingBufferExt extends "Item Tracing Buffer"
         }
         key(Key5; "Item No.", "Item Ledger Entry No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

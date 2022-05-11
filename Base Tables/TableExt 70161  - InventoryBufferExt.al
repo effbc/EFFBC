@@ -19,13 +19,13 @@ tableextension 70161 InventoryBufferExt extends "Inventory Buffer"
 
         //Unsupported feature: Deletion on ""Location Code,Variant Code,Quantity"(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code", "Dimension Entry No.", "Location Code", "Bin Code", "Lot No.", "Serial No.")
+       /* key(Key1; "Item No.", "Variant Code", "Dimension Entry No.", "Location Code", "Bin Code", "Lot No.", "Serial No.")
         {
         }
         key(Key2; "Location Code", "Variant Code", Quantity)
         {
             SumIndexFields = Quantity;
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

@@ -13,9 +13,9 @@ tableextension 70154 DimensionSetTreeNodeExt extends "Dimension Set Tree Node"
 
         //Unsupported feature: Deletion on ""Parent Dimension Set ID,Dimension Value ID"(Key)". Please convert manually.
 
-        key(Key1; "Parent Dimension Set ID", "Dimension Value ID")
+        /*key(Key1; "Parent Dimension Set ID", "Dimension Value ID")
         {
-        }
+        }*/
     }
 
 
@@ -53,6 +53,6 @@ tableextension 70154 DimensionSetTreeNodeExt extends "Dimension Set Tree Node"
         Mail_To: Text;
         Mail_From: Text;
         Mail: Codeunit Mail;
-        SMTP_MAIL: Codeunit "SMTP Mail";
+      //  SMTP_MAIL: Codeunit "SMTP Mail";
 }
 

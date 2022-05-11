@@ -106,7 +106,7 @@ tableextension 70152 DetailedVendoLedgEntryExt extends "Detailed Vendor Ledg. En
 
         //Unsupported feature: Deletion on ""Initial Document Type,Initial Entry Due Date"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+       /* key(Key1; "Entry No.")
         {
         }
         key(Key2; "Vendor Ledger Entry No.", "Posting Date")
@@ -149,7 +149,7 @@ tableextension 70152 DetailedVendoLedgEntryExt extends "Detailed Vendor Ledg. En
         key(Key12; "Vendor No.", "Posting Date", "Initial Entry Global Dim. 1", "Initial Entry Global Dim. 2", "Currency Code")
         {
             SumIndexFields = Amount, "Amount (LCY)";
-        }
+        }*/
     }
 
 

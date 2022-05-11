@@ -22,7 +22,7 @@ tableextension 70169 ItemJournalBufferExt extends "Item Journal Buffer"
 
         //Unsupported feature: Deletion on ""Item No.,Variant Code"(Key)". Please convert manually.
 
-        key(Key1; "Line No.")
+        /*key(Key1; "Line No.")
         {
         }
         key(Key2; "Item No.", "Location Code", "Variant Code")
@@ -30,7 +30,7 @@ tableextension 70169 ItemJournalBufferExt extends "Item Journal Buffer"
         }
         key(Key3; "Item No.", "Variant Code")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

@@ -19,9 +19,9 @@ tableextension 70172 ItemTranslationExt extends "Item Translation"
 
         //Unsupported feature: Deletion on ""Item No.,Variant Code,Language Code"(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code", "Language Code")
+        /*key(Key1; "Item No.", "Variant Code", "Language Code")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

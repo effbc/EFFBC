@@ -19,7 +19,7 @@ tableextension 70167 ItemEntryRelationExt extends "Item Entry Relation"
 
         //Unsupported feature: Deletion on ""Order No.,Order Line No."(Key)". Please convert manually.
 
-        key(Key1; "Item Entry No.")
+       /* key(Key1; "Item Entry No.")
         {
         }
         key(Key2; "Source ID", "Source Type", "Source Subtype", "Source Ref. No.", "Source Prod. Order Line", "Source Batch Name")
@@ -27,7 +27,7 @@ tableextension 70167 ItemEntryRelationExt extends "Item Entry Relation"
         }
         key(Key3; "Order No.", "Order Line No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

@@ -4,22 +4,22 @@ tableextension 70162 InventoryCommentLineExt extends "Inventory Comment Line"
 
     fields
     {
-        modify("Document Type")
+       /* modify("Document Type")
         {
-            OptionCaptionML = ENU = ' ,Transfer Order,Posted Transfer Shipment,Posted Transfer Receipt,Material Issues,Posted Material Issues', ENN = ' ,Transfer Order,Posted Transfer Shipment,Posted Transfer Receipt,Material Issues,Posted Material Issues';
+         OptionCaptionML = ENU = ' ,Transfer Order,Posted Transfer Shipment,Posted Transfer Receipt,Material Issues,Posted Material Issues', ENN = ' ,Transfer Order,Posted Transfer Shipment,Posted Transfer Receipt,Material Issues,Posted Material Issues';
 
             //Unsupported feature: Change OptionString on ""Document Type"(Field 1)". Please convert manually.
 
-        }
+        }*/
     }
     keys
     {
 
         //Unsupported feature: Deletion on ""Document Type,No.,Line No."(Key)". Please convert manually.
 
-        key(Key1; "Document Type", "No.", "Line No.")
+       /* key(Key1; "Document Type", "No.", "Line No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: InsertAfter on "Documentation". Please convert manually.

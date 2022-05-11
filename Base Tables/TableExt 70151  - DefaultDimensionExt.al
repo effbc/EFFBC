@@ -247,12 +247,12 @@ tableextension 70151 DefaultDimensionExt extends "Default Dimension"
 
         //Unsupported feature: Deletion on ""Dimension Code"(Key)". Please convert manually.
 
-        key(Key1; "Table ID", "No.", "Dimension Code")
+        /*key(Key1; "Table ID", "No.", "Dimension Code")
         {
         }
         key(Key2; "Dimension Code")
         {
-        }
+        }*/
     }
 
 

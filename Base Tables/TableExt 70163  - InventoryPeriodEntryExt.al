@@ -34,9 +34,9 @@ tableextension 70163 InventoryPeriodEntryExt extends "Inventory Period Entry"
 
         //Unsupported feature: Deletion on ""Ending Date,Entry No."(Key)". Please convert manually.
 
-        key(Key1; "Ending Date", "Entry No.")
+       /* key(Key1; "Ending Date", "Entry No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.
