@@ -360,7 +360,7 @@ tableextension 70141 BinContentExt extends "Bin Content"
 
         //Unsupported feature: Deletion on ""Default,Location Code,Item No.,Variant Code,Bin Code"(Key)". Please convert manually.
 
-        key(Key1; "Location Code", "Bin Code", "Item No.", "Variant Code", "Unit of Measure Code")
+        /*key(Key1; "Location Code", "Bin Code", "Item No.", "Variant Code", "Unit of Measure Code")
         {
         }
         key(Key2; "Bin Type Code")
@@ -380,7 +380,7 @@ tableextension 70141 BinContentExt extends "Bin Content"
         }
         key(Key7; Default, "Location Code", "Item No.", "Variant Code", "Bin Code")
         {
-        }
+        }*/
     }
 
 

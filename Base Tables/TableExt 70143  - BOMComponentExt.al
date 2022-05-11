@@ -285,12 +285,12 @@ tableextension 70143 BOMComponentExt extends "BOM Component"
 
         //Unsupported feature: Deletion on ""Type,No."(Key)". Please convert manually.
 
-        key(Key1; "Parent Item No.", "Line No.")
+        /*key(Key1; "Parent Item No.", "Line No.")
         {
         }
         key(Key2; Type, "No.")
         {
-        }
+        }*/
     }
 
 

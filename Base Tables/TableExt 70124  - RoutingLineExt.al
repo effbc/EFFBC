@@ -247,7 +247,7 @@ tableextension 70124 RoutingLineExt extends "Routing Line"
         }
         field(33000250; "Sub Assembly"; Code[20])
         {
-            TableRelation = "Sub Assembly";
+            //TableRelation = "Sub Assembly";
 
             trigger OnValidate();
             begin
@@ -257,11 +257,11 @@ tableextension 70124 RoutingLineExt extends "Routing Line"
                     "QC Enabled" := false;
                     "Qty. Produced" := 0;
                 end else begin
-                    Subassembly.Get("Sub Assembly");
-                    "Sub Assembly Unit of Meas.Code" := Subassembly."Unit Of Measure Code";
-                    "Spec Id" := Subassembly."Spec Id";
-                    "QC Enabled" := Subassembly."QC Enabled";
-                    "Sub Assembly Description" := Subassembly.Description;
+                    /* Subassembly.Get("Sub Assembly");
+                     "Sub Assembly Unit of Meas.Code" := Subassembly."Unit Of Measure Code";
+                     "Spec Id" := Subassembly."Spec Id";
+                     "QC Enabled" := Subassembly."QC Enabled";
+                     "Sub Assembly Description" := Subassembly.Description;*/
                 end;
             end;
         }
@@ -275,7 +275,7 @@ tableextension 70124 RoutingLineExt extends "Routing Line"
         }
         field(33000252; "Sub Assembly Unit of Meas.Code"; Code[10])
         {
-            TableRelation = "Sub Assembly Unit of Measure".Code WHERE("Sub Assembly No." = FIELD("Sub Assembly"));
+            // TableRelation = "Sub Assembly Unit of Measure".Code WHERE("Sub Assembly No." = FIELD("Sub Assembly"));
 
             trigger OnValidate();
             begin
@@ -284,7 +284,7 @@ tableextension 70124 RoutingLineExt extends "Routing Line"
         }
         field(33000253; "Spec Id"; Code[20])
         {
-            TableRelation = "Specification Header";
+            // TableRelation = "Specification Header";
 
             trigger OnValidate();
             begin
@@ -326,25 +326,25 @@ tableextension 70124 RoutingLineExt extends "Routing Line"
 
         //Unsupported feature: Deletion on ""Routing Link Code"(Key)". Please convert manually.
 
-        key(Key1; "Routing No.", "Version Code", "Operation No.")
-        {
-            SumIndexFields = "Man Cost";
-        }
-        key(Key2; "Routing No.", "Version Code", "Sequence No. (Forward)")
-        {
-        }
-        key(Key3; "Routing No.", "Version Code", "Sequence No. (Backward)")
-        {
-        }
-        key(Key4; "Work Center No.")
-        {
-        }
-        key(Key5; Type, "No.")
-        {
-        }
-        key(Key6; "Routing Link Code")
-        {
-        }
+        /* key(Key1; "Routing No.", "Version Code", "Operation No.")
+         {
+            // SumIndexFields = "Man Cost";
+         }
+         key(Key2; "Routing No.", "Version Code", "Sequence No. (Forward)")
+         {
+         }
+         key(Key3; "Routing No.", "Version Code", "Sequence No. (Backward)")
+         {
+         }
+         key(Key4; "Work Center No.")
+         {
+         }
+         key(Key5; Type, "No.")
+         {
+         }
+         key(Key6; "Routing Link Code")
+         {
+         }*/
     }
 
     //Unsupported feature: InsertAfter on "(FieldGroup: DropDown)". Please convert manually.
@@ -559,6 +559,6 @@ tableextension 70124 RoutingLineExt extends "Routing Line"
 
     var
         "--QC--": Integer;
-        Subassembly: Record "Sub Assembly";
+    // Subassembly: Record "Sub Assembly";
 }
 

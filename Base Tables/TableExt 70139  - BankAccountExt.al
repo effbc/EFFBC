@@ -481,21 +481,21 @@ tableextension 70139 BankAccountExts extends "Bank Account"
 
         //Unsupported feature: Deletion on ""Country/Region Code"(Key)". Please convert manually.
 
-        key(Key1; "No.")
-        {
-        }
-        key(Key2; "Search Name")
-        {
-        }
-        key(Key3; "Bank Acc. Posting Group")
-        {
-        }
-        key(Key4; "Currency Code")
-        {
-        }
-        key(Key5; "Country/Region Code")
-        {
-        }
+        /* key(Key1; "No.")
+         {
+         }
+         key(Key2; "Search Name")
+         {
+         }
+         key(Key3; "Bank Acc. Posting Group")
+         {
+         }
+         key(Key4; "Currency Code")
+         {
+         }
+         key(Key5; "Country/Region Code")
+         {
+         }*/
     }
 
 

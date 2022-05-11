@@ -28,7 +28,7 @@ tableextension 70132 ActionMessageEntryExt extends "Action Message Entry"
 
         //Unsupported feature: Deletion on ""Source Type,Source Subtype,Source ID,Source Batch Name,Source Prod. Order Line,Source Ref. No.,Item No.,Location Code,Bin Code,Variant Code"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+        /*key(Key1; "Entry No.")
         {
         }
         key(Key2; "Reservation Entry", Calculation)
@@ -38,7 +38,7 @@ tableextension 70132 ActionMessageEntryExt extends "Action Message Entry"
         key(Key3; "Source Type", "Source Subtype", "Source ID", "Source Batch Name", "Source Prod. Order Line", "Source Ref. No.", "Item No.", "Location Code", "Bin Code", "Variant Code")
         {
             SumIndexFields = Quantity;
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

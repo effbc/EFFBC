@@ -43,7 +43,7 @@ tableextension 70134 ApprovalCommentLineExt extends "Approval Comment Line"
 
         //Unsupported feature: Deletion on ""Workflow Step Instance ID"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+        /*key(Key1; "Entry No.")
         {
         }
         key(Key2; "Table ID", "Document Type", "Document No.", "Record ID to Approve")
@@ -51,7 +51,7 @@ tableextension 70134 ApprovalCommentLineExt extends "Approval Comment Line"
         }
         key(Key3; "Workflow Step Instance ID")
         {
-        }
+        }*/
     }
 
 

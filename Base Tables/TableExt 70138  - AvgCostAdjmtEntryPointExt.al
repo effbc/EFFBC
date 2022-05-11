@@ -16,12 +16,12 @@ tableextension 70138 AvgCostAdjmtEntryPointExt extends "Avg. Cost Adjmt. Entry P
 
         //Unsupported feature: Deletion on ""Item No.,Cost Is Adjusted,Valuation Date"(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code", "Location Code", "Valuation Date")
-        {
-        }
-        key(Key2; "Item No.", "Cost Is Adjusted", "Valuation Date")
-        {
-        }
+        /* key(Key1; "Item No.", "Variant Code", "Location Code", "Valuation Date")
+         {
+         }
+         key(Key2; "Item No.", "Cost Is Adjusted", "Valuation Date")
+         {
+         }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

@@ -55,7 +55,7 @@ tableextension 70146 ChangeLogEntryExt extends "Change Log Entry"
 
         //Unsupported feature: Deletion on ""Table No.,Date and Time"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+        /*key(Key1; "Entry No.")
         {
         }
         key(Key2; "Table No.", "Primary Key Field 1 Value")
@@ -66,7 +66,7 @@ tableextension 70146 ChangeLogEntryExt extends "Change Log Entry"
         }
         key(Key4; "Table No.", "Primary Key Field 2 Value", "Primary Key Field 3 Value", "Date and Time")
         {
-        }
+        }*/
     }
 
 

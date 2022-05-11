@@ -141,14 +141,14 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+            //TableRelation = "Excise Bus. Posting Group";
         }
         field(13703; "Excise Prod. Posting Group"; Code[10])
         {
             CaptionML = ENU = 'Excise Prod. Posting Group',
                         ENN = 'Excise Prod. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Prod. Posting Group";
+            //TableRelation = "Excise Prod. Posting Group";
         }
         field(13708; "Excise Amount"; Decimal)
         {
@@ -282,7 +282,7 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
 
             trigger OnLookup();
             var
-                StateForm: Record "State Forms";
+            // StateForm: Record "State Forms";
             begin
             end;
         }
@@ -304,7 +304,7 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
             CaptionML = ENU = 'Service Tax Group',
                         ENN = 'Service Tax Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Service Tax Groups".Code;
+            //TableRelation = "Service Tax Groups".Code;
 
             trigger OnValidate();
             var
@@ -424,7 +424,7 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
             CaptionML = ENU = 'Process Carried Out',
                         ENN = 'Process Carried Out';
             DataClassification = ToBeClassified;
-            TableRelation = "Process Carried Out".Code;
+            // TableRelation = "Process Carried Out".Code;
         }
         field(16529; "Identification Mark"; Text[30])
         {
@@ -484,7 +484,7 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
             CaptionML = ENU = 'PIT Structure',
                         ENN = 'PIT Structure';
             DataClassification = ToBeClassified;
-            TableRelation = "Structure Header";
+            // TableRelation = "Structure Header";
         }
         field(16541; "Price Inclusive of Tax"; Boolean)
         {
@@ -575,7 +575,7 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
             CaptionML = ENU = 'GST Group Code',
                         ENN = 'GST Group Code';
             DataClassification = ToBeClassified;
-            TableRelation = "GST Group";
+            //TableRelation = "GST Group";
         }
         field(16603; "GST Group Type"; Option)
         {
@@ -649,7 +649,7 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -659,22 +659,22 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
         field(33000250; "Spec ID"; Code[20])
         {
             Description = 'QC1.0';
-            TableRelation = "Specification Header";
+            // TableRelation = "Specification Header";
         }
         field(33000251; "Quantity Accepted"; Decimal)
         {
-            CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
-                                                                     "Order Line No." = FIELD("Line No."),
-                                                                     "Entry Type" = FILTER(Accepted)));
+            /* CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
+                                                                      "Order Line No." = FIELD("Line No."),
+                                                                      "Entry Type" = FILTER(Accepted)));*/
             Description = 'QC1.0';
             Editable = false;
             FieldClass = FlowField;
         }
         field(33000252; "Quantity Rework"; Decimal)
         {
-            CalcFormula = Sum("Quality Ledger Entry"."Remaining Quantity" WHERE("Order No." = FIELD("Document No."),
+            /*CalcFormula = Sum("Quality Ledger Entry"."Remaining Quantity" WHERE("Order No." = FIELD("Document No."),
                                                                                  "Order Line No." = FIELD("Line No."),
-                                                                                 "Entry Type" = FILTER(Rework)));
+                                                                                 "Entry Type" = FILTER(Rework)));*/
             Description = 'QC1.0';
             Editable = false;
             FieldClass = FlowField;
@@ -699,9 +699,9 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
         }
         field(33000254; "Quantity Rejected"; Decimal)
         {
-            CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
-                                                                     "Order Line No." = FIELD("Line No."),
-                                                                     "Entry Type" = FILTER(Reject)));
+            /* CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE("Order No." = FIELD("Document No."),
+                                                                      "Order Line No." = FIELD("Line No."),
+                                                                      "Entry Type" = FILTER(Reject)));*/
             Description = 'QC1.0';
             Editable = false;
             FieldClass = FlowField;
@@ -748,7 +748,7 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
         field(33000259; "Spec Version"; Code[20])
         {
             Description = 'QC1.0';
-            TableRelation = "Specification Version"."Version Code" WHERE("Specification No." = FIELD("Spec ID"));
+            // TableRelation = "Specification Version"."Version Code" WHERE("Specification No." = FIELD("Spec ID"));
         }
     }
     keys
@@ -771,24 +771,26 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
 
         //Unsupported feature: Deletion on ""Sell-to Customer No."(Key)". Please convert manually.
 
-        key(Key1; "Document No.", "Line No.")
-        {
-        }
-        key(Key2; "Return Order No.", "Return Order Line No.")
-        {
-        }
-        key(Key3; "Blanket Order No.", "Blanket Order Line No.")
-        {
-        }
-        key(Key4; "Item Rcpt. Entry No.")
-        {
-        }
-        key(Key5; "Bill-to Customer No.")
-        {
-        }
-        key(Key6; "Sell-to Customer No.")
-        {
-        }
+        /*     
+         key(Key1; "Document No.", "Line No.")
+                {
+                }
+                key(Key2; "Return Order No.", "Return Order Line No.")
+                {
+                }
+                key(Key3; "Blanket Order No.", "Blanket Order Line No.")
+                {
+                }
+                key(Key4; "Item Rcpt. Entry No.")
+                {
+                }
+                key(Key5; "Bill-to Customer No.")
+                {
+                }
+                key(Key6; "Sell-to Customer No.")
+                {
+                }
+                */
     }
 
 
@@ -1035,4 +1037,3 @@ tableextension 70116 ReturnReceiptLineExt extends "Return Receipt Line"
     //LanguageManagement : LanguageManagement;
     //Variable type has not been exported.
 }
-

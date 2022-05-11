@@ -40,9 +40,9 @@ tableextension 70140 BinContentBufferExt extends "Bin Content Buffer"
 
         //Unsupported feature: Deletion on ""Location Code,Bin Code,Item No.,Variant Code,Unit of Measure Code,Lot No.,Serial No."(Key)". Please convert manually.
 
-        key(Key1; "Location Code", "Bin Code", "Item No.", "Variant Code", "Unit of Measure Code", "Lot No.", "Serial No.")
-        {
-        }
+        /* key(Key1; "Location Code", "Bin Code", "Item No.", "Variant Code", "Unit of Measure Code", "Lot No.", "Serial No.")
+         {
+         }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

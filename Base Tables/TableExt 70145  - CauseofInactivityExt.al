@@ -27,9 +27,9 @@ tableextension 70145 CauseofInactivityExt extends "Cause of Inactivity"
 
         //Unsupported feature: Deletion on "Code(Key)". Please convert manually.
 
-        key(Key1; "Zone Code")
-        {
-        }
+        /* key(Key1; "Zone Code")
+         {
+         }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

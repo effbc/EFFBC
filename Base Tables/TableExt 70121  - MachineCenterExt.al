@@ -563,15 +563,15 @@ tableextension 70121 MachineCenterExt extends "Machine Center"
 
         //Unsupported feature: Deletion on ""Work Center No."(Key)". Please convert manually.
 
-        key(Key1; "No.")
-        {
-        }
-        key(Key2; "Search Name")
-        {
-        }
-        key(Key3; "Work Center No.")
-        {
-        }
+        /* key(Key1; "No.")
+         {
+         }
+         key(Key2; "Search Name")
+         {
+         }
+         key(Key3; "Work Center No.")
+         {
+         }*/
     }
 
 
