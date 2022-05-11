@@ -1,6 +1,6 @@
 table 50017 "MAILID LIST"
 {
-    LinkedInTransaction = true;
+   // LinkedInTransaction = true;
     LinkedObject = false;
 
     fields

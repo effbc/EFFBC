@@ -2,7 +2,7 @@ table 50018 "Product Customer's List"
 {
     // version B2B1.0
 
-    LookupPageID = 60023;
+   // LookupPageID = 60023;
 
     fields
     {

@@ -452,19 +452,19 @@ table 50001 "Material Issues Header"
         }
         field(40; "Sales Order No."; Code[20])
         {
-            TableRelation = IF ("Transfer-from Code" = CONST('CS STR'),
-                                "Reason Code" = CONST('INSTALLA')) "Sales Header"."No." WHERE("Document Type" = CONST(Order),
-                                                                                             Status = CONST(Released))
-            ELSE
-            IF ("Transfer-from Code" = CONST('CS STR'),
-                                                                                                      "Reason Code" = CONST('AMC')) "Sales Header"."No." WHERE("Document Type" = CONST(Amc),
-                                                                                                                                                              Status = CONST(Released))
-            ELSE
-            IF ("Transfer-from Code" = FILTER(<> 'CS STR'),
-                                                                                                                                                                       "Reason Code" = CONST('AMC')) "Sales Header"."No." WHERE("Document Type" = CONST(Order),
-                                                                                                                                                                                                                               Status = CONST(Released))
-            ELSE
-            "Sales Header"."No." WHERE(Status = CONST(Released));
+            /*   TableRelation = IF ("Transfer-from Code" = CONST('CS STR'),
+                                   "Reason Code" = CONST('INSTALLA')) "Sales Header"."No." WHERE("Document Type" = CONST(Order),
+                                                                                                Status = CONST(Released))
+               ELSE
+               IF ("Transfer-from Code" = CONST('CS STR'),
+                                                                                                         "Reason Code" = CONST('AMC')) "Sales Header"."No." WHERE("Document Type" = CONST(Amc),
+                                                                                                                                                                 Status = CONST(Released))
+               ELSE
+               IF ("Transfer-from Code" = FILTER(<> 'CS STR'),
+                                                                                                                                                                          "Reason Code" = CONST('AMC')) "Sales Header"."No." WHERE("Document Type" = CONST(Order),
+                                                                                                                                                                                                                                  Status = CONST(Released))
+               ELSE
+               "Sales Header"."No." WHERE(Status = CONST(Released));*/
         }
         field(41; "Resource Name"; Text[50])
         {
@@ -495,8 +495,8 @@ table 50001 "Material Issues Header"
                 */
                 UserGrec.Reset;
                 UserGrec.SetRange("User Name", "User ID");
-                if UserGrec.FindFirst then
-                    "Resource Name" := UserGrec."Full Name";
+                /*  if UserGrec.FindFirst then
+                      "Resource Name" := UserGrec."Full Name";*/
                 //Rev01 End
 
                 USER_SETUP.SetRange(USER_SETUP."User ID", "User ID");
@@ -589,7 +589,7 @@ table 50001 "Material Issues Header"
 
             trigger OnLookup();
             begin
-                ShowDocDim
+                //  ShowDocDim
             end;
         }
         field(60000; "BOM Type"; Option)
@@ -663,7 +663,7 @@ table 50001 "Material Issues Header"
             trigger OnLookup();
             begin
                 UserGrec.Reset;
-                UserGrec.SetRange(levels, true);
+                //   UserGrec.SetRange(levels, true);
                 if PAGE.RunModal(9800, UserGrec) = ACTION::LookupOK then
                     "Request for Authorization" := UserGrec."User Name";
             end;
@@ -716,7 +716,7 @@ table 50001 "Material Issues Header"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -760,13 +760,13 @@ table 50001 "Material Issues Header"
             UserGrec.Reset;
             UserGrec.SetRange("User Name", UserId);
             if UserGrec.FindSet then begin
-                if UserGrec.Dept = 'STR' then begin
+                /*if UserGrec.Dept = 'STR' then begin
                     MaterialIssueLine.Reset;
                     MaterialIssueLine.SetRange("Document No.", "No.");
                     if MaterialIssueLine.FindFirst then
                         Error('You Do Not Have Right to delete Material Requests');
                 end else
-                    Error('You Do Not Have Right to delete Material Requests');
+                    Error('You Do Not Have Right to delete Material Requests');*/
             end else
                 Error('You Do Not Have Right to delete Material Requests');
         end;
@@ -783,9 +783,9 @@ table 50001 "Material Issues Header"
             until TrackingSpecifications.Next = 0;
 
 
-        InvtCommentLine.SetRange("Document Type", InvtCommentLine."Document Type"::"Material Issues");
-        InvtCommentLine.SetRange("No.", "No.");
-        InvtCommentLine.DeleteAll;
+        /* InvtCommentLine.SetRange("Document Type", InvtCommentLine."Document Type"::"Material Issues");
+         InvtCommentLine.SetRange("No.", "No.");
+         InvtCommentLine.DeleteAll;*/
 
 
         //DIM1.0  Since this Function doesn't exist in Nav 2013.
@@ -854,16 +854,16 @@ table 50001 "Material Issues Header"
         Item: Record Item;
         productionbomversion: Record "Production BOM Version";
         Service_Item_Line: Record "Service Item Line";
-        Stat: Record Station;
+        //  Stat: Record Station;
         USER_SETUP: Record "User Setup";
         UserGrec: Record User;
         "-DIM1.0-": Integer;
         MaterIssLine: Record "Material Issues Line";
-        "--DIM1.0--": ;
+        //   "--DIM1.0--": ;
         Text051: TextConst ENU = 'You may have changed a dimension.\\Do you want to update the lines?', ENN = 'You may have changed a dimension.\\Do you want to update the lines?';
         TrackingSpecifications: Record "Mat.Issue Track. Specification";
 
-    [LineStart(81)]
+    // [LineStart(81)]
     procedure InitRecord();
     var
         "Material Issues Line": Record "Material Issues Line";
@@ -875,19 +875,19 @@ table 50001 "Material Issues Header"
 
     end;
 
-    [LineStart(87)]
+    //[LineStart(87)]
     local procedure TestStatusOpen();
     begin
         TestField(Status, Status::Open);
     end;
 
-    [LineStart(90)]
+    // [LineStart(90)]
     procedure SetHideValidationDialog(NewHideValidationDialog: Boolean);
     begin
         HideValidationDialog := NewHideValidationDialog;
     end;
 
-    [LineStart(93)]
+    //[LineStart(93)]
     local procedure UpdateTransLines(FieldRef: Integer);
     var
         MaterialIssueLine: Record "Material Issues Line";
@@ -915,7 +915,7 @@ table 50001 "Material Issues Header"
         end;
     end;
 
-    [LineStart(115)]
+    // [LineStart(115)]
     procedure AssistEdit(OldMaterialIssueHeader: Record "Material Issues Header"): Boolean;
     begin
         with MaterialIssueHeader do begin
@@ -930,7 +930,7 @@ table 50001 "Material Issues Header"
         end;
     end;
 
-    [LineStart(127)]
+    //  [LineStart(127)]
     procedure ValidateShortcutDimCode(FieldNumber: Integer; var ShortcutDimCode: Code[20]);
     var
         OldDimSetID: Integer;
@@ -963,7 +963,7 @@ table 50001 "Material Issues Header"
 
     end;
 
-    [LineStart(154)]
+    // [LineStart(154)]
     procedure CopyRequisition();
     var
         IndentHeader: Record "Indent Header";
@@ -992,7 +992,7 @@ table 50001 "Material Issues Header"
         end;
     end;
 
-    [LineStart(176)]
+    // [LineStart(176)]
     procedure CopyProductionOrder();
     var
         ProdOrderLines: Record "Prod. Order Line";
@@ -1071,7 +1071,7 @@ table 50001 "Material Issues Header"
         end;
     end;
 
-    [LineStart(243)]
+    // [LineStart(243)]
     procedure CopySalesOrder();
     var
         SalesHeader: Record "Sales Header";
@@ -1105,7 +1105,7 @@ table 50001 "Material Issues Header"
             until SalesLine.Next = 0;
     end;
 
-    [LineStart(269)]
+    // [LineStart(269)]
     procedure DeleteOrder(var MaterialIssuesHeader2: Record "Material Issues Header"; var MaterialIssuesLine2: Record "Material Issues Line"): Boolean;
     var
         InvtCommentLine: Record "Inventory Comment Line";
@@ -1124,7 +1124,7 @@ table 50001 "Material Issues Header"
         end;
 
         if not DoNotDelete then begin
-            InvtCommentLine.SetRange("Document Type", InvtCommentLine."Document Type"::"Material Issues");
+            // InvtCommentLine.SetRange("Document Type", InvtCommentLine."Document Type"::"Material Issues");
             InvtCommentLine.SetRange("No.", No);
             InvtCommentLine.DeleteAll;
 
@@ -1152,7 +1152,7 @@ table 50001 "Material Issues Header"
         exit(false);
     end;
 
-    [LineStart(308)]
+    //[LineStart(308)]
     procedure CopyProductionBOM();
     var
         ProductionBOMHeader: Record "Production BOM Header";
@@ -1291,12 +1291,12 @@ table 50001 "Material Issues Header"
 
     end;
 
-    [LineStart(439)]
+    //  [LineStart(439)]
     procedure "*-*-"();
     begin
     end;
 
-    [LineStart(442)]
+    // [LineStart(442)]
     procedure GetNextNo() NumberValue: Code[20];
     var
         DateValue: Text[30];
@@ -1339,7 +1339,7 @@ table 50001 "Material Issues Header"
         NumberValue := IncStr(LastNumber);
     end;
 
-    [LineStart(473)]
+    //[LineStart(473)]
     procedure CopyFromSalesSchedule();
     var
         MaterialIssueLine: Record "Material Issues Line";
@@ -1368,7 +1368,7 @@ table 50001 "Material Issues Header"
             until SalesSchedule.Next = 0;
     end;
 
-    [LineStart(495)]
+    //[LineStart(495)]
     procedure UpdateItemsInventory();
     var
         MaterialIssuesLine: Record "Material Issues Line";
@@ -1384,32 +1384,32 @@ table 50001 "Material Issues Header"
 
     end;
 
-    [LineStart(505)]
+    //[LineStart(505)]
     procedure "---DIM1.0---"();
     begin
     end;
 
-    [LineStart(508)]
-    procedure ShowDocDim();
-    var
-        OldDimSetID: Integer;
-    begin
-        //DIM 1.0 Start
-        OldDimSetID := "Dimension Set ID";
-        "Dimension Set ID" :=
-          DimMgt.EditDimensionSet2(
-            "Dimension Set ID", StrSubstNo('%1', "No."),
-            "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code");
+    // [LineStart(508)]
+    /*  procedure ShowDocDim();
+      var
+          OldDimSetID: Integer;
+      begin
+          //DIM 1.0 Start
+          OldDimSetID := "Dimension Set ID";
+          "Dimension Set ID" :=
+         //   DimMgt.EditDimensionSet2(
+            //  "Dimension Set ID", StrSubstNo('%1', "No."),
+            //  "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code");
 
-        if OldDimSetID <> "Dimension Set ID" then begin
-            Modify;
-            if MatIssueLinesExist then
-                UpdateAllLineDim("Dimension Set ID", OldDimSetID);
-        end;
-        //DIM 1.0  End
-    end;
+        //  if OldDimSetID <> "Dimension Set ID" then begin
+            //  Modify;
+              if MatIssueLinesExist then
+                  UpdateAllLineDim("Dimension Set ID", OldDimSetID);
+          end;
+          //DIM 1.0  End
+      end;*/
 
-    [LineStart(523)]
+    // [LineStart(523)]
     procedure MatIssueLinesExist(): Boolean;
     begin
         //DIM 1.0 Start
@@ -1420,7 +1420,7 @@ table 50001 "Material Issues Header"
         //DIM 1.0 End
     end;
 
-    [LineStart(531)]
+    // [LineStart(531)]
     local procedure UpdateAllLineDim(NewParentDimSetID: Integer; OldParentDimSetID: Integer);
     var
         NewDimSetID: Integer;

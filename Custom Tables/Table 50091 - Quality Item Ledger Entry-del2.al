@@ -3,8 +3,8 @@ table 50091 "Quality Item Ledger Entry-del2"
     // version QC1.0,QCB2B1.2,QC1.2
 
     Caption = 'Quality Item Ledger Entry';
-    DrillDownPageID = 33000274;
-    LookupPageID = 33000274;
+   // DrillDownPageID = 33000274;
+   // LookupPageID = 33000274;
 
     fields
     {
@@ -166,7 +166,7 @@ table 50091 "Quality Item Ledger Entry-del2"
         field(5402;"Variant Code";Code[10])
         {
             Caption = 'Variant Code';
-            TableRelation = "Item Variant".Make WHERE ("Item No."=FIELD("Item No."));
+          //  TableRelation = "Item Variant".Make WHERE ("Item No."=FIELD("Item No."));
         }
         field(5404;"Qty. per Unit of Measure";Decimal)
         {
@@ -194,7 +194,7 @@ table 50091 "Quality Item Ledger Entry-del2"
         field(5702;"Originally Ordered Var. Code";Code[10])
         {
             Caption = 'Originally Ordered Var. Code';
-            TableRelation = "Item Variant".Make WHERE ("Item No."=FIELD("Originally Ordered No."));
+            //TableRelation = "Item Variant".Make WHERE ("Item No."=FIELD("Originally Ordered No."));
         }
         field(5703;"Out-of-Stock Substitution";Boolean)
         {
@@ -217,7 +217,7 @@ table 50091 "Quality Item Ledger Entry-del2"
         field(5707;"Product Group Code";Code[10])
         {
             Caption = 'Product Group Code';
-            TableRelation = "Product Group".Code WHERE ("Item Category Code"=FIELD("Item Category Code"));
+         //   TableRelation = "Product Group".Code WHERE ("Item Category Code"=FIELD("Item Category Code"));
         }
         field(5740;"Transfer Order No.";Code[20])
         {
@@ -258,7 +258,7 @@ table 50091 "Quality Item Ledger Entry-del2"
 
             trigger OnLookup();
             begin
-                ItemTrackingMgt.LookupLotSerialNoInfo("Item No.","Variant Code",0,"Serial No.");
+               // ItemTrackingMgt.LookupLotSerialNoInfo("Item No.","Variant Code",0,"Serial No.");
             end;
         }
         field(6501;"Lot No.";Code[20])
@@ -267,7 +267,7 @@ table 50091 "Quality Item Ledger Entry-del2"
 
             trigger OnLookup();
             begin
-                ItemTrackingMgt.LookupLotSerialNoInfo("Item No.","Variant Code",1,"Lot No.");
+               // ItemTrackingMgt.LookupLotSerialNoInfo("Item No.","Variant Code",1,"Lot No.");
             end;
         }
         field(6502;"Warranty Date";Date)
@@ -309,7 +309,7 @@ table 50091 "Quality Item Ledger Entry-del2"
         }
         field(33000251;"Quality Ledger Entry No.";Integer)
         {
-            TableRelation = "Quality Ledger Entry";
+           //TableRelation = "Quality Ledger Entry";
         }
         field(33000252;Accept;Boolean)
         {
