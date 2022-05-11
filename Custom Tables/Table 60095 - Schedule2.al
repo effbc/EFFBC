@@ -5,16 +5,16 @@ table 60095 Schedule2
     // 1.3 UPG    BOM Replacement process changes Function SetSkipOrderVerification and
     //            testOrderVerification code added.
 
-    DrillDownPageID = 60127;
-    LookupPageID = 60127;
+    // DrillDownPageID = 60127;
+    // LookupPageID = 60127;
 
     fields
     {
-        field(1;"Document No.";Code[20])
+        field(1; "Document No."; Code[20])
         {
             Editable = true;
         }
-        field(2;"Document Line No.";Integer)
+        field(2; "Document Line No."; Integer)
         {
             Editable = true;
 
@@ -44,77 +44,77 @@ table 60095 Schedule2
 
             end;
         }
-        field(3;"Line No.";Integer)
+        field(3; "Line No."; Integer)
         {
             Editable = true;
         }
-        field(4;Type;Option)
+        field(4; Type; Option)
         {
             OptionCaption = '"Item,G/l Account, "';
             OptionMembers = Item,"G/l Account"," ";
         }
-        field(5;"No.";Code[30])
+        field(5; "No."; Code[30])
         {
-            TableRelation = IF (Type=CONST(Item)) Item."No."
-                            ELSE IF (Type=CONST("G/l Account")) "G/L Account"."No.";
+            TableRelation = IF (Type = CONST(Item)) Item."No."
+            ELSE
+            IF (Type = CONST("G/l Account")) "G/L Account"."No.";
 
             trigger OnValidate();
             begin
-                if "Document Line No." <> "Line No." then
-                begin
-                //ADDED BY VIJAYA ON 16-jUN-16
-                SalesHeader.Reset;
-                SalesHeader.SetRange(SalesHeader."Document Type",SalesHeader."Document Type"::Order);
-                SalesHeader.SetRange(SalesHeader."No.","Document No.");
-                if SalesHeader.FindFirst then
-                begin
-                if SalesHeader."Order Verified" = true then
-                  if not SkipOrderVerification then//UPG1.3 19Feb2019
-                    Error('Schedule item cannot be Change the Item when sale order is verified');
+                if "Document Line No." <> "Line No." then begin
+                    //ADDED BY VIJAYA ON 16-jUN-16
+                    SalesHeader.Reset;
+                    SalesHeader.SetRange(SalesHeader."Document Type", SalesHeader."Document Type"::Order);
+                    SalesHeader.SetRange(SalesHeader."No.", "Document No.");
+                    if SalesHeader.FindFirst then begin
+                        if SalesHeader."Order Verified" = true then
+                            if not SkipOrderVerification then//UPG1.3 19Feb2019
+                                Error('Schedule item cannot be Change the Item when sale order is verified');
+                    end;
+                    //END BY VIJAYA
                 end;
-                //END BY VIJAYA
-                 end;
 
 
-                      if Item.Get(TenderLine."No.") then begin
+                if Item.Get(TenderLine."No.") then begin
                     Description := TenderLine.Description;
                     "Unit Cost" := TenderLine."Unit Cost"
-                  end  else
-                  if Item.Get("No.") then begin
-                 //   Description := Item.Description; // commented by sujani in order to not to reset sales people updated item details
-                    if Description = '' then
-                      Description := Item.Description; //added by vishnu priya on 02-07-2019
-                  //  "Unit Cost" := Item."Avg Unit Cost"; // commented by sujani in order to not to reset sales people updated item details
-                    "Posting Group":=Item."Inventory Posting Group";    //Added by Pranavi on 10-Dec-2015 for updating Posting Group
-                    Item.TestField(Blocked,false);
-                      if Item."Item Status"=Item."Item Status"::"In-Active" then   //added by pranavi on 03-06-2015 not to allow in-active items in sales lines
-                        Error('Item is IN-Activated! You cannot select this Item!');
+                end else
+                    if Item.Get("No.") then begin
+                        //   Description := Item.Description; // commented by sujani in order to not to reset sales people updated item details
+                        if Description = '' then
+                            Description := Item.Description; //added by vishnu priya on 02-07-2019
+                                                             //  "Unit Cost" := Item."Avg Unit Cost"; // commented by sujani in order to not to reset sales people updated item details
+                        "Posting Group" := Item."Inventory Posting Group";    //Added by Pranavi on 10-Dec-2015 for updating Posting Group
+                        Item.TestField(Blocked, false);
+                        if Item."Item Status" = Item."Item Status"::"In-Active" then   //added by pranavi on 03-06-2015 not to allow in-active items in sales lines
+                            Error('Item is IN-Activated! You cannot select this Item!');
 
-                  end;
+                    end;
                 //B2B SH1.0
                 ItemDesignWorksheet.Reset;
-                if ItemDesignWorksheet.Get("No.") and (Item."Replenishment System"=Item."Replenishment System"::"Prod. Order" )then
-                  "Estimated Total Unit Cost":=ItemDesignWorksheet."Total Cost"
-                else if Item."Replenishment System"=Item."Replenishment System"::Purchase then
-                  "Estimated Total Unit Cost":=Item."Avg Unit Cost";
+                if ItemDesignWorksheet.Get("No.") and (Item."Replenishment System" = Item."Replenishment System"::"Prod. Order") then
+                    "Estimated Total Unit Cost" := ItemDesignWorksheet."Total Cost"
+                else
+                    if Item."Replenishment System" = Item."Replenishment System"::Purchase then
+                        "Estimated Total Unit Cost" := Item."Avg Unit Cost";
 
-                if Type=Type::"G/l Account" then begin
-                      "G/LAccount".Get("No.");
-                      Description := "G/LAccount".Name;
-                    end;
+                if Type = Type::"G/l Account" then begin
+                    "G/LAccount".Get("No.");
+                    Description := "G/LAccount".Name;
+                end;
 
-                if "No."<>xRec."No." then begin
-                  "Estimated Unit Price":=0;
-                  "Calcaulated Amont":=0;
+                if "No." <> xRec."No." then begin
+                    "Estimated Unit Price" := 0;
+                    "Calcaulated Amont" := 0;
                 end;
                 //B2B SH1.0
             end;
         }
-        field(6;Description;Text[250])
+        field(6; Description; Text[250])
         {
             Editable = true;
         }
-        field(7;Quantity;Decimal)
+        field(7; Quantity; Decimal)
         {
             BlankZero = true;
 
@@ -122,21 +122,19 @@ table 60095 Schedule2
             begin
                 //ADDED BY VIJAYA ON 16-jUN-16
                 SalesHeader.Reset;
-                SalesHeader.SetRange(SalesHeader."Document Type",SalesHeader."Document Type"::Order);
-                SalesHeader.SetRange(SalesHeader."No.","Document No.");
-                if "Document Line No." <> "Line No." then
-                begin
+                SalesHeader.SetRange(SalesHeader."Document Type", SalesHeader."Document Type"::Order);
+                SalesHeader.SetRange(SalesHeader."No.", "Document No.");
+                if "Document Line No." <> "Line No." then begin
 
-                if SalesHeader.FindFirst then
-                begin
-                if SalesHeader."Order Verified" = true then
-                    Error('Schedule item cannot be Change the Quantity when sale order is verified');
-                end;
+                    if SalesHeader.FindFirst then begin
+                        if SalesHeader."Order Verified" = true then
+                            Error('Schedule item cannot be Change the Quantity when sale order is verified');
+                    end;
                 end;
                 //END BY VIJAYA
 
                 //TESTFIELD("Qty. Shipped",0);
-                "Estimated Total Unit Price":="Estimated Unit Price"*Quantity;
+                "Estimated Total Unit Price" := "Estimated Unit Price" * Quantity;
                 "Outstanding Qty." := Quantity - "Qty. Shipped";  // $Pranavi
                 //"Outstanding Qty.(Base)" := "Outstanding Qty.";   //$Pranavi
                 "Outstanding Qty.(Base)" := "Quantity(Base)" - "Qty.Shipped (Base)";
@@ -145,101 +143,102 @@ table 60095 Schedule2
                 //"Outstanding Qty.(Base)" := Quantity;
                 //"Quantity(Base)" := Quantity;
                 IUOM.Reset;
-                IUOM.SetRange(IUOM."Item No.","No.");
-                IUOM.SetRange(IUOM.Code,"Unit of Measure Code");
+                IUOM.SetRange(IUOM."Item No.", "No.");
+                IUOM.SetRange(IUOM.Code, "Unit of Measure Code");
                 if IUOM.FindFirst then
-                  "Quantity(Base)" := Quantity * IUOM."Qty. per Unit of Measure"
-                else "Quantity(Base)" := Quantity;
-                Amount  :=  Quantity * "Unit Cost";
+                    "Quantity(Base)" := Quantity * IUOM."Qty. per Unit of Measure"
+                else
+                    "Quantity(Base)" := Quantity;
+                Amount := Quantity * "Unit Cost";
                 //B2BSP
             end;
         }
-        field(8;"RDSO Required";Boolean)
+        field(8; "RDSO Required"; Boolean)
         {
         }
-        field(9;"Insp. Letter Sent";Boolean)
+        field(9; "Insp. Letter Sent"; Boolean)
         {
         }
-        field(10;Date;Date)
+        field(10; Date; Date)
         {
         }
-        field(11;Priority;Option)
+        field(11; Priority; Option)
         {
             OptionMembers = " ","1","2","3","4","5";
         }
-        field(12;"Document Type";Option)
+        field(12; "Document Type"; Option)
         {
             Editable = true;
             OptionMembers = Tender,"Order",Quote,"Blanket Order";
         }
-        field(13;Remarks;Text[250])
+        field(13; Remarks; Text[250])
         {
         }
-        field(14;"Tender Schedule";Text[250])
+        field(14; "Tender Schedule"; Text[250])
         {
         }
-        field(15;"Sales Description";Text[250])
+        field(15; "Sales Description"; Text[250])
         {
         }
-        field(16;"Design Conclusions1";Text[250])
+        field(16; "Design Conclusions1"; Text[250])
         {
         }
-        field(17;Dispatched;Boolean)
+        field(17; Dispatched; Boolean)
         {
         }
-        field(18;Status;Option)
+        field(18; Status; Option)
         {
             Editable = false;
             OptionMembers = Open,Release;
         }
-        field(19;"Reserved Qty. (Base)";Decimal)
+        field(19; "Reserved Qty. (Base)"; Decimal)
         {
-            CalcFormula = -Sum("Reservation Entry"."Quantity (Base)" WHERE ("Source ID"=FIELD("Document No."),
-                                                                            "Source Ref. No."=FIELD("Line No."),
-                                                                            "Source Type"=CONST(37),
-                                                                            "Source Subtype"=FIELD("Document Type"),
-                                                                            "Reservation Status"=CONST(Reservation)));
+            CalcFormula = - Sum("Reservation Entry"."Quantity (Base)" WHERE("Source ID" = FIELD("Document No."),
+                                                                            "Source Ref. No." = FIELD("Line No."),
+                                                                            "Source Type" = CONST(37),
+                                                                            "Source Subtype" = FIELD("Document Type"),
+                                                                            "Reservation Status" = CONST(Reservation)));
             FieldClass = FlowField;
         }
-        field(100;SetSelection;Boolean)
+        field(100; SetSelection; Boolean)
         {
         }
-        field(101;"M/S Item";Code[40])
+        field(101; "M/S Item"; Code[40])
         {
         }
-        field(102;"Source Document Line No.";Integer)
+        field(102; "Source Document Line No."; Integer)
         {
         }
-        field(103;"Unit Cost";Decimal)
+        field(103; "Unit Cost"; Decimal)
         {
         }
-        field(104;"Estimated Total Unit Cost";Decimal)
+        field(104; "Estimated Total Unit Cost"; Decimal)
         {
             Editable = false;
         }
-        field(105;"Estimated Unit Price";Decimal)
+        field(105; "Estimated Unit Price"; Decimal)
         {
 
             trigger OnValidate();
             begin
                 /*IF "Estimated Total Unit Price"<"Estimated Total Unit Cost" THEN
                 ERROR('Estimated Total Unit Price less then the Estimated Total Unit Cost');*/
-                "Calcaulated Amont" := "Estimated Total Unit Price" +("Estimated Total Unit Price" * Percentage/100);
-                "Estimated Total Unit Price":="Estimated Unit Price"*Quantity;
+                "Calcaulated Amont" := "Estimated Total Unit Price" + ("Estimated Total Unit Price" * Percentage / 100);
+                "Estimated Total Unit Price" := "Estimated Unit Price" * Quantity;
 
             end;
         }
-        field(106;Percentage;Decimal)
+        field(106; Percentage; Decimal)
         {
 
             trigger OnValidate();
             begin
                 if "Estimated Total Unit Price" < 1 then
-                 FieldError("Estimated Total Unit Price");
+                    FieldError("Estimated Total Unit Price");
                 Validate("Estimated Total Unit Price");
             end;
         }
-        field(107;"Calcaulated Amont";Decimal)
+        field(107; "Calcaulated Amont"; Decimal)
         {
             Editable = false;
 
@@ -248,39 +247,39 @@ table 60095 Schedule2
                 //  "Calcaulated Amont" := ("Estimated Unit Price" +("Estimated Total Unit Price" * Percentage/100))*Quantity ;
             end;
         }
-        field(108;"RPO Completion Date";Date)
+        field(108; "RPO Completion Date"; Date)
         {
         }
-        field(109;"Packet No";Code[20])
+        field(109; "Packet No"; Code[20])
         {
         }
-        field(110;"Estimated Total Unit Price";Decimal)
+        field(110; "Estimated Total Unit Price"; Decimal)
         {
 
             trigger OnValidate();
             begin
-                "Calcaulated Amont" := ("Estimated Unit Price" +("Estimated Unit Price" * Percentage/100))*Quantity;
+                "Calcaulated Amont" := ("Estimated Unit Price" + ("Estimated Unit Price" * Percentage / 100)) * Quantity;
                 //"Calcaulated Amont" := ("Estimated Unit Price" +("Estimated Total Unit Price" * Percentage/100))*Quantity ;
             end;
         }
-        field(111;"Serial No";Text[250])
+        field(111; "Serial No"; Text[250])
         {
             Enabled = false;
         }
-        field(112;"Batch No";Text[250])
+        field(112; "Batch No"; Text[250])
         {
             Caption = 'Lot No.';
             Enabled = false;
         }
-        field(150;"Purchase Expected Receipt Date";Date)
+        field(150; "Purchase Expected Receipt Date"; Date)
         {
         }
-        field(151;"Serial No.";Code[250])
+        field(151; "Serial No."; Code[250])
         {
 
             trigger OnLookup();
             var
-                ItemLedgerEntry : Record "Item Ledger Entry";
+                ItemLedgerEntry: Record "Item Ledger Entry";
             begin
                 ItemLedgerEntry.Reset;
                 ItemLedgerEntry.SetCurrentKey(ItemLedgerEntry."Item No.",
@@ -288,185 +287,184 @@ table 60095 Schedule2
                                               ItemLedgerEntry."Global Dimension 1 Code",
                                               ItemLedgerEntry."Global Dimension 2 Code",
                                               ItemLedgerEntry.Open,
-                                              ItemLedgerEntry."Remaining Quantity" );
+                                              ItemLedgerEntry."Remaining Quantity");
 
 
-                ItemLedgerEntry.SetRange(ItemLedgerEntry."Item No.","No.");
-                ItemLedgerEntry.SetRange(ItemLedgerEntry."Location Code",'Prod');
-                ItemLedgerEntry.SetFilter(ItemLedgerEntry."Remaining Quantity",'<>%1',0);
-                ItemLedgerEntry.SetFilter(ItemLedgerEntry."Entry Type",'%1|%2',
+                ItemLedgerEntry.SetRange(ItemLedgerEntry."Item No.", "No.");
+                ItemLedgerEntry.SetRange(ItemLedgerEntry."Location Code", 'Prod');
+                ItemLedgerEntry.SetFilter(ItemLedgerEntry."Remaining Quantity", '<>%1', 0);
+                ItemLedgerEntry.SetFilter(ItemLedgerEntry."Entry Type", '%1|%2',
                                           ItemLedgerEntry."Entry Type"::Transfer,
                                           ItemLedgerEntry."Entry Type"::Output);
-                if PAGE.RunModal(0,ItemLedgerEntry) = ACTION::LookupOK then begin
-                  if "Serial No."='' then
-                    "Serial No." := ItemLedgerEntry."Serial No."
-                  else
-                    "Serial No.":=xRec."Serial No."+','+ItemLedgerEntry."Serial No.";
-                  if "Lot No."='' then
-                    "Lot No." := ItemLedgerEntry."Lot No."
-                  else
-                    "Lot No.":=xRec."Lot No."+','+ItemLedgerEntry."Lot No.";
+                if PAGE.RunModal(0, ItemLedgerEntry) = ACTION::LookupOK then begin
+                    if "Serial No." = '' then
+                        "Serial No." := ItemLedgerEntry."Serial No."
+                    else
+                        "Serial No." := xRec."Serial No." + ',' + ItemLedgerEntry."Serial No.";
+                    if "Lot No." = '' then
+                        "Lot No." := ItemLedgerEntry."Lot No."
+                    else
+                        "Lot No." := xRec."Lot No." + ',' + ItemLedgerEntry."Lot No.";
 
                 end;
             end;
         }
-        field(152;"Lot No.";Code[250])
+        field(152; "Lot No."; Code[250])
         {
 
             trigger OnLookup();
             var
-                ItemLedgerEntry : Record "Item Ledger Entry";
+                ItemLedgerEntry: Record "Item Ledger Entry";
             begin
                 ItemLedgerEntry.Reset;
-                ItemLedgerEntry.SetCurrentKey("Entry Type","Item No.","Location Code",Open,"Lot No.","Serial No.","Global Dimension 2 Code");
-                ItemLedgerEntry.SetRange(ItemLedgerEntry."Item No.","No.");
-                ItemLedgerEntry.SetRange(ItemLedgerEntry."Location Code",'Prod');
-                ItemLedgerEntry.SetFilter(ItemLedgerEntry."Remaining Quantity",'<>%1',0);
-                if PAGE.RunModal(0,ItemLedgerEntry) = ACTION::LookupOK then begin
-                  if "Serial No."='' then
-                    "Serial No." := ItemLedgerEntry."Serial No."
-                  else
-                    "Serial No.":=xRec."Serial No."+','+ItemLedgerEntry."Serial No.";
-                  if "Lot No."='' then
-                    "Lot No." := ItemLedgerEntry."Lot No."
-                  else
-                    "Lot No.":=xRec."Lot No."+','+ItemLedgerEntry."Lot No.";
+                ItemLedgerEntry.SetCurrentKey("Entry Type", "Item No.", "Location Code", Open, "Lot No.", "Serial No.", "Global Dimension 2 Code");
+                ItemLedgerEntry.SetRange(ItemLedgerEntry."Item No.", "No.");
+                ItemLedgerEntry.SetRange(ItemLedgerEntry."Location Code", 'Prod');
+                ItemLedgerEntry.SetFilter(ItemLedgerEntry."Remaining Quantity", '<>%1', 0);
+                if PAGE.RunModal(0, ItemLedgerEntry) = ACTION::LookupOK then begin
+                    if "Serial No." = '' then
+                        "Serial No." := ItemLedgerEntry."Serial No."
+                    else
+                        "Serial No." := xRec."Serial No." + ',' + ItemLedgerEntry."Serial No.";
+                    if "Lot No." = '' then
+                        "Lot No." := ItemLedgerEntry."Lot No."
+                    else
+                        "Lot No." := xRec."Lot No." + ',' + ItemLedgerEntry."Lot No.";
 
                 end;
             end;
         }
-        field(153;"To be Shipped Qty";Decimal)
+        field(153; "To be Shipped Qty"; Decimal)
         {
         }
-        field(154;"Material Required Date";Date)
+        field(154; "Material Required Date"; Date)
         {
         }
-        field(155;"Plan Shifting Date";Date)
+        field(155; "Plan Shifting Date"; Date)
         {
         }
-        field(156;"Change To Specified Plan Date";Boolean)
+        field(156; "Change To Specified Plan Date"; Boolean)
         {
         }
-        field(157;"Design Conclusion2";Text[200])
+        field(157; "Design Conclusion2"; Text[200])
         {
         }
-        field(158;"Posting Group";Code[10])
+        field(158; "Posting Group"; Code[10])
         {
             Description = 'Pranavi';
         }
-        field(159;"Prod. Order Quantity";Decimal)
+        field(159; "Prod. Order Quantity"; Decimal)
         {
-            CalcFormula = Sum("Production Order".Quantity WHERE ("Sales Order No."=FIELD("Document No."),
-                                                                 "Sales Order Line No."=FIELD("Document Line No."),
-                                                                 "Schedule Line No."=FIELD("Line No."),
-                                                                 "Source No."=FIELD("No.")));
+            CalcFormula = Sum("Production Order".Quantity WHERE("Sales Order No." = FIELD("Document No."),
+                                                                 "Sales Order Line No." = FIELD("Document Line No."),
+                                                                 "Schedule Line No." = FIELD("Line No."),
+                                                                 "Source No." = FIELD("No.")));
             FieldClass = FlowField;
         }
-        field(50000;"Qty. Per";Decimal)
+        field(50000; "Qty. Per"; Decimal)
         {
-            DecimalPlaces = 4:4;
+            DecimalPlaces = 4 : 4;
 
             trigger OnValidate();
             begin
-                 Clear("Qty. to Ship");
-                 Clear("Qty. to ship (Base)");
-                 if "Document Line No." <> "Line No." then
-                begin
-                //ADDED BY VIJAYA ON 16-jUN-16
-                SalesHeader.Reset;
-                SalesHeader.SetRange(SalesHeader."Document Type",SalesHeader."Document Type"::Order);
-                SalesHeader.SetRange(SalesHeader."No.","Document No.");
-                if SalesHeader.FindFirst then
-                begin
-                if SalesHeader."Order Verified" = true then
-                    Error('Schedule item cannot be Change the Item when sale order is verified');
+                Clear("Qty. to Ship");
+                Clear("Qty. to ship (Base)");
+                if "Document Line No." <> "Line No." then begin
+                    //ADDED BY VIJAYA ON 16-jUN-16
+                    SalesHeader.Reset;
+                    SalesHeader.SetRange(SalesHeader."Document Type", SalesHeader."Document Type"::Order);
+                    SalesHeader.SetRange(SalesHeader."No.", "Document No.");
+                    if SalesHeader.FindFirst then begin
+                        if SalesHeader."Order Verified" = true then
+                            Error('Schedule item cannot be Change the Item when sale order is verified');
+                    end;
+                    //END BY VIJAYA
                 end;
-                //END BY VIJAYA
-                 end;
             end;
         }
-        field(50001;"Qty. to Ship";Decimal)
+        field(50001; "Qty. to Ship"; Decimal)
         {
 
             trigger OnValidate();
             begin
                 //
-                if "Qty. to Ship"  > "Outstanding Qty." then
-                  Error(Text50000);
+                if "Qty. to Ship" > "Outstanding Qty." then
+                    Error(Text50000);
 
                 //B2BSP
                 if "Qty. Per" = 0 then
-                  Error('Qty. Per Must have a value in shed line no.:'+Format("Line No.")+' of sales line: '+Format("Document Line No."));
+                    Error('Qty. Per Must have a value in shed line no.:' + Format("Line No.") + ' of sales line: ' + Format("Document Line No."));
 
                 IUOM.Reset;
-                IUOM.SetRange(IUOM."Item No.","No.");
-                IUOM.SetRange(IUOM.Code,"Unit of Measure Code");
+                IUOM.SetRange(IUOM."Item No.", "No.");
+                IUOM.SetRange(IUOM.Code, "Unit of Measure Code");
                 if IUOM.FindFirst then
-                  "Qty. to ship (Base)" := "Qty. to Ship" * IUOM."Qty. per Unit of Measure"
-                else "Qty. to ship (Base)" := "Qty. to Ship";
+                    "Qty. to ship (Base)" := "Qty. to Ship" * IUOM."Qty. per Unit of Measure"
+                else
+                    "Qty. to ship (Base)" := "Qty. to Ship";
                 //B2BSP
             end;
         }
-        field(50002;"Qty. Shipped";Decimal)
+        field(50002; "Qty. Shipped"; Decimal)
         {
         }
-        field(50003;"Outstanding Qty.";Decimal)
+        field(50003; "Outstanding Qty."; Decimal)
         {
         }
-        field(50004;"Qty. to ship (Base)";Decimal)
+        field(50004; "Qty. to ship (Base)"; Decimal)
         {
         }
-        field(50005;"Qty.Shipped (Base)";Decimal)
+        field(50005; "Qty.Shipped (Base)"; Decimal)
         {
         }
-        field(50006;"Outstanding Qty.(Base)";Decimal)
+        field(50006; "Outstanding Qty.(Base)"; Decimal)
         {
         }
-        field(50007;"Quantity(Base)";Decimal)
+        field(50007; "Quantity(Base)"; Decimal)
         {
         }
-        field(50008;"Location Code";Code[20])
+        field(50008; "Location Code"; Code[20])
         {
-            TableRelation = Location WHERE ("Use As In-Transit"=CONST(false));
+            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
         }
-        field(50009;"Qty. per Unit of Measure";Decimal)
-        {
-        }
-        field(50010;Amount;Decimal)
+        field(50009; "Qty. per Unit of Measure"; Decimal)
         {
         }
-        field(50011;"Prod. Qty";Decimal)
+        field(50010; Amount; Decimal)
+        {
+        }
+        field(50011; "Prod. Qty"; Decimal)
         {
 
             trigger OnValidate();
             begin
 
                 CalcFields("Prod. Order Quantity");
-                if "Prod. Order Quantity"+"Prod. Qty" > Quantity then
-                  Error(text112);
+                if "Prod. Order Quantity" + "Prod. Qty" > Quantity then
+                    Error(text112);
             end;
         }
-        field(50012;"Prod. Due Date";Date)
+        field(50012; "Prod. Due Date"; Date)
         {
         }
-        field(50013;"Reserved Quantity";Decimal)
+        field(50013; "Reserved Quantity"; Decimal)
         {
-            CalcFormula = -Sum("Reservation Entry".Quantity WHERE ("Source ID"=FIELD("Document No."),
-                                                                   "Source Ref. No."=FIELD("Line No."),
-                                                                   "Source Type"=CONST(37),
-                                                                   "Source Subtype"=FIELD("Document Type"),
-                                                                   "Reservation Status"=CONST(Reservation)));
-            CaptionML = ENU='Reserved Quantity',
-                        ENN='Reserved Quantity';
-            DecimalPlaces = 0:5;
+            CalcFormula = - Sum("Reservation Entry".Quantity WHERE("Source ID" = FIELD("Document No."),
+                                                                   "Source Ref. No." = FIELD("Line No."),
+                                                                   "Source Type" = CONST(37),
+                                                                   "Source Subtype" = FIELD("Document Type"),
+                                                                   "Reservation Status" = CONST(Reservation)));
+            CaptionML = ENU = 'Reserved Quantity',
+                        ENN = 'Reserved Quantity';
+            DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
-        field(50014;"Variant Code";Code[10])
+        field(50014; "Variant Code"; Code[10])
         {
-            CaptionML = ENU='Variant Code',
-                        ENN='Variant Code';
-            TableRelation = IF (Type=CONST(Item)) "Item Variant".Make WHERE ("Item No."=FIELD("No."));
+            CaptionML = ENU = 'Variant Code',
+                        ENN = 'Variant Code';
+            //   TableRelation = IF (Type = CONST(Item)) "Item Variant".Make WHERE("Item No." = FIELD("No."));
 
             trigger OnValidate();
             begin
@@ -507,20 +505,21 @@ table 60095 Schedule2
 
             end;
         }
-        field(50015;"Bin Code";Code[20])
+        field(50015; "Bin Code"; Code[20])
         {
-            CaptionML = ENU='Bin Code',
-                        ENN='Bin Code';
-            TableRelation = IF ("Document Type"=FILTER(Order),
-                                Quantity=FILTER(>=0)) "Bin Content"."Bin Code" WHERE ("Location Code"=FIELD("Location Code"),
-                                                                                      "Item No."=FIELD("No."),
-                                                                                      "Variant Code"=FIELD("Variant Code"))
-                                                                                      ELSE Bin.Code WHERE ("Location Code"=FIELD("Location Code"));
+            CaptionML = ENU = 'Bin Code',
+                        ENN = 'Bin Code';
+            TableRelation = IF ("Document Type" = FILTER(Order),
+                                Quantity = FILTER(>= 0)) "Bin Content"."Bin Code" WHERE("Location Code" = FIELD("Location Code"),
+                                                                                      "Item No." = FIELD("No."),
+                                                                                      "Variant Code" = FIELD("Variant Code"))
+            ELSE
+            Bin.Code WHERE("Location Code" = FIELD("Location Code"));
 
             trigger OnLookup();
             var
-                WMSManagement : Codeunit "WMS Management";
-                BinCode : Code[20];
+                WMSManagement: Codeunit "WMS Management";
+                BinCode: Code[20];
             begin
                 /*
                 IF NOT IsInbound AND ("Quantity (Base)" <> 0) THEN
@@ -536,7 +535,7 @@ table 60095 Schedule2
 
             trigger OnValidate();
             var
-                WMSManagement : Codeunit "WMS Management";
+                WMSManagement: Codeunit "WMS Management";
             begin
                 /*
                 IF "Bin Code" <> '' THEN BEGIN
@@ -563,46 +562,48 @@ table 60095 Schedule2
 
             end;
         }
-        field(50016;"Unit of Measure Code";Code[10])
+        field(50016; "Unit of Measure Code"; Code[10])
         {
-            TableRelation = IF (Type=CONST(Item)) "Item Unit of Measure".Code WHERE ("Item No."=FIELD("No."))
-                            ELSE "Unit of Measure";
+            TableRelation = IF (Type = CONST(Item)) "Item Unit of Measure".Code WHERE("Item No." = FIELD("No."))
+            ELSE
+            "Unit of Measure";
 
             trigger OnValidate();
             begin
-                TestField("Qty. Shipped",0);
+                TestField("Qty. Shipped", 0);
 
                 IUOM.Reset;
-                IUOM.SetRange(IUOM."Item No.","No.");
-                IUOM.SetRange(IUOM.Code,"Unit of Measure Code");
+                IUOM.SetRange(IUOM."Item No.", "No.");
+                IUOM.SetRange(IUOM.Code, "Unit of Measure Code");
                 if IUOM.FindFirst then
-                  "Quantity(Base)" := Quantity * IUOM."Qty. per Unit of Measure"
-                else "Quantity(Base)" := Quantity;
+                    "Quantity(Base)" := Quantity * IUOM."Qty. per Unit of Measure"
+                else
+                    "Quantity(Base)" := Quantity;
             end;
         }
-        field(50017;"Planned Dispatch Date";Date)
+        field(50017; "Planned Dispatch Date"; Date)
         {
             Description = 'Pranavi-for BOI Planning';
         }
-        field(50018;"Purchase Remarks";Option)
+        field(50018; "Purchase Remarks"; Option)
         {
             OptionCaption = '" ,Sales Configuration Pending,Purchase order placed Mat Exp,Call letters Pending,Purchase Prices under negotiations,Material Received,Material Supplied-Invoice Pending,PO will place before Mfg items Ready"';
             OptionMembers = " ","Sales Conformation Pending","Purchase order placed Mat Exp","Call letters Pending","Purchase Prices under negotiations","Material Received","Material Supplied-Invoice Pending","PO will place before Mfg items Ready";
         }
-        field(50019;"LOA Schedule No";Text[60])
+        field(50019; "LOA Schedule No"; Text[60])
         {
         }
     }
 
     keys
     {
-        key(Key1;"Document Type","Document No.","Document Line No.","Line No.")
+        key(Key1; "Document Type", "Document No.", "Document Line No.", "Line No.")
         {
         }
-        key(Key2;"M/S Item")
+        key(Key2; "M/S Item")
         {
         }
-        key(Key3;"Material Required Date","No.")
+        key(Key3; "Material Required Date", "No.")
         {
             SumIndexFields = "To be Shipped Qty";
         }
@@ -614,8 +615,8 @@ table 60095 Schedule2
 
     trigger OnDelete();
     var
-        PrdOrder : Record "Production Order";
-        rpoQty : Integer;
+        PrdOrder: Record "Production Order";
+        rpoQty: Integer;
     begin
         /*
         rpoQty:=0;
@@ -631,9 +632,9 @@ table 60095 Schedule2
         IF rpoQty>0 THEN
           ERROR('Already '+FORMAT(rpoQty)+' Production Orders was released on this Product. Please contact Production manager for further actions');
         */
-        
-        
-        
+
+
+
         /*
         // Added by Rakesh on 5-Jul-14 to block deleting the schedule if the saleorder is released
         SalesHeader.RESET;
@@ -647,10 +648,9 @@ table 60095 Schedule2
         // end by rakesh
         */
         //ADDED BY VIJAYA ON 16-jUN-16
-        if SalesHeader.FindFirst then
-        begin
-        if SalesHeader."Order Verified" = true then
-            Error('Schedule item cannot be inserted when sale order is verified');
+        if SalesHeader.FindFirst then begin
+            if SalesHeader."Order Verified" = true then
+                Error('Schedule item cannot be inserted when sale order is verified');
         end;
         //END BY VIJAYA
 
@@ -660,39 +660,36 @@ table 60095 Schedule2
     begin
         // Added by Rakesh on 5-Jul-14 to block inserting the schedule if the saleorder is released
         SalesHeader.Reset;
-        SalesHeader.SetRange(SalesHeader."No.","Document No.");
-        SalesHeader.SetRange(SalesHeader."Document Type",SalesHeader."Document Type"::Order);
-        if SalesHeader.FindFirst then
-        begin
-        if SalesHeader.Status = 1 then
-            Error('Schedule item cannot be inserted when sale order is released');
+        SalesHeader.SetRange(SalesHeader."No.", "Document No.");
+        SalesHeader.SetRange(SalesHeader."Document Type", SalesHeader."Document Type"::Order);
+        if SalesHeader.FindFirst then begin
+            /* if SalesHeader.Status = 1 then
+                 Error('Schedule item cannot be inserted when sale order is released');*/
         end;
         // end by rakesh
         //ADDED BY VIJAYA ON 16-jUN-16
-        if "Document Line No." <> "Line No." then
-        begin
+        if "Document Line No." <> "Line No." then begin
 
-        if SalesHeader.FindFirst then
-        begin
-        if SalesHeader."Order Verified" = true then
-            Error('Schedule item cannot be inserted when sale order is verified');
-        end;
+            if SalesHeader.FindFirst then begin
+                if SalesHeader."Order Verified" = true then
+                    Error('Schedule item cannot be inserted when sale order is verified');
+            end;
         end;
         //END BY VIJAYA
 
         // $Pranavi
         SalesLine.Reset;
-        SalesLine.SetRange(SalesLine."Document No.","Document No.");
-        SalesLine.SetRange(SalesLine."Line No.","Document Line No.");
+        SalesLine.SetRange(SalesLine."Document No.", "Document No.");
+        SalesLine.SetRange(SalesLine."Line No.", "Document Line No.");
         if SalesLine.FindFirst then
-          "Location Code" := SalesLine."Location Code";
+            "Location Code" := SalesLine."Location Code";
         // $Pranavi End
     end;
 
     trigger OnModify();
     var
-        PrdOrder : Record "Production Order";
-        rpoQty : Integer;
+        PrdOrder: Record "Production Order";
+        rpoQty: Integer;
     begin
         /*
         rpoQty:=0;
@@ -716,95 +713,95 @@ table 60095 Schedule2
         */
         "Outstanding Qty." := Quantity - "Qty. Shipped";  // $Pranavi
         //"Outstanding Qty.(Base)" := "Outstanding Qty.";   // $Pranavi
-        "Outstanding Qty.(Base)" := "Quantity(Base)" -  "Qty.Shipped (Base)";
+        "Outstanding Qty.(Base)" := "Quantity(Base)" - "Qty.Shipped (Base)";
 
     end;
 
     var
-        Item : Record Item;
-        StdTxt : Record "Standard Text";
-        TenderLine : Record "Tender Line";
-        SalesLine : Record "Sales Line";
-        ItemDesignWorksheet : Record "Item Design Worksheet Header";
-        "G/LAccount" : Record "G/L Account";
-        SalesHeader : Record "Sales Header";
-        Text50000 : Label 'Qty. to Ship must be less than Outstanding Quantity';
-        text112 : Label 'You can''t create more porduction order''s than Qty';
-        IUOM : Record "Item Unit of Measure";
-        SkipOrderVerification : Boolean;
+        Item: Record Item;
+        StdTxt: Record "Standard Text";
+        TenderLine: Record "Tender Line";
+        SalesLine: Record "Sales Line";
+        ItemDesignWorksheet: Record "Item Design Worksheet Header";
+        "G/LAccount": Record "G/L Account";
+        SalesHeader: Record "Sales Header";
+        Text50000: Label 'Qty. to Ship must be less than Outstanding Quantity';
+        text112: Label 'You can''t create more porduction order''s than Qty';
+        IUOM: Record "Item Unit of Measure";
+        SkipOrderVerification: Boolean;
 
-    [LineStart(4214)]
-    procedure CopySchedule(var Rec : Record Schedule2);
+    //[LineStart(4214)]
+    procedure CopySchedule(var Rec: Record Schedule2);
     var
-        Schedule : Record Schedule2;
-        ScheduleInsert : Record Schedule2;
-        ScheduleInsert1 : Record Schedule2;
-        "LineNo." : Integer;
+        Schedule: Record Schedule2;
+        ScheduleInsert: Record Schedule2;
+        ScheduleInsert1: Record Schedule2;
+        "LineNo.": Integer;
     begin
-        if PAGE.RunModal(0,Schedule) = ACTION::LookupOK then begin
-          Schedule.LockTable;
-          Schedule.SetRange(SetSelection,true);
-          if Schedule.Find('-') then
-            repeat
-              ScheduleInsert."Document Type" := Rec."Document Type";
-              ScheduleInsert."Document No." := Rec."Document No.";
-              ScheduleInsert."Document Line No." := Rec."Document Line No.";
-              ScheduleInsert.SetRange("Document No.",Rec."Document No.");
-              if ScheduleInsert.Find('+') then
-                ScheduleInsert."Line No." := ScheduleInsert."Line No." + 10000
-              else
-                ScheduleInsert."Line No." := 10000;
-              ScheduleInsert.Type := Schedule.Type;
-              ScheduleInsert."No." := Schedule."No.";
-              ScheduleInsert.Description := Schedule.Description;
-              ScheduleInsert."Unit of Measure Code" := Schedule."Unit of Measure Code";
-              ScheduleInsert.Quantity := Schedule.Quantity;
-              ScheduleInsert.Validate(Quantity);
-              ScheduleInsert."RDSO Required" := Schedule."RDSO Required";
-              ScheduleInsert."Insp. Letter Sent" := Schedule."Insp. Letter Sent";
-              ScheduleInsert.Date := Schedule.Date;
-              ScheduleInsert.Priority := Schedule.Priority;
-              ScheduleInsert.Remarks := Schedule.Remarks;
-              ScheduleInsert."Tender Schedule" := Schedule."Tender Schedule";
-              ScheduleInsert."Sales Description" := Schedule."Sales Description";
-              ScheduleInsert."Design Conclusions1" := Schedule."Design Conclusions1";
-              ScheduleInsert.Dispatched := Schedule.Dispatched;
-              ScheduleInsert.Insert;
-            until Schedule.Next = 0;
-          Schedule.SetRange(SetSelection,true);
-          Schedule.ModifyAll(SetSelection,false);
+        if PAGE.RunModal(0, Schedule) = ACTION::LookupOK then begin
+            Schedule.LockTable;
+            Schedule.SetRange(SetSelection, true);
+            if Schedule.Find('-') then
+                repeat
+                    ScheduleInsert."Document Type" := Rec."Document Type";
+                    ScheduleInsert."Document No." := Rec."Document No.";
+                    ScheduleInsert."Document Line No." := Rec."Document Line No.";
+                    ScheduleInsert.SetRange("Document No.", Rec."Document No.");
+                    if ScheduleInsert.Find('+') then
+                        ScheduleInsert."Line No." := ScheduleInsert."Line No." + 10000
+                    else
+                        ScheduleInsert."Line No." := 10000;
+                    ScheduleInsert.Type := Schedule.Type;
+                    ScheduleInsert."No." := Schedule."No.";
+                    ScheduleInsert.Description := Schedule.Description;
+                    ScheduleInsert."Unit of Measure Code" := Schedule."Unit of Measure Code";
+                    ScheduleInsert.Quantity := Schedule.Quantity;
+                    ScheduleInsert.Validate(Quantity);
+                    ScheduleInsert."RDSO Required" := Schedule."RDSO Required";
+                    ScheduleInsert."Insp. Letter Sent" := Schedule."Insp. Letter Sent";
+                    ScheduleInsert.Date := Schedule.Date;
+                    ScheduleInsert.Priority := Schedule.Priority;
+                    ScheduleInsert.Remarks := Schedule.Remarks;
+                    ScheduleInsert."Tender Schedule" := Schedule."Tender Schedule";
+                    ScheduleInsert."Sales Description" := Schedule."Sales Description";
+                    ScheduleInsert."Design Conclusions1" := Schedule."Design Conclusions1";
+                    ScheduleInsert.Dispatched := Schedule.Dispatched;
+                    ScheduleInsert.Insert;
+                until Schedule.Next = 0;
+            Schedule.SetRange(SetSelection, true);
+            Schedule.ModifyAll(SetSelection, false);
         end;
     end;
 
-    [LineStart(4249)]
+    //[LineStart(4249)]
     procedure "--B2BSP--"();
     begin
     end;
 
-    [LineStart(4252)]
-    procedure InitTrackingSpecification(var ScheduleComp : Record Schedule2;var TrackingSpecification : Record "Tracking Specification");
+    //[LineStart(4252)]
+    procedure InitTrackingSpecification(var ScheduleComp: Record Schedule2; var TrackingSpecification: Record "Tracking Specification");
     begin
         TrackingSpecification.Init;
         TrackingSpecification."Source Type" := DATABASE::Schedule2;
-        with ScheduleComp do begin
-          TrackingSpecification."Item No." := ScheduleComp."No.";
-          TrackingSpecification."Location Code" := "Location Code" ;
-          TrackingSpecification.Description := ScheduleComp.Description;
-          //TrackingSpecification."Variant Code" := "Variant Code";
-          TrackingSpecification."Source Subtype" := Type;
-          TrackingSpecification."Source ID" := "Document No.";
-          TrackingSpecification."Source Batch Name" := '';
-          TrackingSpecification."Source Prod. Order Line" := "Document Line No.";
-          TrackingSpecification."Source Ref. No." := "Line No.";
-          TrackingSpecification."Quantity (Base)" := "Quantity(Base)";
-        end;
+        /* with ScheduleComp do begin
+           TrackingSpecification."Item No." := ScheduleComp."No.";
+           TrackingSpecification."Location Code" := "Location Code" ;
+           TrackingSpecification.Description := ScheduleComp.Description;
+           //TrackingSpecification."Variant Code" := "Variant Code";
+           TrackingSpecification."Source Subtype" := Type;
+           TrackingSpecification."Source ID" := "Document No.";
+           TrackingSpecification."Source Batch Name" := '';
+           TrackingSpecification."Source Prod. Order Line" := "Document Line No.";
+           TrackingSpecification."Source Ref. No." := "Line No.";
+           TrackingSpecification."Quantity (Base)" := "Quantity(Base)";
+         end;*/
     end;
 
-    [LineStart(4268)]
-    procedure CallTracking(var Schedule : Record "Posted Material Issues Header");
+    //[LineStart(4268)]
+    procedure CallTracking(var Schedule: Record "Posted Material Issues Header");
     var
-        TrackingSpecification : Record "Tracking Specification";
-        ItemTrackingForm : Page "Item Tracking Lines";
+        TrackingSpecification: Record "Tracking Specification";
+        ItemTrackingForm: Page "Item Tracking Lines";
     begin
         /*
         InitTrackingSpecification(Rec,TrackingSpecification);
@@ -815,27 +812,27 @@ table 60095 Schedule2
 
     end;
 
-    [LineStart(4276)]
-    procedure IsInbound() : Boolean;
+    //[LineStart(4276)]
+    procedure IsInbound(): Boolean;
     begin
         case "Document Type" of
-          "Document Type"::Order:
-            exit("Quantity(Base)" < 0);
+            "Document Type"::Order:
+                exit("Quantity(Base)" < 0);
         end;
 
         exit(false);
     end;
 
-    [LineStart(4284)]
-    procedure RowID1() : Text[250];
+    //[LineStart(4284)]
+    procedure RowID1(): Text[250];
     var
-        ItemTrackingMgt : Codeunit "Item Tracking Management";
+        ItemTrackingMgt: Codeunit "Item Tracking Management";
     begin
-        exit(ItemTrackingMgt.ComposeRowID(DATABASE::Schedule2,"Document Type",
-            "Document No.",'',"Document Line No.","Line No."));
+        exit(ItemTrackingMgt.ComposeRowID(DATABASE::Schedule2, "Document Type",
+            "Document No.", '', "Document Line No.", "Line No."));
     end;
 
-    [LineStart(4288)]
+    //[LineStart(4288)]
     procedure SetSkipOrderVerification();
     begin
         //UPG1.3 19Feb2019 //New function

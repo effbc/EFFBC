@@ -10,8 +10,8 @@ table 60081 "MSPT Header"
     // ---------------------------------------------------
     // 01  B2B    MSPT Header
 
-    DrillDownPageID = 60101;
-    LookupPageID = 60101;
+  //  DrillDownPageID = 60101;
+   // LookupPageID = 60101;
 
     fields
     {

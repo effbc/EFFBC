@@ -2,8 +2,8 @@ table 60090 "Item Lot Numbers"
 {
     // version DRK
 
-    DrillDownPageID = 60069;
-    LookupPageID = 60069;
+   // DrillDownPageID = 60069;
+    //LookupPageID = 60069;
 
     fields
     {

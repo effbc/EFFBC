@@ -1,7 +1,7 @@
 table 60080 "Material Issue Line"
 {
-    DrillDownPageID = 60141;
-    LookupPageID = 60141;
+   // DrillDownPageID = 60141;
+    //LookupPageID = 60141;
 
     fields
     {

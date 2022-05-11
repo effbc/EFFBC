@@ -3,29 +3,29 @@ table 60093 "Calibration Procedure Header"
     // version Cal1.0
 
     Caption = 'Calibration Procedure Header';
-    LookupPageID = 60161;
+    // LookupPageID = 60161;
 
     fields
     {
-        field(1;"No.";Code[20])
+        field(1; "No."; Code[20])
         {
             Caption = 'No.';
 
             trigger OnValidate();
             begin
 
-                if "No." <> xRec."No." then begin
-                  QCSetup.Get ;
-                  NoSeriesMgt.TestManual(QCSetup."Calibration Procedure No.");
-                  "No. Series" := '';
-                end;
+                /*  if "No." <> xRec."No." then begin
+                    QCSetup.Get ;
+                    NoSeriesMgt.TestManual(QCSetup."Calibration Procedure No.");
+                    "No. Series" := '';
+                  end;*/
             end;
         }
-        field(2;Description;Text[50])
+        field(2; Description; Text[50])
         {
             Caption = 'Description';
         }
-        field(3;"No. Series";Code[10])
+        field(3; "No. Series"; Code[10])
         {
             Caption = 'No. Series';
             Editable = false;
@@ -35,7 +35,7 @@ table 60093 "Calibration Procedure Header"
 
     keys
     {
-        key(Key1;"No.")
+        key(Key1; "No.")
         {
         }
     }
@@ -46,30 +46,30 @@ table 60093 "Calibration Procedure Header"
 
     trigger OnInsert();
     begin
-        QCSetup.Get ;
-        if "No." = '' then begin
-          QCSetup.TestField("Calibration Procedure No.");
-          NoSeriesMgt.InitSeries(QCSetup."Calibration Procedure No.",xRec."No. Series",0D,"No.","No. Series");
-        end;
+        /*  QCSetup.Get ;
+          if "No." = '' then begin
+          //  QCSetup.TestField("Calibration Procedure No.");
+            NoSeriesMgt.InitSeries(QCSetup."Calibration Procedure No.",xRec."No. Series",0D,"No.","No. Series");
+          end;*/
     end;
 
     var
-        Text000 : Label 'No %1 was found.';
-        Text001 : Label 'No %1 was found for %2 %3.';
-        QCSetup : Record "Quality Control Setup";
-        CalProcHeader : Record "Calibration Procedure Header";
-        CalProSetup : Record "Calibration Setup";
-        CalProcHeader2 : Record "Calibration Procedure Header";
-        NoSeriesMgt : Codeunit NoSeriesManagement;
-        Text002 : Label 'Calibration Procedure not found';
+        Text000: Label 'No %1 was found.';
+        Text001: Label 'No %1 was found for %2 %3.';
+        // QCSetup : Record "Quality Control Setup";
+        CalProcHeader: Record "Calibration Procedure Header";
+        CalProSetup: Record "Calibration Setup";
+        CalProcHeader2: Record "Calibration Procedure Header";
+        NoSeriesMgt: Codeunit NoSeriesManagement;
+        Text002: Label 'Calibration Procedure not found';
 
-    [LineStart(4042)]
-    procedure AssistEdit(OldCalProcHeader : Record "Calibration Procedure Header") : Boolean;
+    //[LineStart(4042)]
+    procedure AssistEdit(OldCalProcHeader: Record "Calibration Procedure Header"): Boolean;
     begin
-        with CalProcHeader do begin
+        /*with CalProcHeader do begin
           CalProcHeader := Rec;
           QCSetup.Get;
-          QCSetup.TestField("Calibration Procedure No.");
+      //    QCSetup.TestField("Calibration Procedure No.");
           if NoSeriesMgt.SelectSeries(QCSetup."Calibration Procedure No.",OldCalProcHeader."No. Series","No. Series") then begin
             NoSeriesMgt.SetSeries("No.");
             Rec := CalProcHeader;
@@ -78,7 +78,7 @@ table 60093 "Calibration Procedure Header"
           end;
     end;
 
-    [LineStart(4054)]
+    //[LineStart(4054)]
     procedure ShowCalProc(Calibration : Record Calibration);
     var
         CalProFound : Boolean;
@@ -108,22 +108,24 @@ table 60093 "Calibration Procedure Header"
 
     end;
 
-    [LineStart(4078)]
-    procedure MarkCalProHeader(CalProSetup2 : Record "Calibration Setup");
+    //[LineStart(4078)]
+    procedure MarkCalProHeader(CalProSetup2: Record "Calibration Setup");
     begin
         CalProSetup2.Find('-');
         repeat
-          CalProcHeader2.Get(CalProSetup2."Procedure No.");
-          CalProcHeader2.Mark(true);
+            CalProcHeader2.Get(CalProSetup2."Procedure No.");
+            CalProcHeader2.Mark(true);
         until CalProSetup2.Next = 0;
     end;
 
-    [LineStart(4085)]
+
+    //[LineStart(4085)]
+    /*
     procedure ShowCalProcForIDs(IDS : Record "Inspection Datasheet Header");
     var
         CalProFound : Boolean;
     begin
-        /*
+        
         CalProSetup.RESET;
         CalProSetup.SETRANGE("Equipment No.",IDS."Item No.");
         CalProFound := CalProSetup.FIND('-');
@@ -144,8 +146,9 @@ table 60093 "Calibration Procedure Header"
           CalProcHeader2.RESET;
         END ELSE
           MESSAGE(Text002);
-        */
+        
 
     end;
+    */
 }
 

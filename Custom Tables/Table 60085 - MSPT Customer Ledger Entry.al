@@ -11,8 +11,8 @@ table 60085 "MSPT Customer Ledger Entry"
     // 01  B2B    MSPT Customer Ledger Entry
 
     Caption = 'MSPT Customer Ledger Entry';
-    DrillDownPageID = 60107;
-    LookupPageID = 60107;
+ //   DrillDownPageID = 60107;
+   // LookupPageID = 60107;
 
     fields
     {
