@@ -157,7 +157,7 @@ table 60059 "Inprocess Inspection"
         field(5402;"Variant Code";Code[10])
         {
             Caption = 'Variant Code';
-            TableRelation = "Item Variant".Make WHERE ("Item No."=FIELD("Item No."));
+            //TableRelation = "Item Variant".Make WHERE ("Item No."=FIELD("Item No."));
         }
         field(5404;"Qty. per Unit of Measure";Decimal)
         {
@@ -185,7 +185,7 @@ table 60059 "Inprocess Inspection"
         field(5702;"Originally Ordered Var. Code";Code[10])
         {
             Caption = 'Originally Ordered Var. Code';
-            TableRelation = "Item Variant".Make WHERE ("Item No."=FIELD("Originally Ordered No."));
+           // TableRelation = "Item Variant".Make WHERE ("Item No."=FIELD("Originally Ordered No."));
         }
         field(5703;"Out-of-Stock Substitution";Boolean)
         {
@@ -208,7 +208,7 @@ table 60059 "Inprocess Inspection"
         field(5707;"Product Group Code";Code[10])
         {
             Caption = 'Product Group Code';
-            TableRelation = "Product Group".Code WHERE ("Item Category Code"=FIELD("Item Category Code"));
+         //   TableRelation = "Product Group".Code WHERE ("Item Category Code"=FIELD("Item Category Code"));
         }
         field(5740;"Transfer Order No.";Code[20])
         {

@@ -141,7 +141,7 @@ table 60060 "Quotation Comparision"
         field(13790;Structure;Code[10])
         {
             Caption = 'Structure';
-            TableRelation = "Structure Header";
+        //    TableRelation = "Structure Header";
 
             trigger OnValidate();
             var

@@ -2,8 +2,8 @@ table 60051 "Defect Master"
 {
     // version B2B1.0
 
-    DrillDownPageID = 60074;
-    LookupPageID = 60074;
+  //  DrillDownPageID = 60074;
+  //  LookupPageID = 60074;
 
     fields
     {

@@ -2,8 +2,8 @@ table 60048 CFormlist
 {
     // version B2B1.0
 
-    DrillDownPageID = 60069;
-    LookupPageID = 60069;
+  // DrillDownPageID = 60069;
+  //  LookupPageID = 60069;
 
     fields
     {

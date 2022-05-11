@@ -4,7 +4,7 @@ table 60033 "Specification Parameters"
 
     // 2.0      UPGREV                        Code Reviewed and Field User id TableRelation Changed.
 
-    LookupPageID = 60052;
+   // LookupPageID = 60052;
 
     fields
     {

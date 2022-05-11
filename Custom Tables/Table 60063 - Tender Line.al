@@ -2,8 +2,8 @@ table 60063 "Tender Line"
 {
     // version B2B1.0,DWS1.0,SH1.0
 
-    DrillDownPageID = 60084;
-    LookupPageID = 60084;
+ //   DrillDownPageID = 60084;
+  //  LookupPageID = 60084;
 
     fields
     {
@@ -302,7 +302,7 @@ table 60063 "Tender Line"
         ArchieveTenderLine : Record "Tender Line Archive";
         TH : Record "Tender Header";
 
-    [LineStart(3328)]
+   // [LineStart(3328)]
     procedure TestStatusOpen();
     var
         TenderHeader : Record "Tender Header";
