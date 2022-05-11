@@ -2,7 +2,7 @@ table 60019 "Pre Site Check List Parameters"
 {
     // version B2B1.0
 
-    LookupPageID = 60033;
+  //  LookupPageID = 60033;
 
     fields
     {

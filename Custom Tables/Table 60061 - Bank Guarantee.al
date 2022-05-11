@@ -5,12 +5,12 @@ table 60061 "Bank Guarantee"
     // 2.0      UPGREV                        Code Reviewed and Field "Final Railway Bill Date" and  Warranty Period Code changed for process
     //                                        little bit faster.
 
-    LookupPageID = 60081;
-    Permissions = TableData "Sales Invoice Header"=rm;
+    // LookupPageID = 60081;
+    Permissions = TableData "Sales Invoice Header" = rm;
 
     fields
     {
-        field(1;"BG No.";Code[20])
+        field(1; "BG No."; Code[20])
         {
             NotBlank = true;
 
@@ -19,7 +19,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(2;Description;Text[30])
+        field(2; Description; Text[30])
         {
 
             trigger OnValidate();
@@ -27,7 +27,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(3;"Issuing Bank";Text[30])
+        field(3; "Issuing Bank"; Text[30])
         {
 
             trigger OnValidate();
@@ -35,7 +35,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(4;Branch;Text[30])
+        field(4; Branch; Text[30])
         {
 
             trigger OnValidate();
@@ -43,7 +43,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(5;Address;Text[30])
+        field(5; Address; Text[30])
         {
 
             trigger OnValidate();
@@ -51,7 +51,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(6;"Address 2";Text[30])
+        field(6; "Address 2"; Text[30])
         {
 
             trigger OnValidate();
@@ -59,7 +59,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(7;"Post Code";Code[20])
+        field(7; "Post Code"; Code[20])
         {
             TableRelation = "Post Code".Code;
 
@@ -72,10 +72,10 @@ table 60061 "Bank Guarantee"
             trigger OnValidate();
             begin
                 TestRelease;
-                PostCode.ValidatePostCode(City,"Post Code",County,CountryCode,true);
+                PostCode.ValidatePostCode(City, "Post Code", County, CountryCode, true);
             end;
         }
-        field(8;City;Text[30])
+        field(8; City; Text[30])
         {
 
             trigger OnLookup();
@@ -87,10 +87,10 @@ table 60061 "Bank Guarantee"
             trigger OnValidate();
             begin
                 TestRelease;
-                PostCode.ValidatePostCode(City,"Post Code",County,CountryCode,true);
+                PostCode.ValidatePostCode(City, "Post Code", County, CountryCode, true);
             end;
         }
-        field(9;State;Code[20])
+        field(9; State; Code[20])
         {
             TableRelation = State;
 
@@ -99,7 +99,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(10;"Transaction Type";Option)
+        field(10; "Transaction Type"; Option)
         {
             OptionMembers = Sale,Purchase,Amc;
 
@@ -108,17 +108,18 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(11;"Issued to/Received from";Code[20])
+        field(11; "Issued to/Received from"; Code[20])
         {
-            TableRelation = IF ("Transaction Type"=CONST(Sale)) Customer
-                            ELSE IF ("Transaction Type"=CONST(Purchase)) Vendor;
+            TableRelation = IF ("Transaction Type" = CONST(Sale)) Customer
+            ELSE
+            IF ("Transaction Type" = CONST(Purchase)) Vendor;
 
             trigger OnValidate();
             begin
                 TestRelease;
             end;
         }
-        field(13;"Doc No.";Code[20])
+        field(13; "Doc No."; Code[20])
         {
             Editable = true;
 
@@ -127,7 +128,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(14;"Date of Issue";Date)
+        field(14; "Date of Issue"; Date)
         {
 
             trigger OnValidate();
@@ -135,7 +136,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(15;"Expiry Date";Date)
+        field(15; "Expiry Date"; Date)
         {
 
             trigger OnValidate();
@@ -143,7 +144,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(16;"Claim Date";Date)
+        field(16; "Claim Date"; Date)
         {
 
             trigger OnValidate();
@@ -151,7 +152,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(17;"Type of BG";Option)
+        field(17; "Type of BG"; Option)
         {
             OptionMembers = " ",Security,Performance,EMD;
 
@@ -160,7 +161,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(18;Description2;Text[50])
+        field(18; Description2; Text[50])
         {
 
             trigger OnValidate();
@@ -168,7 +169,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(19;"BG Value";Decimal)
+        field(19; "BG Value"; Decimal)
         {
 
             trigger OnValidate();
@@ -176,7 +177,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(20;"Confirmed BY";Code[10])
+        field(20; "Confirmed BY"; Code[10])
         {
             TableRelation = "Salesperson/Purchaser";
 
@@ -185,12 +186,12 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(21;Status;Option)
+        field(21; Status; Option)
         {
             Editable = false;
             OptionMembers = Open,Released;
         }
-        field(22;Attachment;Boolean)
+        field(22; Attachment; Boolean)
         {
 
             trigger OnValidate();
@@ -198,7 +199,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(23;"File Extension";Text[30])
+        field(23; "File Extension"; Text[30])
         {
 
             trigger OnValidate();
@@ -206,7 +207,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(24;"BG Margin Amount";Decimal)
+        field(24; "BG Margin Amount"; Decimal)
         {
 
             trigger OnValidate();
@@ -214,7 +215,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(25;"Tender No.";Code[20])
+        field(25; "Tender No."; Code[20])
         {
             Editable = false;
             TableRelation = "Tender Header"."Tender No.";
@@ -224,7 +225,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(26;"Security Deposit No.";Code[20])
+        field(26; "Security Deposit No."; Code[20])
         {
 
             trigger OnValidate();
@@ -232,29 +233,29 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(27;Closed;Boolean)
+        field(27; Closed; Boolean)
         {
             Editable = true;
 
             trigger OnValidate();
             begin
-                TestRelease;
-                if( not ( UserId in ['EFFTRONICS\RAJANI','EFFTRONICS\YESU','EFFTRONICS\RISHIANVESH','EFFTRONICS\CHRAJYALAKSHMI'])) then
-                begin
-                   Error('You do not have a permision to Close BG');
-                end;
+                /* TestRelease;
+                 if( not ( UserId in ['EFFTRONICS\RAJANI','EFFTRONICS\YESU','EFFTRONICS\RISHIANVESH','EFFTRONICS\CHRAJYALAKSHMI'])) then
+                 begin
+                    Error('You do not have a permision to Close BG');
+                 end;*/
             end;
         }
-        field(29;"Account No.";Code[20])
+        field(29; "Account No."; Code[20])
         {
-            TableRelation = "Bank Account"."No." WHERE ("Currency Code"=FILTER(=''));
+            TableRelation = "Bank Account"."No." WHERE("Currency Code" = FILTER(= ''));
 
             trigger OnValidate();
             begin
                 TestRelease;
             end;
         }
-        field(50;"Issued/Received";Option)
+        field(50; "Issued/Received"; Option)
         {
             Editable = false;
             OptionMembers = " ",Issued,Received;
@@ -264,7 +265,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(51;"Posting Account No.";Code[20])
+        field(51; "Posting Account No."; Code[20])
         {
             TableRelation = "G/L Account"."No.";
 
@@ -273,7 +274,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(52;Posted;Boolean)
+        field(52; Posted; Boolean)
         {
 
             trigger OnValidate();
@@ -281,7 +282,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(53;"BG Posting Status";Option)
+        field(53; "BG Posting Status"; Option)
         {
             Editable = false;
             OptionMembers = " ",Purchased,Surrendered;
@@ -291,7 +292,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(54;Extended;Option)
+        field(54; Extended; Option)
         {
             OptionMembers = " ",Amount,Date,Both;
 
@@ -300,7 +301,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(55;"Mode Of Payment";Option)
+        field(55; "Mode Of Payment"; Option)
         {
             OptionMembers = Cash,Bank;
 
@@ -309,14 +310,14 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(60000;"Customer Order No.";Text[100])
+        field(60000; "Customer Order No."; Text[100])
         {
             Description = 'B2B';
 
             trigger OnLookup();
             begin
-                if PAGE.RunModal(45,SalesHeader) = ACTION::LookupOK then
-                 "Customer Order No." := SalesHeader."Customer OrderNo.";
+                if PAGE.RunModal(45, SalesHeader) = ACTION::LookupOK then
+                    "Customer Order No." := SalesHeader."Customer OrderNo.";
             end;
 
             trigger OnValidate();
@@ -324,7 +325,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(60001;"Final Bill Payment";Date)
+        field(60001; "Final Bill Payment"; Date)
         {
             Description = 'B2B';
 
@@ -333,7 +334,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(60002;"Date Period";DateFormula)
+        field(60002; "Date Period"; DateFormula)
         {
             Description = 'B2B';
 
@@ -342,7 +343,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(60003;"BG Head Status";Option)
+        field(60003; "BG Head Status"; Option)
         {
             Description = 'B2B';
             OptionCaption = '" ,Due,Not Due"';
@@ -353,13 +354,13 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(60004;"Order No.";Code[100])
+        field(60004; "Order No."; Code[100])
         {
 
             trigger OnLookup();
             begin
-                if PAGE.RunModal(143,salesinvoiceheader) = ACTION::LookupOK then
-                 "Order No." := salesinvoiceheader."Customer OrderNo.";
+                if PAGE.RunModal(143, salesinvoiceheader) = ACTION::LookupOK then
+                    "Order No." := salesinvoiceheader."Customer OrderNo.";
             end;
 
             trigger OnValidate();
@@ -367,7 +368,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(60005;"BG Closed Date";Date)
+        field(60005; "BG Closed Date"; Date)
         {
 
             trigger OnValidate();
@@ -375,7 +376,7 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(60006;"BG Received Back Date";Date)
+        field(60006; "BG Received Back Date"; Date)
         {
 
             trigger OnValidate();
@@ -383,58 +384,56 @@ table 60061 "Bank Guarantee"
                 TestRelease;
             end;
         }
-        field(60007;"Final Railway Bill Date";Date)
+        field(60007; "Final Railway Bill Date"; Date)
         {
 
             trigger OnValidate();
             begin
                 //Added by Pranavi on 13-feb-2016
                 TestRelease;
-                if "Transaction Type" = "Transaction Type"::Sale then
-                begin
-                  if (Format("Warranty Period") = '') and ( "Final Railway Bill Date" <> 0D) then
-                    Error('Please enter Warranty Period!')
-                  else
-                  begin
-                    if "Final Railway Bill Date" <> 0D then
-                      "BG Warranty Completion Date" := CalcDate('+'+Format("Warranty Period"),"Final Railway Bill Date")
-                    else "BG Warranty Completion Date" := "Final Railway Bill Date";
-                  end;
-                  SIH.Reset;
-                  SIH.SetCurrentKey("Order No.");//UPGREV2.0
-                  SIH.SetRange(SIH."Order No.","Doc No.");
-                  if SIH.FindSet then
-                  repeat
-                    SIH."Final Railway Bill Date" := "Final Railway Bill Date";
-                    if SIH."Final Railway Bill Date" <> 0D then
-                    begin
-                      if CalcDate('+'+Format("Warranty Period"),"Final Railway Bill Date") <= Today() then
-                        SIH.SecDepStatus := SIH.SecDepStatus::Due
-                      else SIH.SecDepStatus := SIH.SecDepStatus::Warranty;
+                if "Transaction Type" = "Transaction Type"::Sale then begin
+                    if (Format("Warranty Period") = '') and ("Final Railway Bill Date" <> 0D) then
+                        Error('Please enter Warranty Period!')
+                    else begin
+                        if "Final Railway Bill Date" <> 0D then
+                            "BG Warranty Completion Date" := CalcDate('+' + Format("Warranty Period"), "Final Railway Bill Date")
+                        else
+                            "BG Warranty Completion Date" := "Final Railway Bill Date";
                     end;
-                    SIH.Modify;
-                  until SIH.Next=0;
+                    SIH.Reset;
+                    SIH.SetCurrentKey("Order No.");//UPGREV2.0
+                    SIH.SetRange(SIH."Order No.", "Doc No.");
+                    if SIH.FindSet then
+                        repeat
+                            SIH."Final Railway Bill Date" := "Final Railway Bill Date";
+                            if SIH."Final Railway Bill Date" <> 0D then begin
+                                if CalcDate('+' + Format("Warranty Period"), "Final Railway Bill Date") <= Today() then
+                                    SIH.SecDepStatus := SIH.SecDepStatus::Due
+                                else
+                                    SIH.SecDepStatus := SIH.SecDepStatus::Warranty;
+                            end;
+                            SIH.Modify;
+                        until SIH.Next = 0;
                 end
-                else if "Transaction Type" = "Transaction Type"::Amc then
-                begin
-                  "BG Warranty Completion Date" := "Final Railway Bill Date";
-                  SIH.Reset;
-                  SIH.SetCurrentKey("Order No.");//UPGREV2.0
-                  SIH.SetRange(SIH."Order No.","Doc No.");
-                  if SIH.FindSet then
-                  repeat
-                    SIH."Final Railway Bill Date" := "Final Railway Bill Date";
-                    if SIH."Final Railway Bill Date" <> 0D then
-                    begin
-                      SIH.SecDepStatus := SIH.SecDepStatus::Due;
+                else
+                    if "Transaction Type" = "Transaction Type"::Amc then begin
+                        "BG Warranty Completion Date" := "Final Railway Bill Date";
+                        SIH.Reset;
+                        SIH.SetCurrentKey("Order No.");//UPGREV2.0
+                        SIH.SetRange(SIH."Order No.", "Doc No.");
+                        if SIH.FindSet then
+                            repeat
+                                SIH."Final Railway Bill Date" := "Final Railway Bill Date";
+                                if SIH."Final Railway Bill Date" <> 0D then begin
+                                    SIH.SecDepStatus := SIH.SecDepStatus::Due;
+                                end;
+                                SIH.Modify;
+                            until SIH.Next = 0;
                     end;
-                    SIH.Modify;
-                  until SIH.Next=0;
-                end;
                 // end by pranavi
             end;
         }
-        field(60008;"Warranty Period";DateFormula)
+        field(60008; "Warranty Period"; DateFormula)
         {
 
             trigger OnValidate();
@@ -442,71 +441,69 @@ table 60061 "Bank Guarantee"
                 // Added by Pranavi on 13-feb-2016
                 TestRelease;
                 if Format("Warranty Period") = '' then
-                  "BG Warranty Completion Date" := 0D
-                else
-                begin
-                  if "Final Railway Bill Date" <> 0D then
-                  begin
-                    "BG Warranty Completion Date" := CalcDate('+'+Format("Warranty Period"),"Final Railway Bill Date");
-                    SIH.Reset;
-                    SIH.SetCurrentKey("Order No.");//UPGREV2.0
-                    SIH.SetRange(SIH."Order No.","Doc No.");
-                    if SIH.FindSet then
-                    repeat
-                      SIH.Validate(SIH."Final Railway Bill Date","Final Railway Bill Date");
-                      SIH.Validate(SIH."Warranty Period","Warranty Period");
-                      if "Transaction Type" = "Transaction Type"::Amc then
-                        SIH.SecDepStatus := SIH.SecDepStatus::Due
-                      else if "Transaction Type" = "Transaction Type"::Sale then
-                      begin
-                        if CalcDate('+'+Format("Warranty Period"),"Final Railway Bill Date") <= Today() then
-                          SIH.SecDepStatus := SIH.SecDepStatus::Due
-                        else SIH.SecDepStatus := SIH.SecDepStatus::Warranty;
-                      end;
-                      SIH.Modify;
-                    until SIH.Next=0;
-                  end
-                  else
-                  begin
-                    "BG Warranty Completion Date" := "Final Railway Bill Date";
-                    SIH.Reset;
-                    SIH.SetCurrentKey("Order No.");//UPGREV2.0
-                    SIH.SetRange(SIH."Order No.","Doc No.");
-                    if SIH.FindSet then
-                    repeat
-                      SIH.Validate(SIH."Warranty Period","Warranty Period");
-                      if "Transaction Type" = "Transaction Type"::Sale then
-                      begin
-                        if SIH."Final Railway Bill Date" <> 0D then
-                          if CalcDate('+'+Format(SIH."Warranty Period"),SIH."Final Railway Bill Date") <= Today() then
-                            SIH.SecDepStatus := SIH.SecDepStatus::Due
-                          else SIH.SecDepStatus := SIH.SecDepStatus::Warranty;
-                      end;
-                      SIH.Modify;
-                    until SIH.Next=0;
-                  end;
+                    "BG Warranty Completion Date" := 0D
+                else begin
+                    if "Final Railway Bill Date" <> 0D then begin
+                        "BG Warranty Completion Date" := CalcDate('+' + Format("Warranty Period"), "Final Railway Bill Date");
+                        SIH.Reset;
+                        SIH.SetCurrentKey("Order No.");//UPGREV2.0
+                        SIH.SetRange(SIH."Order No.", "Doc No.");
+                        if SIH.FindSet then
+                            repeat
+                                SIH.Validate(SIH."Final Railway Bill Date", "Final Railway Bill Date");
+                                SIH.Validate(SIH."Warranty Period", "Warranty Period");
+                                if "Transaction Type" = "Transaction Type"::Amc then
+                                    SIH.SecDepStatus := SIH.SecDepStatus::Due
+                                else
+                                    if "Transaction Type" = "Transaction Type"::Sale then begin
+                                        if CalcDate('+' + Format("Warranty Period"), "Final Railway Bill Date") <= Today() then
+                                            SIH.SecDepStatus := SIH.SecDepStatus::Due
+                                        else
+                                            SIH.SecDepStatus := SIH.SecDepStatus::Warranty;
+                                    end;
+                                SIH.Modify;
+                            until SIH.Next = 0;
+                    end
+                    else begin
+                        "BG Warranty Completion Date" := "Final Railway Bill Date";
+                        SIH.Reset;
+                        SIH.SetCurrentKey("Order No.");//UPGREV2.0
+                        SIH.SetRange(SIH."Order No.", "Doc No.");
+                        if SIH.FindSet then
+                            repeat
+                                SIH.Validate(SIH."Warranty Period", "Warranty Period");
+                                if "Transaction Type" = "Transaction Type"::Sale then begin
+                                    if SIH."Final Railway Bill Date" <> 0D then
+                                        if CalcDate('+' + Format(SIH."Warranty Period"), SIH."Final Railway Bill Date") <= Today() then
+                                            SIH.SecDepStatus := SIH.SecDepStatus::Due
+                                        else
+                                            SIH.SecDepStatus := SIH.SecDepStatus::Warranty;
+                                end;
+                                SIH.Modify;
+                            until SIH.Next = 0;
+                    end;
                 end;
                 // end by pranavi
             end;
         }
-        field(60009;"BG Warranty Completion Date";Date)
+        field(60009; "BG Warranty Completion Date"; Date)
         {
             Editable = false;
         }
-        field(60010;Remarks;Text[250])
+        field(60010; Remarks; Text[250])
         {
         }
-        field(60011;"Customer Name";Text[50])
+        field(60011; "Customer Name"; Text[50])
         {
-            CalcFormula = Lookup(Customer.Name WHERE ("No."=FIELD("Issued to/Received from")));
+            /*CalcFormula = Lookup(Customer.Name WHERE ("No."=FIELD("Issued to/Received from")));
+            FieldClass = FlowField;*/
+        }
+        field(60012; "Confirmed BY Name"; Text[50])
+        {
+            CalcFormula = Lookup("Salesperson/Purchaser".Name WHERE(Code = FIELD("Confirmed BY")));
             FieldClass = FlowField;
         }
-        field(60012;"Confirmed BY Name";Text[50])
-        {
-            CalcFormula = Lookup("Salesperson/Purchaser".Name WHERE (Code=FIELD("Confirmed BY")));
-            FieldClass = FlowField;
-        }
-        field(60013;"Released to Finance";Boolean)
+        field(60013; "Released to Finance"; Boolean)
         {
 
             trigger OnValidate();
@@ -518,7 +515,7 @@ table 60061 "Bank Guarantee"
 
     keys
     {
-        key(Key1;"BG No.")
+        key(Key1; "BG No.")
         {
         }
     }
@@ -530,53 +527,53 @@ table 60061 "Bank Guarantee"
     trigger OnDelete();
     begin
         if Status = Status::Released then
-          Error('You cannot delete.');
+            Error('You cannot delete.');
     end;
 
     trigger OnInsert();
     begin
-        if not (UpperCase(UserId) in ['EFFTRONICS\RAJANI','EFFTRONICS\YESU','EFFTRONICS\RISHIANVESH','EFFTRONICS\DURGARAOV','EFFTRONICS\SUSMITHAL','EFFTRONICS\RAMKUMARL',
-          'EFFTRONICS\SGANESH','EFFTRONICS\SITARAJYAM','EFFTRONICS\PRANAVI','EFFTRONICS\MDIVYA','EFFTRONICS\SHABANABEGUM','EFFTRONICS\DIVYA','EFFTRONICS\MBNAGAMANI','EFFTRONICS\CHRAJYALAKSHMI']) then
-         Error('YOU CANNOT INSERT DATA');
+        /* if not (UpperCase(UserId) in ['EFFTRONICS\RAJANI','EFFTRONICS\YESU','EFFTRONICS\RISHIANVESH','EFFTRONICS\DURGARAOV','EFFTRONICS\SUSMITHAL','EFFTRONICS\RAMKUMARL',
+           'EFFTRONICS\SGANESH','EFFTRONICS\SITARAJYAM','EFFTRONICS\PRANAVI','EFFTRONICS\MDIVYA','EFFTRONICS\SHABANABEGUM','EFFTRONICS\DIVYA','EFFTRONICS\MBNAGAMANI','EFFTRONICS\CHRAJYALAKSHMI']) then
+          Error('YOU CANNOT INSERT DATA');*/
     end;
 
     trigger OnModify();
     begin
-        if not (UpperCase(UserId) in ['EFFTRONICS\RAJANI','EFFTRONICS\YESU','EFFTRONICS\RISHIANVESH','EFFTRONICS\DURGARAOV','EFFTRONICS\SUSMITHAL','EFFTRONICS\RAMKUMARL',
-          'EFFTRONICS\RADHIKAK','EFFTRONICS\SITARAJYAM','EFFTRONICS\PRANAVI','EFFTRONICS\MDIVYA','EFFTRONICS\SHABANABEGUM','EFFTRONICS\DIVYA','EFFTRONICS\MBNAGAMANI','EFFTRONICS\VISHNUPRIYA','EFFTRONICS\CHRAJYALAKSHMI']) then
-         Error('YOU CANNOT MODIFY DATA');
+        /* if not (UpperCase(UserId) in ['EFFTRONICS\RAJANI','EFFTRONICS\YESU','EFFTRONICS\RISHIANVESH','EFFTRONICS\DURGARAOV','EFFTRONICS\SUSMITHAL','EFFTRONICS\RAMKUMARL',
+            'EFFTRONICS\RADHIKAK','EFFTRONICS\SITARAJYAM','EFFTRONICS\PRANAVI','EFFTRONICS\MDIVYA','EFFTRONICS\SHABANABEGUM','EFFTRONICS\DIVYA','EFFTRONICS\MBNAGAMANI','EFFTRONICS\VISHNUPRIYA','EFFTRONICS\CHRAJYALAKSHMI']) then
+           Error('YOU CANNOT MODIFY DATA');*/
     end;
 
     var
-        PostCode : Record "Post Code";
-        BG : Record "Bank Guarantee";
-        Text002 : Label 'The attachment is empty.';
-        Text003 : Label 'Attachment is already in use on this machine.';
-        Text004 : Label 'When you have saved your document, click Yes to import the document.';
-        Text005 : Label 'Export Attachment';
-        Text006 : Label 'Import Attachment';
-        Text007 : Label 'All Files (*.*)|*.*';
-        Text008 : Label 'Error during copying file.';
-        Text009 : Label 'Do you want to remove %1?';
-        Text010 : Label 'External file could not be removed.';
-        Text012 : Label '\Doc';
-        Text013 : Label 'Only Microsoft Word documents can be printed.';
-        Text014 : Label 'Only Microsoft Word documents can be faxed.';
-        Text015 : Label 'To-Date must be greater than the From-Date.';
-        Text016 : Label 'Clain-Date must be greater than the From-Date.';
-        SalesHeader : Record "Sales Header";
-        salesinvoiceheader : Record "Sales Invoice Header";
-        userid : Record User;
-        CountryCode : Code[10];
-        County : Text[30];
-        SIH : Record "Sales Invoice Header";
+        PostCode: Record "Post Code";
+        BG: Record "Bank Guarantee";
+        Text002: Label 'The attachment is empty.';
+        Text003: Label 'Attachment is already in use on this machine.';
+        Text004: Label 'When you have saved your document, click Yes to import the document.';
+        Text005: Label 'Export Attachment';
+        Text006: Label 'Import Attachment';
+        Text007: Label 'All Files (*.*)|*.*';
+        Text008: Label 'Error during copying file.';
+        Text009: Label 'Do you want to remove %1?';
+        Text010: Label 'External file could not be removed.';
+        Text012: Label '\Doc';
+        Text013: Label 'Only Microsoft Word documents can be printed.';
+        Text014: Label 'Only Microsoft Word documents can be faxed.';
+        Text015: Label 'To-Date must be greater than the From-Date.';
+        Text016: Label 'Clain-Date must be greater than the From-Date.';
+        SalesHeader: Record "Sales Header";
+        salesinvoiceheader: Record "Sales Invoice Header";
+        userid: Record User;
+        CountryCode: Code[10];
+        County: Text[30];
+        SIH: Record "Sales Invoice Header";
 
-    [LineStart(3133)]
-    procedure OpenAttachment() : Boolean;
+    // [LineStart(3133)]
+    procedure OpenAttachment(): Boolean;
     var
-        WordManagement : Codeunit WordManagement;
-        AttachmentManagement : Codeunit AttachmentManagement;
-        FileName : Text[260];
+        //  WordManagement : Codeunit WordManagement;
+        AttachmentManagement: Codeunit AttachmentManagement;
+        FileName: Text[260];
     begin
         /*
         CALCFIELDS(Attachment);
@@ -594,11 +591,11 @@ table 60061 "Bank Guarantee"
 
     end;
 
-    [LineStart(3148)]
-    procedure ImportAttachment() : Boolean;
+    // [LineStart(3148)]
+    procedure ImportAttachment(): Boolean;
     var
-        AttachmentManagement : Codeunit AttachmentManagement;
-        FileName : Text[260];
+        AttachmentManagement: Codeunit AttachmentManagement;
+        FileName: Text[260];
     begin
         /*
         FileName := CommonDialogMgt.OpenFile(Text006,'',4,Text007,0);
@@ -613,11 +610,11 @@ table 60061 "Bank Guarantee"
 
     end;
 
-    [LineStart(3160)]
-    procedure ExportAttachment(ExportToFile : Text[260]) : Boolean;
+    // [LineStart(3160)]
+    procedure ExportAttachment(ExportToFile: Text[260]): Boolean;
     var
-        FileName : Text[260];
-        FileFilter : Text[260];
+        FileName: Text[260];
+        FileFilter: Text[260];
     begin
         /*
         CALCFIELDS(Attachment);
@@ -639,10 +636,10 @@ table 60061 "Bank Guarantee"
 
     end;
 
-    [LineStart(3179)]
-    procedure RemoveAttachment(Prompt : Boolean) DeleteOk : Boolean;
+    // [LineStart(3179)]
+    procedure RemoveAttachment(Prompt: Boolean) DeleteOk: Boolean;
     var
-        DeleteYesNo : Boolean;
+        DeleteYesNo: Boolean;
     begin
         /*
         CALCFIELDS(Attachment);
@@ -664,11 +661,11 @@ table 60061 "Bank Guarantee"
 
     end;
 
-    [LineStart(3198)]
-    procedure ConstFileName() Filename : Text[260];
+    // [LineStart(3198)]
+    procedure ConstFileName() Filename: Text[260];
     var
-        I : Integer;
-        DocNo : Code[10];
+        I: Integer;
+        DocNo: Code[10];
     begin
         /*
         REPEAT
@@ -684,10 +681,10 @@ table 60061 "Bank Guarantee"
 
     end;
 
-    [LineStart(3211)]
-    procedure DeleteFile(Filename : Text[260]) : Boolean;
+    // [LineStart(3211)]
+    procedure DeleteFile(Filename: Text[260]): Boolean;
     var
-        I : Integer;
+        I: Integer;
     begin
         /*
         IF Filename = '' THEN
@@ -705,10 +702,10 @@ table 60061 "Bank Guarantee"
 
     end;
 
-    [LineStart(3226)]
+    // [LineStart(3226)]
     procedure TestRelease();
     begin
-        TestField(Status,Status::Open);
+        TestField(Status, Status::Open);
     end;
 }
 

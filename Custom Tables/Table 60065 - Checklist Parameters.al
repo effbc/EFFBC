@@ -2,7 +2,7 @@ table 60065 "Checklist Parameters"
 {
     // version B2B1.0
 
-    LookupPageID = 60088;
+   // LookupPageID = 60088;
 
     fields
     {

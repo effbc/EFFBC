@@ -2,7 +2,7 @@ table 60030 "Delivery Ratings"
 {
     // version POAU
 
-    LookupPageID = 50015;
+   // LookupPageID = 50015;
 
     fields
     {

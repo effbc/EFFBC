@@ -2,81 +2,81 @@ table 60056 "Item Design Worksheet Header"
 {
     // version DWS1.0
 
-    DrillDownPageID = 60149;
-    LookupPageID = 60149;
+    // DrillDownPageID = 60149;
+    // LookupPageID = 60149;
 
     fields
     {
-        field(4;"Item No.";Code[20])
+        field(4; "Item No."; Code[20])
         {
             Editable = false;
 
             trigger OnValidate();
             begin
                 if Item.Get("Item No.") then begin
-                  Description:=Item.Description;
-                  "Unit of Measure":=Item."Base Unit of Measure";
-                  if RoutingHeader.Get(Item."Routing No.") then begin
-                    RoutingHeader.CalcFields(RoutingHeader."Man Cost");
-                    "Main Item Manu Cost":=RoutingHeader."Man Cost";
-                  end;
+                    Description := Item.Description;
+                    "Unit of Measure" := Item."Base Unit of Measure";
+                    if RoutingHeader.Get(Item."Routing No.") then begin
+                        RoutingHeader.CalcFields(RoutingHeader."Man Cost");
+                        "Main Item Manu Cost" := RoutingHeader."Man Cost";
+                    end;
 
                 end;
             end;
         }
-        field(5;Description;Text[50])
+        field(5; Description; Text[50])
         {
             Editable = false;
         }
-        field(6;Quantity;Decimal)
+        field(6; Quantity; Decimal)
         {
             Editable = false;
         }
-        field(7;"Unit of Measure";Code[10])
+        field(7; "Unit of Measure"; Code[10])
         {
             Editable = false;
         }
-        field(8;"Components Cost";Decimal)
+        field(8; "Components Cost"; Decimal)
         {
-            CalcFormula = Sum("Item Design Worksheet Line".Amount WHERE ("Item No"=FIELD("Item No."),
-                                                                         Type=FILTER(Item|"Production BOM")));
+            CalcFormula = Sum("Item Design Worksheet Line".Amount WHERE("Item No" = FIELD("Item No."),
+                                                                         Type = FILTER(Item | "Production BOM")));
             Description = 'Editable=No';
             FieldClass = FlowField;
         }
-        field(9;"Manufacturing Cost";Decimal)
+        field(9; "Manufacturing Cost"; Decimal)
         {
-            CalcFormula = Sum("Item Design Worksheet Line"."Total Manufacturing Cost" WHERE ("Item No"=FIELD("Item No.")));
+            CalcFormula = Sum("Item Design Worksheet Line"."Total Manufacturing Cost" WHERE("Item No" = FIELD("Item No.")));
             Editable = false;
             FieldClass = FlowField;
         }
-        field(12;"Soldering Time for SMD";Decimal)
+        field(12; "Soldering Time for SMD"; Decimal)
         {
             Editable = false;
         }
-        field(13;"Soldering time for DIP";Decimal)
+        field(13; "Soldering time for DIP"; Decimal)
         {
             Editable = false;
         }
-        field(14;"Total time in Hours";Decimal)
+        field(14; "Total time in Hours"; Decimal)
         {
             Editable = false;
         }
-        field(15;"Soldering Cost Perhour";Decimal)
+        field(15; "Soldering Cost Perhour"; Decimal)
         {
             Editable = false;
         }
-        field(16;"Resource Cost";Decimal)
+        field(16; "Resource Cost"; Decimal)
         {
-            CalcFormula = Sum("Item Design Worksheet Line".Amount WHERE (Type=CONST(Resource),
-                                                                         "Item No"=FIELD("Item No.")));
+            CalcFormula = Sum("Item Design Worksheet Line".Amount WHERE(Type = CONST(Resource),
+                                                                         "Item No" = FIELD("Item No.")));
             Editable = false;
             FieldClass = FlowField;
         }
-        field(17;"Development Cost";Decimal)
+        field(17; "Development Cost"; Decimal)
         {
             Editable = false;
         }
-        field(18;"Development Time in hours";Decimal)
+        field(18; "Development Time in hours"; Decimal)
         {
 
             trigger OnValidate();
@@ -84,7 +84,7 @@ table 60056 "Item Design Worksheet Header"
                 "Development Cost" := "Development Time in hours" * "Development Cost per hour";
             end;
         }
-        field(19;"Development Cost per hour";Decimal)
+        field(19; "Development Cost per hour"; Decimal)
         {
 
             trigger OnValidate();
@@ -92,53 +92,53 @@ table 60056 "Item Design Worksheet Header"
                 "Development Cost" := "Development Time in hours" * "Development Cost per hour";
             end;
         }
-        field(20;"Installation Cost";Decimal)
+        field(20; "Installation Cost"; Decimal)
         {
-            CalcFormula = Sum("Item Design Worksheet Line".Amount WHERE (Type=CONST(JOB),
-                                                                         "Item No"=FIELD("Item No.")));
+            CalcFormula = Sum("Item Design Worksheet Line".Amount WHERE(Type = CONST(JOB),
+                                                                         "Item No" = FIELD("Item No.")));
             Description = 'Editable=No';
             Editable = false;
             FieldClass = FlowField;
         }
-        field(21;"Additional Cost";Decimal)
+        field(21; "Additional Cost"; Decimal)
         {
         }
-        field(22;"Total Cost (From Line)";Decimal)
+        field(22; "Total Cost (From Line)"; Decimal)
         {
-            CalcFormula = Sum("Item Design Worksheet Line".Amount WHERE ("Item No"=FIELD("Item No.")));
+            CalcFormula = Sum("Item Design Worksheet Line".Amount WHERE("Item No" = FIELD("Item No.")));
             Editable = false;
             FieldClass = FlowField;
         }
-        field(23;"Production Bom No.";Code[20])
+        field(23; "Production Bom No."; Code[20])
         {
             Editable = false;
         }
-        field(24;"Production Bom Version No.";Code[20])
+        field(24; "Production Bom Version No."; Code[20])
         {
             Editable = false;
         }
-        field(100;"Total Cost";Decimal)
+        field(100; "Total Cost"; Decimal)
         {
             Editable = false;
         }
-        field(101;Status;Option)
+        field(101; Status; Option)
         {
             Editable = false;
             OptionMembers = Open,Release;
         }
-        field(201;"Version No.";Integer)
+        field(201; "Version No."; Integer)
         {
         }
-        field(202;"No. of Archived Versions";Integer)
+        field(202; "No. of Archived Versions"; Integer)
         {
             Caption = 'No. of Archived Versions';
             Editable = true;
         }
-        field(203;"Main Item Manu Cost";Decimal)
+        field(203; "Main Item Manu Cost"; Decimal)
         {
             Editable = false;
         }
-        field(204;"Total Manu Cost";Decimal)
+        field(204; "Total Manu Cost"; Decimal)
         {
             Editable = false;
         }
@@ -146,7 +146,7 @@ table 60056 "Item Design Worksheet Header"
 
     keys
     {
-        key(Key1;"Item No.")
+        key(Key1; "Item No.")
         {
             SumIndexFields = "Total Cost";
         }
@@ -159,99 +159,99 @@ table 60056 "Item Design Worksheet Header"
     trigger OnDelete();
     begin
         ItemDesignWorkSheetLine.Reset;
-        ItemDesignWorkSheetLine.SetRange("Item No","Item No.");
+        ItemDesignWorkSheetLine.SetRange("Item No", "Item No.");
         ItemDesignWorkSheetLine.DeleteAll;
     end;
 
     trigger OnInsert();
     var
-        Item : Record Item;
+        Item: Record Item;
     begin
     end;
 
     var
-        ManufacturingSetup : Record "Manufacturing Setup";
-        SalesLine : Record "Sales Line";
-        Item : Record Item;
-        ItemDesignWorkSheetLine : Record "Item Design Worksheet Line";
-        RoutingHeader : Record "Routing Header";
+        ManufacturingSetup: Record "Manufacturing Setup";
+        SalesLine: Record "Sales Line";
+        Item: Record Item;
+        ItemDesignWorkSheetLine: Record "Item Design Worksheet Line";
+        RoutingHeader: Record "Routing Header";
 
-    [LineStart(2910)]
+    //[LineStart(2910)]
     procedure CopyBomComponents();
     var
-        DesignWorksheetLine : Record "Design Worksheet Line";
-        ProductionBOMLine : Record "Production BOM Line";
-        DesignWorksheetLine1 : Record "Design Worksheet Line";
+        DesignWorksheetLine: Record "Design Worksheet Line";
+        ProductionBOMLine: Record "Production BOM Line";
+        DesignWorksheetLine1: Record "Design Worksheet Line";
     begin
         if "Production Bom Version No." = '' then begin
-          TestField("Production Bom No.");
-          ProductionBOMLine.Reset;
-          ProductionBOMLine.SetRange("Production BOM No.","Production Bom No.");
-          ProductionBOMLine.SetFilter("Version Code",'=%1','');
-          if ProductionBOMLine.Find('-') then
-            repeat
-              CheckType(ProductionBOMLine);
-            until ProductionBOMLine.Next = 0;
+            TestField("Production Bom No.");
+            ProductionBOMLine.Reset;
+            ProductionBOMLine.SetRange("Production BOM No.", "Production Bom No.");
+            ProductionBOMLine.SetFilter("Version Code", '=%1', '');
+            if ProductionBOMLine.Find('-') then
+                repeat
+                    CheckType(ProductionBOMLine);
+                until ProductionBOMLine.Next = 0;
         end else begin
-          TestField("Production Bom No.");
-          TestField("Production Bom Version No.");
-          ProductionBOMLine.Reset;
-          ProductionBOMLine.SetRange("Production BOM No.","Production Bom No.");
-          ProductionBOMLine.SetRange("Version Code","Production Bom Version No.");
-          if ProductionBOMLine.Find('-') then
-            repeat
-              CheckType(ProductionBOMLine);
-            until ProductionBOMLine.Next = 0;
+            TestField("Production Bom No.");
+            TestField("Production Bom Version No.");
+            ProductionBOMLine.Reset;
+            ProductionBOMLine.SetRange("Production BOM No.", "Production Bom No.");
+            ProductionBOMLine.SetRange("Version Code", "Production Bom Version No.");
+            if ProductionBOMLine.Find('-') then
+                repeat
+                    CheckType(ProductionBOMLine);
+                until ProductionBOMLine.Next = 0;
         end;
     end;
 
-    [LineStart(2932)]
+    //[LineStart(2932)]
     procedure DesignWorkSheetAttachments();
     var
-        Attachments : Record Attachments;
+        Attachments: Record Attachments;
     begin
         Attachments.Reset;
-        Attachments.SetRange("Table ID",DATABASE::"Design Worksheet Header");
-        Attachments.SetRange("Document No.","Item No.");
-        PAGE.Run(PAGE::Page60117,Attachments);
+        Attachments.SetRange("Table ID", DATABASE::"Design Worksheet Header");
+        Attachments.SetRange("Document No.", "Item No.");
+        //PAGE.Run(PAGE::Page60117,Attachments);
     end;
 
-    [LineStart(2938)]
-    procedure CheckType(var ProductionBOMLine : Record "Production BOM Line");
+    //[LineStart(2938)]
+    procedure CheckType(var ProductionBOMLine: Record "Production BOM Line");
     var
-        ProductionBOMLine1 : Record "Production BOM Line";
+        ProductionBOMLine1: Record "Production BOM Line";
     begin
         case ProductionBOMLine.Type of
-          ProductionBOMLine.Type :: "Production BOM":
-          begin
-            ProductionBOMLine1.Reset;
-           ProductionBOMLine1.SetRange("Production BOM No.",ProductionBOMLine."No.");
-           ProductionBOMLine1.SetFilter("Version Code",'=%1','');
-            if ProductionBOMLine1.Find('-') then
-              repeat
-                CheckType(ProductionBOMLine1);
-              until ProductionBOMLine1.Next = 0;
-          end;
-          ProductionBOMLine.Type :: Item:
-          begin
-              InsertItems(ProductionBOMLine);
-          end;
+            ProductionBOMLine.Type::"Production BOM":
+                begin
+                    ProductionBOMLine1.Reset;
+                    ProductionBOMLine1.SetRange("Production BOM No.", ProductionBOMLine."No.");
+                    ProductionBOMLine1.SetFilter("Version Code", '=%1', '');
+                    if ProductionBOMLine1.Find('-') then
+                        repeat
+                            CheckType(ProductionBOMLine1);
+                        until ProductionBOMLine1.Next = 0;
+                end;
+            ProductionBOMLine.Type::Item:
+                begin
+                    InsertItems(ProductionBOMLine);
+                end;
         end;
     end;
 
-    [LineStart(2956)]
-    procedure InsertItems(var ProductionBOMLine : Record "Production BOM Line");
+    //[LineStart(2956)]
+    procedure InsertItems(var ProductionBOMLine: Record "Production BOM Line");
     var
-        DesignWorksheetLine : Record "Design Worksheet Line";
-        DesignWorksheetLine1 : Record "Design Worksheet Line";
-        SMDSolder : Decimal;
-        DIPSolder : Decimal;
-        Cost : Decimal;
-        ProductionBomLineCost : Record "Production BOM Line";
-        BomItem : Record Item;
-        Cost1 : Decimal;
-        Cost2 : Decimal;
-        ProductionBomLineSolder : Record "Production BOM Line";
+        DesignWorksheetLine: Record "Design Worksheet Line";
+        DesignWorksheetLine1: Record "Design Worksheet Line";
+        SMDSolder: Decimal;
+        DIPSolder: Decimal;
+        Cost: Decimal;
+        ProductionBomLineCost: Record "Production BOM Line";
+        BomItem: Record Item;
+        Cost1: Decimal;
+        Cost2: Decimal;
+        ProductionBomLineSolder: Record "Production BOM Line";
     begin
         /*
         ManufacturingSetup.GET;
@@ -334,21 +334,21 @@ table 60056 "Item Design Worksheet Header"
 
     end;
 
-    [LineStart(3036)]
+    //[LineStart(3036)]
     procedure CopyItemDesignWorkSheet();
     var
-        DesignWorksheetLine : Record "Design Worksheet Line";
-        DesignWorksheetLine1 : Record "Design Worksheet Line";
-        ProductionBomLineSolder : Record "Production BOM Line";
-        ProductionBOMLine : Record "Production BOM Line";
-        ProductionBomLineCost : Record "Production BOM Line";
-        BomItem : Record Item;
-        SMDSolder : Integer;
-        DIPSolder : Integer;
-        Cost : Decimal;
-        Cost1 : Decimal;
-        Cost2 : Decimal;
-        Designworksheet : Record "Item Design Worksheet Line";
+        DesignWorksheetLine: Record "Design Worksheet Line";
+        DesignWorksheetLine1: Record "Design Worksheet Line";
+        ProductionBomLineSolder: Record "Production BOM Line";
+        ProductionBOMLine: Record "Production BOM Line";
+        ProductionBomLineCost: Record "Production BOM Line";
+        BomItem: Record Item;
+        SMDSolder: Integer;
+        DIPSolder: Integer;
+        Cost: Decimal;
+        Cost1: Decimal;
+        Cost2: Decimal;
+        Designworksheet: Record "Item Design Worksheet Line";
     begin
         /*
         Designworksheet.RESET;

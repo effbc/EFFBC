@@ -2,47 +2,47 @@ table 60020 "Inst. PreSite Check List"
 {
     // version B2B1.0
 
-    LookupPageID = 60028;
+    //  LookupPageID = 60028;
 
     fields
     {
-        field(1;"Sales Order No.";Code[20])
+        field(1; "Sales Order No."; Code[20])
         {
         }
-        field(2;"Sales Order Line No.";Integer)
+        field(2; "Sales Order Line No."; Integer)
         {
         }
-        field(3;"Pre Site Parameter";Code[20])
+        field(3; "Pre Site Parameter"; Code[20])
         {
             NotBlank = true;
             TableRelation = "Pre Site Check List Parameters";
 
             trigger OnValidate();
             var
-                PreSiteCheckList : Record "Inst. PreSite Check List";
-                PreSiteParameters : Record "Pre Site Check List Parameters";
+                PreSiteCheckList: Record "Inst. PreSite Check List";
+                PreSiteParameters: Record "Pre Site Check List Parameters";
             begin
                 if PreSiteParameters.Get("Pre Site Parameter") then
-                  Description := PreSiteParameters.Description;
+                    Description := PreSiteParameters.Description;
             end;
         }
-        field(4;Description;Text[250])
+        field(4; Description; Text[250])
         {
         }
-        field(5;Remarks;Text[100])
+        field(5; Remarks; Text[100])
         {
         }
-        field(6;"Line No.";Integer)
+        field(6; "Line No."; Integer)
         {
         }
-        field(100;"Set Selection";Boolean)
+        field(100; "Set Selection"; Boolean)
         {
         }
     }
 
     keys
     {
-        key(Key1;"Sales Order No.","Sales Order Line No.","Pre Site Parameter","Line No.")
+        key(Key1; "Sales Order No.", "Sales Order Line No.", "Pre Site Parameter", "Line No.")
         {
         }
     }
@@ -51,25 +51,25 @@ table 60020 "Inst. PreSite Check List"
     {
     }
 
-    [LineStart(1674)]
+    //[LineStart(1674)]
     procedure Attachments();
     var
-        PresiteAttach : Record Attachments;
+        PresiteAttach: Record Attachments;
     begin
         PresiteAttach.Reset;
-        PresiteAttach.SetRange("Table ID",DATABASE::"Inst. PreSite Check List");
-        PresiteAttach.SetRange("Document No.","Sales Order No.");
-        PresiteAttach.SetRange("Document Line No.","Line No.");
-        PAGE.Run(PAGE::Page60117,PresiteAttach);
+        PresiteAttach.SetRange("Table ID", DATABASE::"Inst. PreSite Check List");
+        PresiteAttach.SetRange("Document No.", "Sales Order No.");
+        PresiteAttach.SetRange("Document Line No.", "Line No.");
+        //  PAGE.Run(PAGE::Page60117,PresiteAttach);
     end;
 
-    [LineStart(1681)]
-    procedure CopyPresite(Rec : Record "Inst. PreSite Check List");
+    //[LineStart(1681)]
+    procedure CopyPresite(Rec: Record "Inst. PreSite Check List");
     var
-        Selection : Integer;
-        Text001 : Label '&Presite,Presite &Lines';
-        PresiteVisitOrder : Record "Inst. PreSite Check List";
-        PreSiteCheckListInsert : Record "Inst. PreSite Check List";
+        Selection: Integer;
+        Text001: Label '&Presite,Presite &Lines';
+        PresiteVisitOrder: Record "Inst. PreSite Check List";
+        PreSiteCheckListInsert: Record "Inst. PreSite Check List";
     begin
         /*
         Selection := STRMENU(Text001,1);
@@ -96,21 +96,21 @@ table 60020 "Inst. PreSite Check List"
           END;
         END;
         */
-        if PAGE.RunModal(0,PresiteVisitOrder) = ACTION::LookupOK then begin
-          PresiteVisitOrder.LockTable;
-          PresiteVisitOrder.SetRange("Set Selection",true);
-          if PresiteVisitOrder.Find('-') then
-            repeat
-                PreSiteCheckListInsert."Sales Order No." := Rec."Sales Order No.";
-                PreSiteCheckListInsert."Sales Order Line No." := Rec."Sales Order Line No.";
-                PreSiteCheckListInsert."Pre Site Parameter" := PresiteVisitOrder."Pre Site Parameter";
-                PreSiteCheckListInsert."Line No." := PreSiteCheckListInsert."Line No." + 10000;
-                PreSiteCheckListInsert.Description := PresiteVisitOrder.Description;
-                PreSiteCheckListInsert.Remarks := PresiteVisitOrder.Remarks;
-                PreSiteCheckListInsert.Insert;
-              until PresiteVisitOrder.Next = 0;
-            PresiteVisitOrder.SetRange(PresiteVisitOrder."Set Selection",true);
-            PresiteVisitOrder.ModifyAll("Set Selection",false);
+        if PAGE.RunModal(0, PresiteVisitOrder) = ACTION::LookupOK then begin
+            PresiteVisitOrder.LockTable;
+            PresiteVisitOrder.SetRange("Set Selection", true);
+            if PresiteVisitOrder.Find('-') then
+                repeat
+                    PreSiteCheckListInsert."Sales Order No." := Rec."Sales Order No.";
+                    PreSiteCheckListInsert."Sales Order Line No." := Rec."Sales Order Line No.";
+                    PreSiteCheckListInsert."Pre Site Parameter" := PresiteVisitOrder."Pre Site Parameter";
+                    PreSiteCheckListInsert."Line No." := PreSiteCheckListInsert."Line No." + 10000;
+                    PreSiteCheckListInsert.Description := PresiteVisitOrder.Description;
+                    PreSiteCheckListInsert.Remarks := PresiteVisitOrder.Remarks;
+                    PreSiteCheckListInsert.Insert;
+                until PresiteVisitOrder.Next = 0;
+            PresiteVisitOrder.SetRange(PresiteVisitOrder."Set Selection", true);
+            PresiteVisitOrder.ModifyAll("Set Selection", false);
         end;
 
     end;

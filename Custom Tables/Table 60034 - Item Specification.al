@@ -2,7 +2,7 @@ table 60034 "Item Specification"
 {
     // version B2B1.0
 
-    LookupPageID = 60053;
+    //LookupPageID = 60053;
 
     fields
     {
