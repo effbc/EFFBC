@@ -51,9 +51,9 @@ table 80816 "Routing Line operation Length"
         StdTaskQltyMeasure : Record "Standard Task Quality Measure";
         StdTaskComment : Record "Standard Task Description";
         "--QC--" : Integer;
-        Subassembly : Record "Sub Assembly";
+      //  Subassembly : Record "Sub Assembly";
 
-    [LineStart(5883)]
+    //[LineStart(5883)]
     procedure TestStatus();
     var
         RtngHeader : Record "Routing Header";
@@ -61,27 +61,27 @@ table 80816 "Routing Line operation Length"
     begin
     end;
 
-    [LineStart(5886)]
+    //[LineStart(5886)]
     procedure DeleteRelations();
     begin
     end;
 
-    [LineStart(5889)]
+    //[LineStart(5889)]
     procedure WorkCenterTransferfields();
     begin
     end;
 
-    [LineStart(5892)]
+    //[LineStart(5892)]
     procedure MachineCtrTransferfields();
     begin
     end;
 
-    [LineStart(5895)]
+    //[LineStart(5895)]
     procedure SetRecalcStatus();
     begin
     end;
 
-    [LineStart(5898)]
+    //[LineStart(5898)]
     procedure RunTimePer() : Decimal;
     begin
     end;

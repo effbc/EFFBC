@@ -64,9 +64,9 @@ table 80815 "Routing Line operations"
         StdTaskQltyMeasure : Record "Standard Task Quality Measure";
         StdTaskComment : Record "Standard Task Description";
         "--QC--" : Integer;
-        Subassembly : Record "Sub Assembly";
+        //Subassembly : Record "Sub Assembly";
 
-    [LineStart(5871)]
+    //[LineStart(5871)]
     procedure TestStatus();
     var
         RtngHeader : Record "Routing Header";
@@ -74,27 +74,27 @@ table 80815 "Routing Line operations"
     begin
     end;
 
-    [LineStart(5874)]
+    //[LineStart(5874)]
     procedure DeleteRelations();
     begin
     end;
 
-    [LineStart(5877)]
+    //[LineStart(5877)]
     procedure WorkCenterTransferfields();
     begin
     end;
 
-    [LineStart(5880)]
+    //[LineStart(5880)]
     procedure MachineCtrTransferfields();
     begin
     end;
 
-    [LineStart(5883)]
+    //[LineStart(5883)]
     procedure SetRecalcStatus();
     begin
     end;
 
-    [LineStart(5886)]
+    //[LineStart(5886)]
     procedure RunTimePer() : Decimal;
     begin
     end;

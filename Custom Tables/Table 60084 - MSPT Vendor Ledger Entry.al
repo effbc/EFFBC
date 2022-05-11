@@ -10,8 +10,8 @@ table 60084 "MSPT Vendor Ledger Entry"
     // ---------------------------------------------------
     // 01  B2B    MSPT Vendor Ledger Entry
 
-    DrillDownPageID = 60110;
-    LookupPageID = 60110;
+   // DrillDownPageID = 60110;
+   // LookupPageID = 60110;
 
     fields
     {

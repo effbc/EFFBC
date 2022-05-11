@@ -2,7 +2,7 @@ table 60078 "ICN Numbers"
 {
     // version POAU
 
-    LookupPageID = 60132;
+   // LookupPageID = 60132;
 
     fields
     {

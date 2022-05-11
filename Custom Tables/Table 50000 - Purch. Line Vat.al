@@ -12,7 +12,7 @@ table 50000 "Purch. Line Vat"
         field(3;"Document No.";Code[20])
         {
             Caption = 'Purchase Order No.';
-            TableRelation = "Purchase Header"."No." WHERE ("Document Type"=FIELD("Document Type"));
+          //  TableRelation = "Purchase Header"."No." WHERE ("Document Type"=FIELD("Document Type"));
         }
         field(4;"Line No.";Integer)
         {

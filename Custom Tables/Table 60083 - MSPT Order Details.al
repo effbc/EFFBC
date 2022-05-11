@@ -148,7 +148,7 @@ table 60083 "MSPT Order Details"
         Text001 : Label 'Percentage Must Be Positive Value';
         Text002 : Label 'Percentage Must Be Equal to 100 In MSPT Order Details';
 
-    [LineStart(3851)]
+    //[LineStart(3851)]
     procedure MSPTSaleTestField();
     var
         SalesHeader : Record "Sales Header";
@@ -160,7 +160,7 @@ table 60083 "MSPT Order Details"
         end;
     end;
 
-    [LineStart(3857)]
+    //[LineStart(3857)]
     procedure MSPTPuchTestField();
     var
         PurchaseHeader : Record "Purchase Header";
@@ -171,7 +171,7 @@ table 60083 "MSPT Order Details"
         end;
     end;
 
-    [LineStart(3863)]
+    //[LineStart(3863)]
     procedure MSPTSalesCheck(SalesHeader : Record "Sales Header");
     var
         MSPTOrderDetails : Record "MSPT Order Details";
@@ -195,7 +195,7 @@ table 60083 "MSPT Order Details"
         end;
     end;
 
-    [LineStart(3880)]
+    //[LineStart(3880)]
     procedure MSPTPurchaseCheck(PurchaseHeader : Record "Purchase Header");
     var
         MSPTOrderDetails : Record "MSPT Order Details";

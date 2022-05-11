@@ -2,8 +2,8 @@ table 60079 "Material Issue Header"
 {
     // version ,Rev01
 
-    DrillDownPageID = 60142;
-    LookupPageID = 60142;
+  //  DrillDownPageID = 60142;
+    //LookupPageID = 60142;
 
     fields
     {

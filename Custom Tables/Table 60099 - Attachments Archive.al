@@ -102,7 +102,7 @@ table 60099 "Attachments Archive"
 
     var
         "--Rev01----" : Integer;
-        TempBlob : Record TempBlob;
+       // TempBlob : Record TempBlob;
         FileMgt : Codeunit "File Management";
         GL : Record "G/L Entry";
         Text000 : Label 'You have canceled the create process.';
@@ -125,12 +125,12 @@ table 60099 "Attachments Archive"
         Text020 : TextConst ENU='An Outlook dialog box is open. Close it and try again.',ENN='An Outlook dialog box is open. Close it and try again.';
         Text021 : TextConst Comment='Default.',ENU='Default.',ENN='Default.';
 
-    [LineStart(4925)]
+    //[LineStart(4925)]
     procedure "--Rev01--------------------"();
     begin
     end;
 
-    [LineStart(4928)]
+    //[LineStart(4928)]
     procedure OpenAttachment(Caption : Text[260];IsTemporary : Boolean);
     var
         FileName : Text[260];
@@ -190,7 +190,7 @@ table 60099 "Attachments Archive"
 
     end;
 
-    [LineStart(4982)]
+    //[LineStart(4982)]
     procedure ImportAttachment(ImportFromFile : Text;IsTemporary : Boolean;IsInherited : Boolean) : Boolean;
     var
         FileName : Text[260];
@@ -389,7 +389,7 @@ table 60099 "Attachments Archive"
 
     end;
 
-    [LineStart(5171)]
+    //[LineStart(5171)]
     procedure ExportAttachment(var ExportToFile : Text) : Boolean;
     var
         FileName : Text[260];
@@ -403,18 +403,18 @@ table 60099 "Attachments Archive"
               if GLSetup."ESPL Attachment Storage Type" = GLSetup."ESPL Attachment Storage Type"::"Disk File" then
                 GLSetup.TestField("ESPL Attmt. Storage Location");
               CalcFields(FileAttachment);
-              if FileAttachment.HasValue then begin
+            /*  if FileAttachment.HasValue then begin
                 TempBlob.Blob := FileAttachment;
                 if ExportToFile = '' then begin
                   FileName := Text021 + "File Extension";
                   ExportToFile := FileMgt.BLOBExport(TempBlob,FileName,true);
                 end else
                   // If a filename is provided, the file will be treated as temp file.
-                  ExportToFile := FileMgt.BLOBExport(TempBlob,ExportToFile,false);
+                //  ExportToFile := FileMgt.BLOBExport(TempBlob,ExportToFile,false);
         
                 exit(true);
               end;
-              exit(false)
+              exit(false)*/
             end;
           "Storage Type"::"Disk File":
             begin
@@ -422,7 +422,7 @@ table 60099 "Attachments Archive"
                 GLSetup.TestField("ESPL Attmt. Storage Location");
         
               FileFilter := UpperCase("File Extension") + ' (*.' + "File Extension" + ')|*.' + "File Extension";
-              exit(Download(ConstDiskFileName,Text005,'',FileFilter,ExportToFile))
+             // exit(Download(ConstDiskFileName,Text005,'',FileFilter,ExportToFile))
             end;
         end;
         
@@ -486,22 +486,22 @@ table 60099 "Attachments Archive"
 
     end;
 
-    [LineStart(5260)]
+    //[LineStart(5260)]
     procedure DeleteFile(FileName : Text) : Boolean;
     var
         I : Integer;
     begin
-        if FileName = '' then
+        /*if FileName = '' then
           exit(false);
         
-        if not FileMgt.ClientFileExists(FileName) then
+        //if not FileMgt.ClientFileExists(FileName) then
           exit(true);
         
         repeat
           Sleep(250);
           I := I + 1;
-        until FileMgt.DeleteClientFile(FileName) or (I = 25);
-        exit(not FileMgt.ClientFileExists(FileName));
+       /* until FileMgt.DeleteClientFile(FileName) or (I = 25);
+        exit(not FileMgt.ClientFileExists(FileName));*/
         
         //Rev01 chaitanya commented old code
         /*
@@ -521,7 +521,7 @@ table 60099 "Attachments Archive"
 
     end;
 
-    [LineStart(5289)]
+    //[LineStart(5289)]
     procedure RemoveAttachment(Prompt : Boolean) DeleteOk : Boolean;
     var
         DeleteYesNo : Boolean;
@@ -566,13 +566,13 @@ table 60099 "Attachments Archive"
 
     end;
 
-    [LineStart(5328)]
+    //[LineStart(5328)]
     procedure ConstFileName() FileName : Text[260];
     var
         I : Integer;
         DocNo : Text[30];
     begin
-        FileName := FileMgt.ClientTempFileName("File Extension");
+       //FileName := FileMgt.ClientTempFileName("File Extension");
         //Rev01 chaitanya commented old code
         /*
         REPEAT
@@ -588,7 +588,7 @@ table 60099 "Attachments Archive"
 
     end;
 
-    [LineStart(5343)]
+    //[LineStart(5343)]
     procedure ConstDiskFileName() DiskFileName : Text[260];
     begin
         DiskFileName := "Storage Pointer" + '\' + Format("No.") + '.';
@@ -600,7 +600,7 @@ table 60099 "Attachments Archive"
 
     end;
 
-    [LineStart(5351)]
+    //[LineStart(5351)]
     procedure CreateAttachment();
     var
         Attachment : Record Attachments;
@@ -636,12 +636,12 @@ table 60099 "Attachments Archive"
 
     end;
 
-    [LineStart(5380)]
+    //[LineStart(5380)]
     procedure "--Rev01"();
     begin
     end;
 
-    [LineStart(5383)]
+    //[LineStart(5383)]
     procedure CheckCorrespondenceType(CorrespondenceType : Option " ","Hard Copy","E-Mail",Fax) ErrorText : Text[80];
     begin
         case CorrespondenceType of

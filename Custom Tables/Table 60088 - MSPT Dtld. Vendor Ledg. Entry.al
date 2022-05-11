@@ -12,8 +12,8 @@ table 60088 "MSPT Dtld. Vendor Ledg. Entry"
 
     Caption = 'MSPT Dtld. Vendor Ledg. Entry';
     DataCaptionFields = "Vendor No.";
-    DrillDownPageID = 60109;
-    LookupPageID = 60109;
+   // DrillDownPageID = 60109;
+    //LookupPageID = 60109;
 
     fields
     {
@@ -79,7 +79,7 @@ table 60088 "MSPT Dtld. Vendor Ledg. Entry"
             var
                 LoginMgt : Codeunit "User Management";
             begin
-                LoginMgt.LookupUserID("User ID");
+             //   LoginMgt.LookupUserID("User ID");
             end;
         }
         field(12;"Source Code";Code[10])

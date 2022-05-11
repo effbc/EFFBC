@@ -177,7 +177,7 @@ table 50004 "Posted Material Issues Line"
         field(5707; "Product Group Code"; Code[10])
         {
             Caption = 'Product Group Code';
-            TableRelation = "Product Group".Code WHERE("Item Category Code" = FIELD("Item Category Code"));
+            // TableRelation = "Product Group".Code WHERE("Item Category Code" = FIELD("Item Category Code"));
         }
         field(5753; "Completely Received"; Boolean)
         {
@@ -306,19 +306,19 @@ table 50004 "Posted Material Issues Line"
         {
             /* CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE ("Order No."=FIELD("Document No."),
                                                                       "Order Line No."=FIELD("Line No."),
-                                                                      "Entry Type"=FILTER(Accepted)));*/
+                                                                      "Entry Type"=FILTER(Accepted)));
             Description = 'QC1.0';
             Editable = false;
-            FieldClass = FlowField;
+            FieldClass = FlowField;*/
         }
         field(33000252; "Quantity Rejected"; Decimal)
         {
             /*CalcFormula = Sum("Quality Ledger Entry".Quantity WHERE ("Order No."=FIELD("Document No."),
                                                                      "Order Line No."=FIELD("Line No."),
-                                                                     "Entry Type"=CONST(Reject)));*/
+                                                                     "Entry Type"=CONST(Reject)));
             Description = 'QC1.0';
             Editable = false;
-            FieldClass = FlowField;
+            FieldClass = FlowField;*/
         }
         field(33000253; "QC Enabled"; Boolean)
         {

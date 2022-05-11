@@ -2,106 +2,106 @@ table 60098 Attachments
 {
     // version B2B1.0,B2BQTO
 
-    LookupPageID = 60117;
+    // LookupPageID = 60117;
 
     fields
     {
-        field(1;"No.";Integer)
+        field(1; "No."; Integer)
         {
         }
-        field(2;"Table ID";Integer)
+        field(2; "Table ID"; Integer)
         {
         }
-        field(3;"Document Type";Option)
+        field(3; "Document Type"; Option)
         {
             OptionCaption = 'Quote,Order,Production BOM,Service Item,Bank Guarantee,Released Prod. Order,Contract,Budgets';
             OptionMembers = Quote,"Order","Production BOM","Service Item","Bank Guarantee","Released Prod. Order",Contract,Budgets;
         }
-        field(4;"Document No.";Code[20])
+        field(4; "Document No."; Code[20])
         {
         }
-        field(5;FileAttachment;BLOB)
+        field(5; FileAttachment; BLOB)
         {
             Compressed = false;
         }
-        field(6;"Storage Type";Option)
+        field(6; "Storage Type"; Option)
         {
             OptionCaption = 'Embedded,Disk File,Exchange Storage';
             OptionMembers = Embedded,"Disk File","Exchange Storage";
         }
-        field(7;"Storage Pointer";Text[250])
+        field(7; "Storage Pointer"; Text[250])
         {
         }
-        field(8;"File Extension";Text[250])
+        field(8; "File Extension"; Text[250])
         {
         }
-        field(9;"Last Date Modified";Date)
+        field(9; "Last Date Modified"; Date)
         {
             Caption = 'Last Date Modified';
         }
-        field(10;"Last Time Modified";Time)
+        field(10; "Last Time Modified"; Time)
         {
             Caption = 'Last Time Modified';
         }
-        field(11;"Store Pointer ID";BLOB)
+        field(11; "Store Pointer ID"; BLOB)
         {
             Caption = 'Store Pointer ID';
 
             trigger OnValidate();
             var
-                StoreIDInStream : InStream;
+                StoreIDInStream: InStream;
             begin
             end;
         }
-        field(12;"Store Pointer Checksum";Integer)
+        field(12; "Store Pointer Checksum"; Integer)
         {
             Caption = 'Store Pointer Checksum';
         }
-        field(13;"Entry Pointer ID";BLOB)
+        field(13; "Entry Pointer ID"; BLOB)
         {
             Caption = 'Entry Pointer ID';
 
             trigger OnValidate();
             var
-                EntryIDInStream : InStream;
+                EntryIDInStream: InStream;
             begin
             end;
         }
-        field(14;"Entry Pointer Checksum";Integer)
+        field(14; "Entry Pointer Checksum"; Integer)
         {
             Caption = 'Entry Pointer Checksum';
         }
-        field(15;"Read Only";Boolean)
+        field(15; "Read Only"; Boolean)
         {
         }
-        field(16;Description;Text[100])
+        field(16; Description; Text[100])
         {
         }
-        field(17;"Attachment Status";Boolean)
+        field(17; "Attachment Status"; Boolean)
         {
         }
-        field(18;"Document Line No.";Integer)
+        field(18; "Document Line No."; Integer)
         {
         }
-        field(60001;"Version No.";Code[10])
+        field(60001; "Version No."; Code[10])
         {
         }
-        field(60002;"Ids Reference No.";Code[20])
+        field(60002; "Ids Reference No."; Code[20])
         {
         }
-        field(60003;Doc_Type;Option)
+        field(60003; Doc_Type; Option)
         {
             OptionCaption = '" ,Invoice,Warranty,Spec,Manual"';
             OptionMembers = " ",Invoice,Warranty,Spec,Manual;
         }
-        field(60015;"Storage File Name";Text[250])
+        field(60015; "Storage File Name"; Text[250])
         {
         }
     }
 
     keys
     {
-        key(Key1;"No.","Table ID","Document Type","Document No.")
+        key(Key1; "No.", "Table ID", "Document Type", "Document No.")
         {
         }
     }
@@ -113,13 +113,13 @@ table 60098 Attachments
     trigger OnDelete();
     begin
         ModifiyDocument;
-        if (Rec."Table ID" = 33000929) and ("Attachment Status" =true) and ("Document No." <>'') then
-          Error('You can not delete the file in posted data');
+        if (Rec."Table ID" = 33000929) and ("Attachment Status" = true) and ("Document No." <> '') then
+            Error('You can not delete the file in posted data');
     end;
 
     trigger OnInsert();
     var
-        GLSetup : Record "General Ledger Setup";
+        GLSetup: Record "General Ledger Setup";
     begin
 
         "Last Date Modified" := Today;
@@ -127,22 +127,22 @@ table 60098 Attachments
 
         Attachment2.LockTable;
         if Attachment2.Find('+') then
-          "NextAttachmentNo." := Attachment2."No." + 1
+            "NextAttachmentNo." := Attachment2."No." + 1
         else
-          "NextAttachmentNo." := 1;
+            "NextAttachmentNo." := 1;
 
         //B2B sankar
-        "Ids Reference No.":= "Document No.";
-        if "Table ID" =0 then
-          if GetFilter("Table ID") = '112|36' then    //>> Added by Pranavi On 30-Mar-17
-          begin
-            "Table ID" :=112;
-            "Document Type" := "Document Type"::Order;
-            "Document No." := CopyStr(xRec.GetFilter(xRec."Document No."),1,StrPos(xRec.GetFilter(xRec."Document No."),'|')-1);
-            "Ids Reference No." := CopyStr(xRec.GetFilter(xRec."Document No."),1,StrPos(xRec.GetFilter(xRec."Document No."),'|')-1);
-          end
-          else  //<< Added by Pranavi On 30-Mar-17
-            "Table ID" :=33000269;
+        "Ids Reference No." := "Document No.";
+        if "Table ID" = 0 then
+            if GetFilter("Table ID") = '112|36' then    //>> Added by Pranavi On 30-Mar-17
+            begin
+                "Table ID" := 112;
+                "Document Type" := "Document Type"::Order;
+                "Document No." := CopyStr(xRec.GetFilter(xRec."Document No."), 1, StrPos(xRec.GetFilter(xRec."Document No."), '|') - 1);
+                "Ids Reference No." := CopyStr(xRec.GetFilter(xRec."Document No."), 1, StrPos(xRec.GetFilter(xRec."Document No."), '|') - 1);
+            end
+            else  //<< Added by Pranavi On 30-Mar-17
+                "Table ID" := 33000269;
         //B2B sankar
 
         "No." := "NextAttachmentNo.";
@@ -150,8 +150,8 @@ table 60098 Attachments
         GLSetup.Get;
         "Storage Type" := GLSetup."ESPL Attachment Storage Type";
         if "Storage Type" = "Storage Type"::"Disk File" then begin
-          GLSetup.TestField("ESPL Attmt. Storage Location");
-          "Storage Pointer" := GLSetup."ESPL Attmt. Storage Location";
+            GLSetup.TestField("ESPL Attmt. Storage Location");
+            "Storage Pointer" := GLSetup."ESPL Attmt. Storage Location";
         end;
         //test
     end;
@@ -163,37 +163,37 @@ table 60098 Attachments
     end;
 
     var
-        Text000 : Label 'You have canceled the create process.';
-        Text001 : Label 'Replace existing attachment?';
-        Text112 : Label 'You have canceled the import process.';
-        Text002 : Label 'The attachment is empty.';
-        Text003 : Label 'Attachment is already in use on this machine.';
-        Text004 : Label 'When you have saved your document, click Yes to import the document.';
-        Text005 : Label 'Export Attachment';
-        Text006 : Label 'Import Attachment';
-        Text007 : Label 'All Files (*.*)|*.*';
-        Text008 : Label 'Error during copying file.';
-        Text009 : Label 'Do you want to remove %1?';
-        Text010 : Label 'External file could not be removed.';
-        Text012 : Label '\Doc';
-        Text013 : Label 'Only Microsoft Word documents can be printed.';
-        Text014 : Label 'Only Microsoft Word documents can be faxed.';
-        Text015 : Label 'The e-mail has been deleted.';
-        Text016 : Label 'When you have finished working with a document, you should delete the associated temporary file. Please note that this will not delete the document.\\Do you want to delete the temporary file?';
-        Attachment2 : Record Attachments;
-        "NextAttachmentNo." : Integer;
-        GL : Record "G/L Entry";
-        Text020 : TextConst ENU='An Outlook dialog box is open. Close it and try again.',ENN='An Outlook dialog box is open. Close it and try again.';
-        Text021 : TextConst Comment='Default.',ENU='Default.',ENN='Default.';
-        "--Rev01----" : Integer;
-        TempBlob : Record TempBlob;
-        FileMgt : Codeunit "File Management";
-        Text022 : Label 'MECH_ITEM.';
+        Text000: Label 'You have canceled the create process.';
+        Text001: Label 'Replace existing attachment?';
+        Text112: Label 'You have canceled the import process.';
+        Text002: Label 'The attachment is empty.';
+        Text003: Label 'Attachment is already in use on this machine.';
+        Text004: Label 'When you have saved your document, click Yes to import the document.';
+        Text005: Label 'Export Attachment';
+        Text006: Label 'Import Attachment';
+        Text007: Label 'All Files (*.*)|*.*';
+        Text008: Label 'Error during copying file.';
+        Text009: Label 'Do you want to remove %1?';
+        Text010: Label 'External file could not be removed.';
+        Text012: Label '\Doc';
+        Text013: Label 'Only Microsoft Word documents can be printed.';
+        Text014: Label 'Only Microsoft Word documents can be faxed.';
+        Text015: Label 'The e-mail has been deleted.';
+        Text016: Label 'When you have finished working with a document, you should delete the associated temporary file. Please note that this will not delete the document.\\Do you want to delete the temporary file?';
+        Attachment2: Record Attachments;
+        "NextAttachmentNo.": Integer;
+        GL: Record "G/L Entry";
+        Text020: TextConst ENU = 'An Outlook dialog box is open. Close it and try again.', ENN = 'An Outlook dialog box is open. Close it and try again.';
+        Text021: TextConst Comment = 'Default.', ENU = 'Default.', ENN = 'Default.';
+        "--Rev01----": Integer;
+        //  TempBlob : Record TempBlob;
+        FileMgt: Codeunit "File Management";
+        Text022: Label 'MECH_ITEM.';
 
-    [LineStart(4335)]
-    procedure OpenAttachment(Caption : Text[260];IsTemporary : Boolean);
+    //[LineStart(4335)]
+    procedure OpenAttachment(Caption: Text[260]; IsTemporary: Boolean);
     var
-        FileName : Text[260];
+        FileName: Text[260];
     begin
         /*
         IF "Storage Type" = "Storage Type"::Embedded THEN BEGIN
@@ -250,14 +250,14 @@ table 60098 Attachments
 
     end;
 
-    [LineStart(4389)]
-    procedure ImportAttachment(ImportFromFile : Text;IsTemporary : Boolean;IsInherited : Boolean) : Boolean;
+    //[LineStart(4389)]
+    procedure ImportAttachment(ImportFromFile: Text; IsTemporary: Boolean; IsInherited: Boolean): Boolean;
     var
-        FileName : Text[260];
-        NewAttachmentNo : Integer;
-        GLSetup : Record "General Ledger Setup";
-        "--Rev01" : Integer;
-        ServerFileName : Text;
+        FileName: Text[260];
+        NewAttachmentNo: Integer;
+        GLSetup: Record "General Ledger Setup";
+        "--Rev01": Integer;
+        ServerFileName: Text;
     begin
         /*
         IF IsTemporary THEN BEGIN
@@ -457,44 +457,44 @@ table 60098 Attachments
 
     end;
 
-    [LineStart(4586)]
-    procedure ExportAttachment(var ExportToFile : Text) : Boolean;
+    //[LineStart(4586)]
+    procedure ExportAttachment(var ExportToFile: Text): Boolean;
     var
-        FileName : Text[260];
-        FileFilter : Text[260];
-        GLSetup : Record "General Ledger Setup";
+        FileName: Text[260];
+        FileFilter: Text[260];
+        GLSetup: Record "General Ledger Setup";
     begin
         GLSetup.Get;
         case "Storage Type" of
-          "Storage Type"::Embedded:
-            begin
-              if GLSetup."ESPL Attachment Storage Type" = GLSetup."ESPL Attachment Storage Type"::"Disk File" then
-                GLSetup.TestField("ESPL Attmt. Storage Location");
-              CalcFields(FileAttachment);
-              if FileAttachment.HasValue then begin
-                TempBlob.Blob := FileAttachment;
-                if ExportToFile = '' then begin
-                  FileName := Text021 + "File Extension";
-                  ExportToFile := FileMgt.BLOBExport(TempBlob,FileName,true);
-                end else
-                  // If a filename is provided, the file will be treated as temp file.
-                  ExportToFile := FileMgt.BLOBExport(TempBlob,ExportToFile,false);
-        
-                exit(true);
-              end;
-              exit(false)
-            end;
-          "Storage Type"::"Disk File":
-            begin
-              if GLSetup."ESPL Attachment Storage Type" = GLSetup."ESPL Attachment Storage Type"::"Disk File" then
-                GLSetup.TestField("ESPL Attmt. Storage Location");
-        
-              FileFilter := UpperCase("File Extension") + ' (*.' + "File Extension" + ')|*.' + "File Extension";
-              exit(Download(ConstDiskFileName,Text005,'',FileFilter,ExportToFile))
-            end;
+            "Storage Type"::Embedded:
+                begin
+                    if GLSetup."ESPL Attachment Storage Type" = GLSetup."ESPL Attachment Storage Type"::"Disk File" then
+                        GLSetup.TestField("ESPL Attmt. Storage Location");
+                    CalcFields(FileAttachment);
+                    if FileAttachment.HasValue then begin
+                        // TempBlob.Blob := FileAttachment;
+                        if ExportToFile = '' then begin
+                            FileName := Text021 + "File Extension";
+                            //  ExportToFile := FileMgt.BLOBExport(TempBlob,FileName,true);
+                        end else
+                            // If a filename is provided, the file will be treated as temp file.
+                            //  ExportToFile := FileMgt.BLOBExport(TempBlob,ExportToFile,false);
+
+                            exit(true);
+                    end;
+                    exit(false)
+                end;
+            "Storage Type"::"Disk File":
+                begin
+                    if GLSetup."ESPL Attachment Storage Type" = GLSetup."ESPL Attachment Storage Type"::"Disk File" then
+                        GLSetup.TestField("ESPL Attmt. Storage Location");
+
+                    FileFilter := UpperCase("File Extension") + ' (*.' + "File Extension" + ')|*.' + "File Extension";
+                    // exit(Download(ConstDiskFileName,Text005,'',FileFilter,ExportToFile))
+                end;
         end;
-        
-        
+
+
         //Rev01 chaitanya commented old code
         /*
         //B2B Deleted local var(CommonDialogMgtCodeunitCodeunit412), Commented code
@@ -554,62 +554,62 @@ table 60098 Attachments
 
     end;
 
-    [LineStart(4675)]
-    procedure DeleteFile(FileName : Text) : Boolean;
+    //[LineStart(4675)]
+    procedure DeleteFile(FileName: Text): Boolean;
     var
-        I : Integer;
+        I: Integer;
     begin
-        if FileName = '' then
-          exit(false);
-        
-        if not FileMgt.ClientFileExists(FileName) then
-          exit(true);
-        
-        repeat
-          Sleep(250);
-          I := I + 1;
+        /* if FileName = '' then
+           exit(false);
+
+         //if not FileMgt.ClientFileExists(FileName) then
+           exit(true);
+
+         repeat
+           Sleep(250);
+           I := I + 1;
         until FileMgt.DeleteClientFile(FileName) or (I = 25);
-        exit(not FileMgt.ClientFileExists(FileName));
-        
-        //Rev01 chaitanya commented old code
-        /*
-        IF FileName = '' THEN
-          EXIT(FALSE);
-        
-        IF NOT EXISTS(FileName) THEN
-          EXIT(TRUE);
-        
-        REPEAT
-          SLEEP(250);
-          I := I + 1;
-        UNTIL ERASE(FileName) OR (I = 25);
-        EXIT(NOT EXISTS(FileName));
-        */
-        //Rev01 chaitanya commented old code
+        // exit(not FileMgt.ClientFileExists(FileName));
+
+         //Rev01 chaitanya commented old code
+
+         IF FileName = '' THEN
+           EXIT(FALSE);
+
+         IF NOT EXISTS(FileName) THEN
+           EXIT(TRUE);
+
+         REPEAT
+           SLEEP(250);
+           I := I + 1;
+         UNTIL ERASE(FileName) OR (I = 25);
+         EXIT(NOT EXISTS(FileName));
+
+         //Rev01 chaitanya commented old code*/
 
     end;
 
-    [LineStart(4704)]
-    procedure RemoveAttachment(Prompt : Boolean) DeleteOk : Boolean;
+    //[LineStart(4704)]
+    procedure RemoveAttachment(Prompt: Boolean) DeleteOk: Boolean;
     var
-        DeleteYesNo : Boolean;
+        DeleteYesNo: Boolean;
     begin
         DeleteOk := false;
         DeleteYesNo := true;
         if Prompt then
-          if not Confirm(
-               Text009,false,TableCaption)
-          then
-            DeleteYesNo := false;
-        
+            if not Confirm(
+                 Text009, false, TableCaption)
+            then
+                DeleteYesNo := false;
+
         if DeleteYesNo then begin
-          if "Storage Type" = "Storage Type"::"Disk File" then
-            if not DeleteFile(ConstDiskFileName) then
-              Message(Text010);
-          Delete(true);
-          DeleteOk := true;
+            if "Storage Type" = "Storage Type"::"Disk File" then
+                if not DeleteFile(ConstDiskFileName) then
+                    Message(Text010);
+            Delete(true);
+            DeleteOk := true;
         end;
-        
+
         //Rev01 chaitanya commented old code
         /*
         DeleteOk := FALSE;
@@ -634,13 +634,13 @@ table 60098 Attachments
 
     end;
 
-    [LineStart(4743)]
-    procedure ConstFileName() FileName : Text[260];
+    //[LineStart(4743)]
+    procedure ConstFileName() FileName: Text[260];
     var
-        I : Integer;
-        DocNo : Text[30];
+        I: Integer;
+        DocNo: Text[30];
     begin
-        FileName := FileMgt.ClientTempFileName("File Extension");
+        // FileName := FileMgt.ClientTempFileName("File Extension");
         //Rev01 chaitanya commented old code
         /*
         REPEAT
@@ -656,8 +656,8 @@ table 60098 Attachments
 
     end;
 
-    [LineStart(4758)]
-    procedure ConstDiskFileName() DiskFileName : Text[260];
+    //[LineStart(4758)]
+    procedure ConstDiskFileName() DiskFileName: Text[260];
     begin
         DiskFileName := "Storage Pointer" + '\' + Format("No.") + '.';
         //Rev01 chaitanya commented old code
@@ -668,11 +668,11 @@ table 60098 Attachments
 
     end;
 
-    [LineStart(4766)]
+    //[LineStart(4766)]
     procedure CreateAttachment();
     var
-        Attachment : Record Attachments;
-        NewAttachNo : Integer;
+        Attachment: Record Attachments;
+        NewAttachNo: Integer;
     begin
         //Rev01 chaitanya commented old code
         /*
@@ -703,49 +703,49 @@ table 60098 Attachments
 
     end;
 
-    [LineStart(4794)]
+    //[LineStart(4794)]
     procedure "--Rev01"();
     begin
     end;
 
-    [LineStart(4797)]
-    procedure CheckCorrespondenceType(CorrespondenceType : Option " ","Hard Copy","E-Mail",Fax) ErrorText : Text[80];
+    //[LineStart(4797)]
+    procedure CheckCorrespondenceType(CorrespondenceType: Option " ","Hard Copy","E-Mail",Fax) ErrorText: Text[80];
     begin
         case CorrespondenceType of
-          CorrespondenceType::"Hard Copy":
-            if (UpperCase("File Extension") <> 'DOC') and (UpperCase("File Extension") <> 'DOCX') then
-              exit(Text013);
-          CorrespondenceType::Fax:
-            if (UpperCase("File Extension") <> 'DOC') and (UpperCase("File Extension") <> 'DOCX') then
-              exit(Text014);
+            CorrespondenceType::"Hard Copy":
+                if (UpperCase("File Extension") <> 'DOC') and (UpperCase("File Extension") <> 'DOCX') then
+                    exit(Text013);
+            CorrespondenceType::Fax:
+                if (UpperCase("File Extension") <> 'DOC') and (UpperCase("File Extension") <> 'DOCX') then
+                    exit(Text014);
         end;
     end;
 
-    [LineStart(4807)]
-    procedure ImportAttachment2(ImportFromFile : Text;IsTemporary : Boolean;IsInherited : Boolean;FileN : Text) : Boolean;
+    //[LineStart(4807)]
+    procedure ImportAttachment2(ImportFromFile: Text; IsTemporary: Boolean; IsInherited: Boolean; FileN: Text): Boolean;
     var
-        FileName : Text[260];
-        NewAttachmentNo : Integer;
-        GLSetup : Record "General Ledger Setup";
-        "--Rev01" : Integer;
-        ServerFileName : Text;
+        FileName: Text[260];
+        NewAttachmentNo: Integer;
+        GLSetup: Record "General Ledger Setup";
+        "--Rev01": Integer;
+        ServerFileName: Text;
     begin
         if IsTemporary then begin
-          FileName := FileN;
-          if FileName <> '' then begin
-            FileAttachment := TempBlob.Blob;
-            "File Extension" := CopyStr(UpperCase(FileMgt.GetExtension(FileName)),1,250);
-            exit(true);
-          end;
-          exit(false);
+            FileName := FileN;
+            if FileName <> '' then begin
+                // FileAttachment := TempBlob.Blob;
+                "File Extension" := CopyStr(UpperCase(FileMgt.GetExtension(FileName)), 1, 250);
+                exit(true);
+            end;
+            exit(false);
         end;
-        
-        TestField("Read Only",false);
+
+        TestField("Read Only", false);
         GLSetup.Get;
         if GLSetup."ESPL Attachment Storage Type" = GLSetup."ESPL Attachment Storage Type"::"Disk File" then
-          GLSetup.TestField("ESPL Attmt. Storage Location");
+            GLSetup.TestField("ESPL Attmt. Storage Location");
         if "Storage Pointer" = '' then
-          "Storage Pointer" := GLSetup."ESPL Attmt. Storage Location";
+            "Storage Pointer" := GLSetup."ESPL Attmt. Storage Location";
         /*
         IF IsInherited THEN BEGIN
           NewAttachmentNo := AttachmentMgt.InsertAttachment("No.","Table ID","Document Type","Document No.");
@@ -757,111 +757,111 @@ table 60098 Attachments
           ELSE
             NewAttachmentNo := "No.";
         */
-        Get(NewAttachmentNo,"Table ID","Document Type","Document No.");//hack
-        
+        Get(NewAttachmentNo, "Table ID", "Document Type", "Document No.");//hack
+
         if GLSetup."ESPL Attachment Storage Type" = GLSetup."ESPL Attachment Storage Type"::"Disk File" then begin
-          ServerFileName := ConstDiskFileName;
-          FileName := FileN;
-         /* IF NOT UPLOAD(Text006,'',Text007,FileName,ServerFileName) THEN
-            ERROR(Text008);*/
-          if FileName = '' then
-            exit(false);
-          "File Extension" := CopyStr(UpperCase(FileMgt.GetExtension(FileName)),1,250);
-          "Storage Pointer" := GLSetup."ESPL Attmt. Storage Location";
-          "Storage Type" := "Storage Type"::"Disk File";
-          "Attachment Status":=true;
-          if Modify(true) then;
-          //Efftronics
-          if "Table ID"=17 then begin
-            GL.Reset;
-            GL.SetRange(GL."Document No.","Document No.");
-            if GL.Find('-') then
-            repeat
-              if GL."G/L Account No." in ['23700','53500','24606','20300'] then begin
-                GL.Attachment:=true;
-                GL.Modify;
-              end;
-            until GL.Next=0;
-          end;
-          //Efftronics
+            ServerFileName := ConstDiskFileName;
+            FileName := FileN;
+            /* IF NOT UPLOAD(Text006,'',Text007,FileName,ServerFileName) THEN
+               ERROR(Text008);*/
+            if FileName = '' then
+                exit(false);
+            "File Extension" := CopyStr(UpperCase(FileMgt.GetExtension(FileName)), 1, 250);
+            "Storage Pointer" := GLSetup."ESPL Attmt. Storage Location";
+            "Storage Type" := "Storage Type"::"Disk File";
+            "Attachment Status" := true;
+            if Modify(true) then;
+            //Efftronics
+            if "Table ID" = 17 then begin
+                GL.Reset;
+                GL.SetRange(GL."Document No.", "Document No.");
+                if GL.Find('-') then
+                    repeat
+                        if GL."G/L Account No." in ['23700', '53500', '24606', '20300'] then begin
+                            GL.Attachment := true;
+                            GL.Modify;
+                        end;
+                    until GL.Next = 0;
+            end;
+            //Efftronics
         end else begin
-          FileName := FileN;
-          FileMgt.BLOBImportFromServerFile(TempBlob,FileName);
-          //FileName := FileMgt.BLOBImport(TempBlob,FileName);
-          if FileName = '' then
-            exit(false);
-          FileAttachment := TempBlob.Blob;
-          "File Extension" := CopyStr(UpperCase(FileMgt.GetExtension(FileName)),1,250);
-          "Storage Type" := "Storage Type"::Embedded;
-          "Attachment Status":=true;
-          if Modify(true) then;
-          //Efftronics
-          if "Table ID"=17 then begin
-            GL.Reset;
-            GL.SetRange(GL."Document No.","Document No.");
-            if GL.Find('-') then
-            repeat
-              if GL."G/L Account No." in ['23700','53500','24606','20300'] then begin
-                GL.Attachment:=true;
-                GL.Modify;
-              end;
-            until GL.Next=0;
-          end;
-          //Efftronics
+            FileName := FileN;
+            // FileMgt.BLOBImportFromServerFile(TempBlob,FileName);
+            //FileName := FileMgt.BLOBImport(TempBlob,FileName);
+            if FileName = '' then
+                exit(false);
+            //  FileAttachment := TempBlob.Blob;
+            "File Extension" := CopyStr(UpperCase(FileMgt.GetExtension(FileName)), 1, 250);
+            "Storage Type" := "Storage Type"::Embedded;
+            "Attachment Status" := true;
+            if Modify(true) then;
+            //Efftronics
+            if "Table ID" = 17 then begin
+                GL.Reset;
+                GL.SetRange(GL."Document No.", "Document No.");
+                if GL.Find('-') then
+                    repeat
+                        if GL."G/L Account No." in ['23700', '53500', '24606', '20300'] then begin
+                            GL.Attachment := true;
+                            GL.Modify;
+                        end;
+                    until GL.Next = 0;
+            end;
+            //Efftronics
         end;
         exit(true);
 
     end;
 
-    [LineStart(4889)]
-    procedure ReadFilePath(var ExportToFile : Text) : Boolean;
+    //[LineStart(4889)]
+    procedure ReadFilePath(var ExportToFile: Text): Boolean;
     var
-        FileName : Text[260];
-        FileFilter : Text[260];
-        GLSetup : Record "General Ledger Setup";
-        DescriptionString : Text[100];
+        FileName: Text[260];
+        FileFilter: Text[260];
+        GLSetup: Record "General Ledger Setup";
+        DescriptionString: Text[100];
     begin
         GLSetup.Get;
         case "Storage Type" of
-          "Storage Type"::Embedded:
-            begin
-             CalcFields(FileAttachment);
-              if FileAttachment.HasValue then begin
-                  TempBlob.Blob := FileAttachment;
-                  DescriptionString := '';
-                  DescriptionString  := ConvertStr(Description,'/',' ');
-                  DescriptionString  := ConvertStr(DescriptionString,'\',' ');
-                  FileName := '\\erpserver\ErpAttachments\Mechanical_Items\'+"Document No."+'-'+DescriptionString+'.'+ "File Extension";
-                  //FileName := ExportToFile;
-                  FileMgt.BLOBExportToServerFile(TempBlob,FileName);
-               exit(true);
-              end;
-              exit(false)
-            end;
-          "Storage Type"::"Disk File":
-            begin
-              if GLSetup."ESPL Attachment Storage Type" = GLSetup."ESPL Attachment Storage Type"::"Disk File" then
-                GLSetup.TestField("ESPL Attmt. Storage Location");
+            "Storage Type"::Embedded:
+                begin
+                    /* CalcFields(FileAttachment);
+                      if FileAttachment.HasValue then begin
+                          TempBlob.Blob := FileAttachment;
+                          DescriptionString := '';
+                          DescriptionString  := ConvertStr(Description,'/',' ');
+                          DescriptionString  := ConvertStr(DescriptionString,'\',' ');
+                          FileName := '\\erpserver\ErpAttachments\Mechanical_Items\'+"Document No."+'-'+DescriptionString+'.'+ "File Extension";
+                          //FileName := ExportToFile;
+                          FileMgt.BLOBExportToServerFile(TempBlob,FileName);
+                       exit(true);
+                      end;*/
+                    exit(false)
+                end;
+            "Storage Type"::"Disk File":
+                begin
+                    if GLSetup."ESPL Attachment Storage Type" = GLSetup."ESPL Attachment Storage Type"::"Disk File" then
+                        GLSetup.TestField("ESPL Attmt. Storage Location");
 
-              FileFilter := UpperCase("File Extension") + ' (*.' + "File Extension" + ')|*.' + "File Extension";
-              exit(Download(ConstDiskFileName,Text005,'',FileFilter,ExportToFile))
-            end;
+                    FileFilter := UpperCase("File Extension") + ' (*.' + "File Extension" + ')|*.' + "File Extension";
+                    // exit(Download(ConstDiskFileName,Text005,'',FileFilter,ExportToFile))
+                end;
         end;
     end;
 
-    [LineStart(4917)]
+    //[LineStart(4917)]
     procedure ModifiyDocument();
     var
-        InspectionReceiptHeader : Record "Inspection Receipt Header";
-        UserSetup : Record "User Setup";
+        //  InspectionReceiptHeader : Record "Inspection Receipt Header";
+        UserSetup: Record "User Setup";
     begin
-        InspectionReceiptHeader.Reset;
-        InspectionReceiptHeader.SetRange("No.","Document No.");
-        InspectionReceiptHeader.SetRange(Status,true);
-        if InspectionReceiptHeader.FindFirst then begin
-          if not (UserId in['EFFTRONICS\KRATNABABU','EFFTRONICS\DINEEL']) then
-            Error('You are not Authorised to modify');
-        end;
+        /* InspectionReceiptHeader.Reset;
+         InspectionReceiptHeader.SetRange("No.","Document No.");
+         InspectionReceiptHeader.SetRange(Status,true);
+         if InspectionReceiptHeader.FindFirst then begin
+           if not (UserId in['EFFTRONICS\KRATNABABU','EFFTRONICS\DINEEL']) then
+             Error('You are not Authorised to modify');
+         end;*/
     end;
 }
 

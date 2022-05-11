@@ -10,8 +10,8 @@ table 60082 "MSPT Line"
     // ---------------------------------------------------
     // 01  B2B    MSPT Line
 
-    DrillDownPageID = 60103;
-    LookupPageID = 60103;
+  //  DrillDownPageID = 60103;
+    //LookupPageID = 60103;
 
     fields
     {
@@ -133,7 +133,7 @@ table 60082 "MSPT Line"
         MSPTLine : Record "MSPT Line";
         Text001 : Label 'Percentage Must Be Positive Value';
 
-    [LineStart(3845)]
+   // [LineStart(3845)]
     procedure MSPTTestField();
     begin
         MSPTHeader.SetRange(Code,"MSPT Header Code");
