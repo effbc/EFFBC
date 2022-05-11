@@ -1,4 +1,4 @@
-tableextension 70192 PostedInvtPutawayLineExt extends "Posted Invt. Put-away Line"
+tableextension 70191 PostedInvtPutawayLineExt extends "Posted Invt. Put-away Line"
 {
     // version NAVW19.00.00.45778
 

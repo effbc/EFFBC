@@ -109,7 +109,7 @@ tableextension 70206 SalesCueExt extends "Sales Cue"
 
         //Unsupported feature: Deletion on ""Primary Key"(Key)". Please convert manually.
 
-        key(Key1; "Primary Key")
+        key(pri1; "Primary Key")
         {
         }
     }
