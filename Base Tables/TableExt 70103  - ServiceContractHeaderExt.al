@@ -1949,7 +1949,7 @@ tableextension 70103 ServiceContractHeaderExt extends "Service Contract Header"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -1995,41 +1995,41 @@ tableextension 70103 ServiceContractHeaderExt extends "Service Contract Header"
 
         //Unsupported feature: Deletion on ""Expiration Date"(Key)". Please convert manually.
 
-        key(Key1; "Contract Type", "Contract No.")
-        {
-        }
-        key(Key2; "Contract No.", "Contract Type")
-        {
-        }
-        key(Key3; "Customer No.", "Ship-to Code")
-        {
-        }
-        key(Key4; "Bill-to Customer No.", "Contract Type", "Combine Invoices", "Next Invoice Date")
-        {
-        }
-        key(Key5; "Next Price Update Date")
-        {
-        }
-        key(Key6; "Responsibility Center", "Service Zone Code", Status, "Contract Group Code")
-        {
-        }
-        key(Key7; "Salesperson Code", Status)
-        {
-        }
-        key(Key8; "Template No.")
-        {
-        }
-        key(Key9; "Customer No.", "Bill-to Customer No.")
-        {
-            MaintainSQLIndex = false;
-        }
-        key(Key10; "Customer No.", "Currency Code", "Ship-to Code")
-        {
-            MaintainSQLIndex = false;
-        }
-        key(Key11; "Expiration Date")
-        {
-        }
+        /*        key(Key1; "Contract Type", "Contract No.")
+                {
+                }
+                key(Key2; "Contract No.", "Contract Type")
+                {
+                }
+                key(Key3; "Customer No.", "Ship-to Code")
+                {
+                }
+                key(Key4; "Bill-to Customer No.", "Contract Type", "Combine Invoices", "Next Invoice Date")
+                {
+                }
+                key(Key5; "Next Price Update Date")
+                {
+                }
+                key(Key6; "Responsibility Center", "Service Zone Code", Status, "Contract Group Code")
+                {
+                }
+                key(Key7; "Salesperson Code", Status)
+                {
+                }
+                key(Key8; "Template No.")
+                {
+                }
+                key(Key9; "Customer No.", "Bill-to Customer No.")
+                {
+                    MaintainSQLIndex = false;
+                }
+                key(Key10; "Customer No.", "Currency Code", "Ship-to Code")
+                {
+                    MaintainSQLIndex = false;
+                }
+                key(Key11; "Expiration Date")
+                {
+                }*/
     }
 
 

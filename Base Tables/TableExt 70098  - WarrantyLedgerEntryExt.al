@@ -71,7 +71,7 @@ tableextension 70098 WarrantyLedgerEntryExt extends "Warranty Ledger Entry"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -96,21 +96,21 @@ tableextension 70098 WarrantyLedgerEntryExt extends "Warranty Ledger Entry"
 
         //Unsupported feature: Deletion on ""Document No.,Posting Date"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
-        {
-        }
-        key(Key2; "Service Item No. (Serviced)", "Posting Date", "Document No.")
-        {
-        }
-        key(Key3; "Service Order No.", "Posting Date", "Document No.")
-        {
-        }
-        key(Key4; "Service Contract No.", "Posting Date", "Document No.")
-        {
-        }
-        key(Key5; "Document No.", "Posting Date")
-        {
-        }
+        /* key(Key1; "Entry No.")
+         {
+         }
+         key(Key2; "Service Item No. (Serviced)", "Posting Date", "Document No.")
+         {
+         }
+         key(Key3; "Service Order No.", "Posting Date", "Document No.")
+         {
+         }
+         key(Key4; "Service Contract No.", "Posting Date", "Document No.")
+         {
+         }
+         key(Key5; "Document No.", "Posting Date")
+         {
+         }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

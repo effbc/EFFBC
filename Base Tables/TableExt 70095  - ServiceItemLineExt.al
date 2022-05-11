@@ -2036,28 +2036,28 @@ tableextension 70095 ServiceItemLineExt extends "Service Item Line"
 
         //trigger OnValidate();
         //Parameters and return type have not been exported.
-    var
-            FaultCode: Record "Fault Code";
-    //begin
-    /*
-    FaultCode.SetFilter(FaultCode.Code,"Fault Code");
-    //MESSAGE("Fault Code");
-    if FaultCode.Find('-') then
-    repeat
-    "Fault Code Description":=FaultCode.Description;
-    until FaultCode.Next=0;
-    //b2b EFF
-    */
-    //end;
-
-
-    //Unsupported feature: CodeInsertion on ""Resolution Code"(Field 36)". Please convert manually.
-
-    //trigger OnValidate();
-    //Parameters and return type have not been exported.
-    var
-        ResolutionCode: Record "Resolution Code";
+        /*var
+                FaultCode: Record "Fault Code";*/
         //begin
+        /*
+        FaultCode.SetFilter(FaultCode.Code,"Fault Code");
+        //MESSAGE("Fault Code");
+        if FaultCode.Find('-') then
+        repeat
+        "Fault Code Description":=FaultCode.Description;
+        until FaultCode.Next=0;
+        //b2b EFF
+        */
+        //end;
+
+
+        //Unsupported feature: CodeInsertion on ""Resolution Code"(Field 36)". Please convert manually.
+
+        //trigger OnValidate();
+        //Parameters and return type have not been exported.
+        /*var
+            ResolutionCode: Record "Resolution Code";
+            //begin*/
         /*
         //b2b EFF
         ResolutionCode.Get("Resolution Code");
@@ -2089,57 +2089,57 @@ tableextension 70095 ServiceItemLineExt extends "Service Item Line"
             FieldCaption("Variant Code"),FieldCaption("Service Item No."))
         */
         //end;
-        field(60003;"Resolution Description";
+        field(60003; "Resolution Description";
         Text[50])
         {
         }
-        field(60004;"Fault Code Description";Text[50])
+        field(60004; "Fault Code Description"; Text[50])
         {
         }
-        field(60005;"Fault Area Description";Text[50])
+        field(60005; "Fault Area Description"; Text[50])
         {
         }
-        field(60006;"Symptom Description";Text[50])
+        field(60006; "Symptom Description"; Text[50])
         {
         }
-        field(60010;"From Location";Code[10])
+        field(60010; "From Location"; Code[10])
         {
-            TableRelation = "Dimension Value".Code WHERE ("Dimension Code"=FILTER('LOCATIONS'));
+            TableRelation = "Dimension Value".Code WHERE("Dimension Code" = FILTER('LOCATIONS'));
 
             trigger OnValidate();
             begin
-                   if Account=true then
-                    "From Location":=xRec."From Location";
+                if Account = true then
+                    "From Location" := xRec."From Location";
             end;
         }
-        field(60011;"To Location";Code[10])
+        field(60011; "To Location"; Code[10])
         {
-            TableRelation = "Dimension Value".Code WHERE ("Dimension Code"=FILTER('LOCATIONS'),
-                                                          Code=FILTER(<>'HAR'));
+            TableRelation = "Dimension Value".Code WHERE("Dimension Code" = FILTER('LOCATIONS'),
+                                                          Code = FILTER(<> 'HAR'));
 
             trigger OnValidate();
             begin
-                  if Account=true then
-                    "To Location":=xRec."To Location";
-                 /*
-                 ServHeader.RESET;
-                  ServHeader.SETFILTER(ServHeader."No.","Document No.");
-                  ServHeader.SETRANGE(ServHeader."Customer Cards",TRUE);
-                  IF ServHeader.FINDFIRST THEN
-                  BEGIN
-                    PMIH.RESET;
-                    PMIH.SETFILTER(PMIH."Material Issue No.",ServHeader."Material Issue no.");
-                    IF PMIH.FINDFIRST THEN
-                    BEGIN
-                      IF NOT(("To Location"=PMIH."Shortcut Dimension 2 Code") OR ("To Location"='DAMAGE')) THEN
-                        ERROR('customer cards cannot be moved to other locations');
-                    END;
-                  END;
-                 */
+                if Account = true then
+                    "To Location" := xRec."To Location";
+                /*
+                ServHeader.RESET;
+                 ServHeader.SETFILTER(ServHeader."No.","Document No.");
+                 ServHeader.SETRANGE(ServHeader."Customer Cards",TRUE);
+                 IF ServHeader.FINDFIRST THEN
+                 BEGIN
+                   PMIH.RESET;
+                   PMIH.SETFILTER(PMIH."Material Issue No.",ServHeader."Material Issue no.");
+                   IF PMIH.FINDFIRST THEN
+                   BEGIN
+                     IF NOT(("To Location"=PMIH."Shortcut Dimension 2 Code") OR ("To Location"='DAMAGE')) THEN
+                       ERROR('customer cards cannot be moved to other locations');
+                   END;
+                 END;
+                */
 
             end;
         }
-        field(60012;Account;Boolean)
+        field(60012; Account; Boolean)
         {
 
             trigger OnValidate();
@@ -2152,265 +2152,255 @@ tableextension 70095 ServiceItemLineExt extends "Service Item Line"
                   IF "To Location"='' THEN
                     ERROR('PLEASE ENTER TO LOCATION');
                 */
-                if (Account=false) and (not(UserId in ['EFFTRONICS\PRANAVI','EFFTRONICS\VISHNUPRIYA','EFFTRONICS\B2BOTS'])) then              //added by pranavi on 17-04-2015
-                  Error('You cannot uncheck!');
+                if (Account = false) and (not (UserId in ['EFFTRONICS\PRANAVI', 'EFFTRONICS\VISHNUPRIYA', 'EFFTRONICS\B2BOTS'])) then              //added by pranavi on 17-04-2015
+                    Error('You cannot uncheck!');
                 if "Repair Status Code" = '' then
-                  Error('Please enter Repair Status!');
+                    Error('Please enter Repair Status!');
                 if "From Location" = '' then
-                  Error('Please enter From Location!');
+                    Error('Please enter From Location!');
                 if "To Location" = '' then
-                  Error('Please enter To Location!');
-                  "ITEMLEDGER ENTRY".SetCurrentKey("Location Code","Global Dimension 2 Code","Item No.");
-                  "ITEMLEDGER ENTRY".SetFilter("ITEMLEDGER ENTRY"."Item No.",Rec."Item No.");
-                  "ITEMLEDGER ENTRY".SetFilter("ITEMLEDGER ENTRY"."Location Code",'CS');
-                  "ITEMLEDGER ENTRY".SetFilter("ITEMLEDGER ENTRY"."Global Dimension 2 Code",Rec."From Location");
-                  "ITEMLEDGER ENTRY".SetFilter("ITEMLEDGER ENTRY"."Serial No.",Rec."Serial No.");
-                  if "ITEMLEDGER ENTRY".FindSet then
-                  begin
-                  repeat
-                    if Account=true then
-                    begin
-                /*     ServHeader.RESET;
-                      ServHeader.SETFILTER(ServHeader."No.","Document No.");
-                      ServHeader.SETRANGE(ServHeader."Customer Cards",TRUE);
-                      IF ServHeader.FINDFIRST THEN
-                      BEGIN
-                        PMIH.RESET;
-                        PMIH.SETFILTER(PMIH."Material Issue No.",ServHeader."Material Issue no.");
-                        IF PMIH.FINDFIRST THEN
-                        BEGIN
-                          {IF NOT(("To Location"=PMIH."Shortcut Dimension 2 Code") OR ("To Location"='DAMAGE')) THEN
-                            ERROR('customer cards cannot be moved to other locations')
-                          ELSE}
-                          BEGIN
-                            IF  "To Location"='DAMAGE' THEN
-                              Connection.Material_Transfer("Item No.","Serial No.",'CS','DAMAGE','')
-                            ELSE
-                              Connection.Material_Transfer("Item No.","Serial No.",'CS','SITE',"To Location");
-                
-                          //  CSTransEntry(0);
-                          END;
-                        END;
-                      END
-                      ELSE BEGIN
-                */
-                        "ITEMLEDGER ENTRY"."Global Dimension 2 Code":=Rec."To Location";
-                        "ITEMLEDGER ENTRY"."Posting Date":=Today;              //added by pranavi on 19-04-2015
-                        "ITEMLEDGER ENTRY".Modify;
-                        //  CSTransEntry(1);
-                        ServItem.SetRange(ServItem."No.","Service Item No.");
-                        if ServItem.Find('-') then
-                        begin
-                          "Dimension Value".SetRange("Dimension Value"."Dimension Code",'Locations');
-                          "Dimension Value".SetRange("Dimension Value".Code,Rec."To Location");
-                          if "Dimension Value".Find('-') then
-                          begin
-                            ServItem."Present Location":="Dimension Value".Name;
-                            if "To Location"='H-OFF' then
-                              ServItem."WORKING STATUS":=ServItem."WORKING STATUS"::WORKING;
-                            ServItem.Modify;
-                          end;
+                    Error('Please enter To Location!');
+                "ITEMLEDGER ENTRY".SetCurrentKey("Location Code", "Global Dimension 2 Code", "Item No.");
+                "ITEMLEDGER ENTRY".SetFilter("ITEMLEDGER ENTRY"."Item No.", Rec."Item No.");
+                "ITEMLEDGER ENTRY".SetFilter("ITEMLEDGER ENTRY"."Location Code", 'CS');
+                "ITEMLEDGER ENTRY".SetFilter("ITEMLEDGER ENTRY"."Global Dimension 2 Code", Rec."From Location");
+                "ITEMLEDGER ENTRY".SetFilter("ITEMLEDGER ENTRY"."Serial No.", Rec."Serial No.");
+                if "ITEMLEDGER ENTRY".FindSet then begin
+                    repeat
+                        if Account = true then begin
+                            /*     ServHeader.RESET;
+                                  ServHeader.SETFILTER(ServHeader."No.","Document No.");
+                                  ServHeader.SETRANGE(ServHeader."Customer Cards",TRUE);
+                                  IF ServHeader.FINDFIRST THEN
+                                  BEGIN
+                                    PMIH.RESET;
+                                    PMIH.SETFILTER(PMIH."Material Issue No.",ServHeader."Material Issue no.");
+                                    IF PMIH.FINDFIRST THEN
+                                    BEGIN
+                                      {IF NOT(("To Location"=PMIH."Shortcut Dimension 2 Code") OR ("To Location"='DAMAGE')) THEN
+                                        ERROR('customer cards cannot be moved to other locations')
+                                      ELSE}
+                                      BEGIN
+                                        IF  "To Location"='DAMAGE' THEN
+                                          Connection.Material_Transfer("Item No.","Serial No.",'CS','DAMAGE','')
+                                        ELSE
+                                          Connection.Material_Transfer("Item No.","Serial No.",'CS','SITE',"To Location");
+
+                                      //  CSTransEntry(0);
+                                      END;
+                                    END;
+                                  END
+                                  ELSE BEGIN
+                            */
+                            "ITEMLEDGER ENTRY"."Global Dimension 2 Code" := Rec."To Location";
+                            "ITEMLEDGER ENTRY"."Posting Date" := Today;              //added by pranavi on 19-04-2015
+                            "ITEMLEDGER ENTRY".Modify;
+                            //  CSTransEntry(1);
+                            /*ServItem.SetRange(ServItem."No.", "Service Item No.");
+                            if ServItem.Find('-') then begin
+                                "Dimension Value".SetRange("Dimension Value"."Dimension Code", 'Locations');
+                                "Dimension Value".SetRange("Dimension Value".Code, Rec."To Location");
+                                if "Dimension Value".Find('-') then begin
+                                    ServItem."Present Location" := "Dimension Value".Name;
+                                    if "To Location" = 'H-OFF' then
+                                        ServItem."WORKING STATUS" := ServItem."WORKING STATUS"::WORKING;
+                                    ServItem.Modify;
+                                end;
+                            end;*/
                         end;
-                      end;
                     //END;
-                  until"ITEMLEDGER ENTRY".Next = 0;
-                  "Sent date time":=CurrentDateTime;
-                  end else
-                  begin
-                    if Account=true then
-                    begin
-                      // added by vishnu for alerting purpose on 08-07-2019
-                      ServItemLine.Account:=false ;
-                      Error('Service Item not in From Location' );
-                
+                    until "ITEMLEDGER ENTRY".Next = 0;
+                    "Sent date time" := CurrentDateTime;
+                end else begin
+                    if Account = true then begin
+                        // added by vishnu for alerting purpose on 08-07-2019
+                        //ServItemLine.Account := false;
+                        Error('Service Item not in From Location');
+
                     end
-                    else
-                    begin
-                      ServItemLine.Account:=true;
-                      Error('Service Item not in From Location' );
+                    else begin
+                        //ServItemLine.Account := true;
+                        Error('Service Item not in From Location');
                     end;
-                  end;
+                end;
 
             end;
         }
-        field(60030;"Countrol Section";Code[10])
+        field(60030; "Countrol Section"; Code[10])
         {
         }
-        field(60031;"N/W Stand Alone";Option)
+        field(60031; "N/W Stand Alone"; Option)
         {
             OptionMembers = " ","Stand Alone","Network  ";
         }
-        field(60032;IDNO;Code[10])
+        field(60032; IDNO; Code[10])
         {
         }
-        field(60033;"F/W Version";Code[10])
+        field(60033; "F/W Version"; Code[10])
         {
         }
-        field(60034;"S/W Version";Text[30])
+        field(60034; "S/W Version"; Text[30])
         {
         }
-        field(60035;"H/W Process Type";Text[30])
+        field(60035; "H/W Process Type"; Text[30])
         {
         }
-        field(60036;"Operating Voltage";Option)
+        field(60036; "Operating Voltage"; Option)
         {
             OptionMembers = " ","24 VDC","12 VDC";
         }
-        field(60037;"Supply Giving From";Text[30])
+        field(60037; "Supply Giving From"; Text[30])
         {
         }
-        field(60038;"Earth Status";Option)
+        field(60038; "Earth Status"; Option)
         {
             OptionMembers = " ",Connected,"Not connected";
         }
-        field(60039;"Communication Media";Option)
+        field(60039; "Communication Media"; Option)
         {
             OptionMembers = " ",OFC,MICROWAVE,QUAD;
         }
-        field(60040;"Warr/AMC/None";Option)
+        field(60040; "Warr/AMC/None"; Option)
         {
             OptionMembers = " ",WARRANTY,AMC,"NONE";
         }
-        field(60041;Zone;Code[10])
+        field(60041; Zone; Code[10])
         {
             Editable = false;
         }
-        field(60042;Division;Code[10])
+        field(60042; Division; Code[10])
         {
             Editable = false;
         }
-        field(60043;Station;Code[20])
+        field(60043; Station; Code[20])
         {
             Editable = true;
-            TableRelation = Station;
+            //TableRelation = Station;
 
             trigger OnLookup();
             begin
-                SH.Reset;
-                if SH.Get("Document Type"::Order,"Document No.") then
-                begin
-                  stat.Reset;
-                  buf2 := SH."Shortcut Dimension 2 Code";
-                  Divi.SetRange("Division Code",buf2);
-                   Divi.FindFirst;
-                  buf := Divi."Cumilative Division1";
-                  stat.SetFilter(stat."Cumilative Division1",buf);
-                 // stat.SETFILTER("SMS Mapped Status",FORMAT(TRUE));
-                  //stat.SETFILTER(stat."Division code",SH."Shortcut Dimension 2 Code");
-                  if PAGE.RunModal(60206,stat) = ACTION:: LookupOK then
-                   Station := stat."Station Code";
-                  Validate(Station);
-                end;
+                /* SH.Reset;
+                 if SH.Get("Document Type"::Order, "Document No.") then begin
+                     stat.Reset;
+                     buf2 := SH."Shortcut Dimension 2 Code";
+                     Divi.SetRange("Division Code", buf2);
+                     Divi.FindFirst;
+                     buf := Divi."Cumilative Division1";
+                     stat.SetFilter(stat."Cumilative Division1", buf);
+                     // stat.SETFILTER("SMS Mapped Status",FORMAT(TRUE));
+                     //stat.SETFILTER(stat."Division code",SH."Shortcut Dimension 2 Code");
+                     if PAGE.RunModal(60206, stat) = ACTION::LookupOK then
+                         Station := stat."Station Code";
+                     Validate(Station);
+                 end;*/
             end;
 
             trigger OnValidate();
             begin
-                SH.Reset;
-                if SH.Get("Document Type"::Order,"Document No.") then
-                begin
-                  stat.Reset;
-                   Divi.SetRange("Division Code",SH."Shortcut Dimension 2 Code");
-                    Divi.FindFirst;
-                  //stat.SETFILTER(stat."Division code",SH."Shortcut Dimension 2 Code");
-                  buf := Divi."Cumilative Division1";
-                  stat.SetFilter(stat."Cumilative Division1",buf);
-                  stat.SetRange(stat."Station Code",Station);
-                  if stat.FindFirst then
-                    "Station Name":=stat."Station Name";
-                end;
+                /* SH.Reset;
+                 if SH.Get("Document Type"::Order, "Document No.") then begin
+                     stat.Reset;
+                     Divi.SetRange("Division Code", SH."Shortcut Dimension 2 Code");
+                     Divi.FindFirst;
+                     //stat.SETFILTER(stat."Division code",SH."Shortcut Dimension 2 Code");
+                     buf := Divi."Cumilative Division1";
+                     stat.SetFilter(stat."Cumilative Division1", buf);
+                     stat.SetRange(stat."Station Code", Station);
+                     if stat.FindFirst then
+                         "Station Name" := stat."Station Name";
+                 end;*/
             end;
         }
-        field(60044;"Order Date";Date)
+        field(60044; "Order Date"; Date)
         {
-            CalcFormula = Lookup("Service Header"."Order Date" WHERE ("No."=FIELD("Document No.")));
+            CalcFormula = Lookup("Service Header"."Order Date" WHERE("No." = FIELD("Document No.")));
             FieldClass = FlowField;
         }
-        field(60045;"Sent date time";DateTime)
+        field(60045; "Sent date time"; DateTime)
         {
             Editable = false;
         }
-        field(60046;"Unit cost";Decimal)
+        field(60046; "Unit cost"; Decimal)
         {
             Editable = false;
         }
-        field(60047;"AMC Order No";Code[30])
+        field(60047; "AMC Order No"; Code[30])
         {
         }
-        field(60048;Tested;Boolean)
+        field(60048; Tested; Boolean)
         {
         }
-        field(60049;"Accounted Date";Date)
+        field(60049; "Accounted Date"; Date)
         {
         }
-        field(60050;"Sub Module Code";Code[20])
+        field(60050; "Sub Module Code"; Code[20])
         {
             TableRelation = "Troubleshooting Header"."No.";
 
             trigger OnValidate();
             begin
-                if "Sub Module Code"='' then
-                  "Sub Module Descrption" :=''
-                else
-                begin
-                  TSH.Get("Sub Module Code");
-                  "Sub Module Descrption" :=TSH.Description;
-                end;
+                /* if "Sub Module Code" = '' then
+                     "Sub Module Descrption" := ''
+                 else begin
+                     TSH.Get("Sub Module Code");
+                     "Sub Module Descrption" := TSH.Description;
+                 end;*/
             end;
         }
-        field(60051;"Sub Module Descrption";Text[50])
+        field(60051; "Sub Module Descrption"; Text[50])
         {
         }
-        field(60052;"Problem from Site";Text[100])
+        field(60052; "Problem from Site"; Text[100])
         {
         }
-        field(60053;"QC internal Remarks";Text[100])
+        field(60053; "QC internal Remarks"; Text[100])
         {
         }
-        field(60054;"Site Feedback";Text[100])
+        field(60054; "Site Feedback"; Text[100])
         {
         }
-        field(60055;"Site Problem Matched";Boolean)
+        field(60055; "Site Problem Matched"; Boolean)
         {
         }
-        field(60056;"Service Level";Option)
+        field(60056; "Service Level"; Option)
         {
             OptionMembers = Basic,"Trouble shooting",Testing,Rework,Prod;
         }
-        field(60057;"Station Name";Text[30])
+        field(60057; "Station Name"; Text[30])
         {
             Description = 'added by vijaya';
         }
-        field(60058;"CS Product";Code[50])
+        field(60058; "CS Product"; Code[50])
         {
-            CalcFormula = Min("Product Model".Product WHERE (Active=CONST(true),
-                                                             "Item Number"=FIELD("Item No.")));
+            //CalcFormula = Min("Product Model".Product WHERE(Active = CONST(true),
+            //  "Item Number" = FIELD("Item No.")));
             Description = 'added by Vishnu for analysis purpose';
             FieldClass = FlowField;
         }
-        field(60059;"CS model";Code[50])
+        field(60059; "CS model"; Code[50])
         {
-            CalcFormula = Min("Product Model".Model WHERE (Active=CONST(true),
-                                                           "Item Number"=FIELD("Item No.")));
+            // CalcFormula = Min("Product Model".Model WHERE(Active = CONST(true),
+            // "Item Number" = FIELD("Item No.")));
             Description = 'added by Vishnu for analysis purpose';
             FieldClass = FlowField;
         }
-        field(60060;"CS Module";Code[50])
+        field(60060; "CS Module"; Code[50])
         {
-            CalcFormula = Min("Product Model".Module WHERE (Active=CONST(true),
-                                                            "Item Number"=FIELD("Item No.")));
+            /* CalcFormula = Min("Product Model".Module WHERE(Active = CONST(true),
+                                                             "Item Number" = FIELD("Item No.")));*/
             Description = 'added by Vishnu for analysis purpose';
             FieldClass = FlowField;
         }
-        field(60090;"Dimension Corrected";Boolean)
+        field(60090; "Dimension Corrected"; Boolean)
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
         }
-        field(60091;"OLD Dim Set ID";Integer)
+        field(60091; "OLD Dim Set ID"; Integer)
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE ("Dimension Set ID"=FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -2453,51 +2443,51 @@ tableextension 70095 ServiceItemLineExt extends "Service Item Line"
 
         //Unsupported feature: Deletion on ""Contract No."(Key)". Please convert manually.
 
-        key(Key1;"Document Type","Document No.","Line No.")
-        {
-        }
-        key(Key2;"Document No.","Line No.","Document Type")
-        {
-        }
-        key(Key3;"Document Type","Document No.","Service Item No.","Contract No.","Contract Line No.")
-        {
-            MaintainSQLIndex = false;
-        }
-        key(Key4;"Service Item No.")
-        {
-        }
-        key(Key5;"Document Type","Document No.","Response Date","Response Time")
-        {
-        }
-        key(Key6;"Response Date","Response Time",Priority)
-        {
-        }
-        key(Key7;"Loaner No.")
-        {
-        }
-        key(Key8;"Document Type","Document No.","Starting Date","Starting Time")
-        {
-            MaintainSQLIndex = false;
-        }
-        key(Key9;"Document Type","Document No.","Finishing Date","Finishing Time")
-        {
-            MaintainSQLIndex = false;
-        }
-        key(Key10;"Fault Reason Code")
-        {
-        }
-        key(Key11;"Contract No.")
-        {
-        }
-        key(Key12;"Customer No.")
-        {
-        }
-        key(Key13;Station)
-        {
-        }
-        key(Key14;"Service Item Group Code")
-        {
-        }
+        /*  key(Key1; "Document Type", "Document No.", "Line No.")
+          {
+          }
+          key(Key2; "Document No.", "Line No.", "Document Type")
+          {
+          }
+          key(Key3; "Document Type", "Document No.", "Service Item No.", "Contract No.", "Contract Line No.")
+          {
+              MaintainSQLIndex = false;
+          }
+          key(Key4; "Service Item No.")
+          {
+          }
+          key(Key5; "Document Type", "Document No.", "Response Date", "Response Time")
+          {
+          }
+          key(Key6; "Response Date", "Response Time", Priority)
+          {
+          }
+          key(Key7; "Loaner No.")
+          {
+          }
+          key(Key8; "Document Type", "Document No.", "Starting Date", "Starting Time")
+          {
+              MaintainSQLIndex = false;
+          }
+          key(Key9; "Document Type", "Document No.", "Finishing Date", "Finishing Time")
+          {
+              MaintainSQLIndex = false;
+          }
+          key(Key10; "Fault Reason Code")
+          {
+          }
+          key(Key11; "Contract No.")
+          {
+          }
+          key(Key12; "Customer No.")
+          {
+          }
+          key(Key13; Station)
+          {
+          }
+          key(Key14; "Service Item Group Code")
+          {
+          }*/
     }
 
 
@@ -2507,116 +2497,116 @@ tableextension 70095 ServiceItemLineExt extends "Service Item Line"
     //Parameters and return type have not been exported.
     //>>>> ORIGINAL CODE:
     //begin
-        /*
-        IF "Loaner No." <> '' THEN BEGIN
-          Loaner.GET("Loaner No.");
-          LoanerEntry.SETRANGE("Document Type","Document Type" + 1);
-          LoanerEntry.SETRANGE("Document No.","Document No.");
-          LoanerEntry.SETRANGE("Loaner No.","Loaner No.");
-          LoanerEntry.SETRANGE(Lent,TRUE);
-          IF NOT LoanerEntry.ISEMPTY THEN
-            ERROR(
-              Text006,
-              TABLECAPTION,"Document No.","Line No.",FIELDCAPTION("Loaner No."),"Loaner No.");
-          LoanerEntry.SETRANGE(Lent,TRUE);
-          LoanerEntry.DELETEALL;
-        END;
+    /*
+    IF "Loaner No." <> '' THEN BEGIN
+      Loaner.GET("Loaner No.");
+      LoanerEntry.SETRANGE("Document Type","Document Type" + 1);
+      LoanerEntry.SETRANGE("Document No.","Document No.");
+      LoanerEntry.SETRANGE("Loaner No.","Loaner No.");
+      LoanerEntry.SETRANGE(Lent,TRUE);
+      IF NOT LoanerEntry.ISEMPTY THEN
+        ERROR(
+          Text006,
+          TABLECAPTION,"Document No.","Line No.",FIELDCAPTION("Loaner No."),"Loaner No.");
+      LoanerEntry.SETRANGE(Lent,TRUE);
+      LoanerEntry.DELETEALL;
+    END;
 
-        ServLine.RESET;
-        ServLine.SETCURRENTKEY("Document Type","Document No.","Service Item Line No.");
-        ServLine.SETRANGE("Document Type","Document Type");
-        ServLine.SETRANGE("Document No.","Document No.");
-        ServLine.SETRANGE("Service Item Line No.","Line No.");
-        IF ServLine.FIND('-') THEN
-          ERROR(
-            Text008,
-            TABLECAPTION,"Document No.","Line No.",ServLine.TABLECAPTION);
+    ServLine.RESET;
+    ServLine.SETCURRENTKEY("Document Type","Document No.","Service Item Line No.");
+    ServLine.SETRANGE("Document Type","Document Type");
+    ServLine.SETRANGE("Document No.","Document No.");
+    ServLine.SETRANGE("Service Item Line No.","Line No.");
+    IF ServLine.FIND('-') THEN
+      ERROR(
+        Text008,
+        TABLECAPTION,"Document No.","Line No.",ServLine.TABLECAPTION);
 
-        ServOrderAlloc.RESET;
-        ServOrderAlloc.SETCURRENTKEY("Document Type","Document No.","Service Item Line No.");
-        ServOrderAlloc.SETRANGE("Document Type","Document Type");
-        ServOrderAlloc.SETRANGE("Document No.","Document No.");
-        ServOrderAlloc.SETRANGE("Service Item Line No.","Line No.");
-        ServOrderAlloc.SETFILTER(Status,'%1|%2',ServOrderAlloc.Status::Active,ServOrderAlloc.Status::Finished);
-        IF ServOrderAlloc.FIND('-') THEN
-          ERROR(
-            Text008,
-            TABLECAPTION,"Document No.","Line No.",ServOrderAlloc.TABLECAPTION);
-        ServOrderAlloc.SETRANGE(Status);
-        ServOrderAlloc.DELETEALL;
+    ServOrderAlloc.RESET;
+    ServOrderAlloc.SETCURRENTKEY("Document Type","Document No.","Service Item Line No.");
+    ServOrderAlloc.SETRANGE("Document Type","Document Type");
+    ServOrderAlloc.SETRANGE("Document No.","Document No.");
+    ServOrderAlloc.SETRANGE("Service Item Line No.","Line No.");
+    ServOrderAlloc.SETFILTER(Status,'%1|%2',ServOrderAlloc.Status::Active,ServOrderAlloc.Status::Finished);
+    IF ServOrderAlloc.FIND('-') THEN
+      ERROR(
+        Text008,
+        TABLECAPTION,"Document No.","Line No.",ServOrderAlloc.TABLECAPTION);
+    ServOrderAlloc.SETRANGE(Status);
+    ServOrderAlloc.DELETEALL;
 
-        ServCommentLine.RESET;
-        ServCommentLine.SETRANGE("Table Name",ServCommentLine."Table Name"::"Service Header");
-        ServCommentLine.SETRANGE("Table Subtype","Document Type");
-        ServCommentLine.SETRANGE("No.","Document No.");
-        ServCommentLine.SETRANGE("Table Line No.","Line No.");
-        ServCommentLine.DELETEALL;
+    ServCommentLine.RESET;
+    ServCommentLine.SETRANGE("Table Name",ServCommentLine."Table Name"::"Service Header");
+    ServCommentLine.SETRANGE("Table Subtype","Document Type");
+    ServCommentLine.SETRANGE("No.","Document No.");
+    ServCommentLine.SETRANGE("Table Line No.","Line No.");
+    ServCommentLine.DELETEALL;
 
-        CLEAR(ServLogMgt);
-        ServLogMgt.ServItemOffServOrder(Rec);
+    CLEAR(ServLogMgt);
+    ServLogMgt.ServItemOffServOrder(Rec);
 
-        ServOrderMgt.UpdateResponseDateTime(Rec,TRUE);
-        UpdateStartFinishDateTime("Document Type","Document No.","Line No.",CALCDATE('<CY+1D-1Y>',WORKDATE),0T,0D,0T,TRUE);
-        ServOrderMgt.UpdatePriority(Rec,TRUE);
-        */
+    ServOrderMgt.UpdateResponseDateTime(Rec,TRUE);
+    UpdateStartFinishDateTime("Document Type","Document No.","Line No.",CALCDATE('<CY+1D-1Y>',WORKDATE),0T,0D,0T,TRUE);
+    ServOrderMgt.UpdatePriority(Rec,TRUE);
+    */
     //end;
     //>>>> MODIFIED CODE:
     //begin
-        /*
-        if not((UpperCase(UserId)in ['SUPER','EFFTRONICS\RAMADEVI','EFFTRONICS\NAGALAKSHMI','EFFTRONICS\PRANAVI','EFFTRONICS\BHAVANIP'])) then
-        Error(' U Have No Rights to delete the Records ');
+    /*
+    if not((UpperCase(UserId)in ['SUPER','EFFTRONICS\RAMADEVI','EFFTRONICS\NAGALAKSHMI','EFFTRONICS\PRANAVI','EFFTRONICS\BHAVANIP'])) then
+    Error(' U Have No Rights to delete the Records ');
 
-        if "Loaner No." <> '' then begin
-          Loaner.Get("Loaner No.");
-          LoanerEntry.SetRange("Document Type","Document Type" + 1);
-          LoanerEntry.SetRange("Document No.","Document No.");
-          LoanerEntry.SetRange("Loaner No.","Loaner No.");
-          LoanerEntry.SetRange(Lent,true);
-          if not LoanerEntry.IsEmpty then
-            Error(
-              Text006,
-              TableCaption,"Document No.","Line No.",FieldCaption("Loaner No."),"Loaner No.");
-          LoanerEntry.SetRange(Lent,true);
-          LoanerEntry.DeleteAll;
-        end;
+    if "Loaner No." <> '' then begin
+      Loaner.Get("Loaner No.");
+      LoanerEntry.SetRange("Document Type","Document Type" + 1);
+      LoanerEntry.SetRange("Document No.","Document No.");
+      LoanerEntry.SetRange("Loaner No.","Loaner No.");
+      LoanerEntry.SetRange(Lent,true);
+      if not LoanerEntry.IsEmpty then
+        Error(
+          Text006,
+          TableCaption,"Document No.","Line No.",FieldCaption("Loaner No."),"Loaner No.");
+      LoanerEntry.SetRange(Lent,true);
+      LoanerEntry.DeleteAll;
+    end;
 
-        ServLine.Reset;
-        ServLine.SetCurrentKey("Document Type","Document No.","Service Item Line No.");
-        ServLine.SetRange("Document Type","Document Type");
-        ServLine.SetRange("Document No.","Document No.");
-        ServLine.SetRange("Service Item Line No.","Line No.");
-        if ServLine.Find('-') then
-          Error(
-            Text008,
-            TableCaption,"Document No.","Line No.",ServLine.TableCaption);
+    ServLine.Reset;
+    ServLine.SetCurrentKey("Document Type","Document No.","Service Item Line No.");
+    ServLine.SetRange("Document Type","Document Type");
+    ServLine.SetRange("Document No.","Document No.");
+    ServLine.SetRange("Service Item Line No.","Line No.");
+    if ServLine.Find('-') then
+      Error(
+        Text008,
+        TableCaption,"Document No.","Line No.",ServLine.TableCaption);
 
-        ServOrderAlloc.Reset;
-        ServOrderAlloc.SetCurrentKey("Document Type","Document No.","Service Item Line No.");
-        ServOrderAlloc.SetRange("Document Type","Document Type");
-        ServOrderAlloc.SetRange("Document No.","Document No.");
-        ServOrderAlloc.SetRange("Service Item Line No.","Line No.");
-        ServOrderAlloc.SetFilter(Status,'%1|%2',ServOrderAlloc.Status::Active,ServOrderAlloc.Status::Finished);
-        if ServOrderAlloc.Find('-') then
-          Error(
-            Text008,
-            TableCaption,"Document No.","Line No.",ServOrderAlloc.TableCaption);
-        ServOrderAlloc.SetRange(Status);
-        ServOrderAlloc.DeleteAll;
+    ServOrderAlloc.Reset;
+    ServOrderAlloc.SetCurrentKey("Document Type","Document No.","Service Item Line No.");
+    ServOrderAlloc.SetRange("Document Type","Document Type");
+    ServOrderAlloc.SetRange("Document No.","Document No.");
+    ServOrderAlloc.SetRange("Service Item Line No.","Line No.");
+    ServOrderAlloc.SetFilter(Status,'%1|%2',ServOrderAlloc.Status::Active,ServOrderAlloc.Status::Finished);
+    if ServOrderAlloc.Find('-') then
+      Error(
+        Text008,
+        TableCaption,"Document No.","Line No.",ServOrderAlloc.TableCaption);
+    ServOrderAlloc.SetRange(Status);
+    ServOrderAlloc.DeleteAll;
 
-        ServCommentLine.Reset;
-        ServCommentLine.SetRange("Table Name",ServCommentLine."Table Name"::"Service Header");
-        ServCommentLine.SetRange("Table Subtype","Document Type");
-        ServCommentLine.SetRange("No.","Document No.");
-        ServCommentLine.SetRange("Table Line No.","Line No.");
-        ServCommentLine.DeleteAll;
+    ServCommentLine.Reset;
+    ServCommentLine.SetRange("Table Name",ServCommentLine."Table Name"::"Service Header");
+    ServCommentLine.SetRange("Table Subtype","Document Type");
+    ServCommentLine.SetRange("No.","Document No.");
+    ServCommentLine.SetRange("Table Line No.","Line No.");
+    ServCommentLine.DeleteAll;
 
-        Clear(ServLogMgt);
-        ServLogMgt.ServItemOffServOrder(Rec);
+    Clear(ServLogMgt);
+    ServLogMgt.ServItemOffServOrder(Rec);
 
-        ServOrderMgt.UpdateResponseDateTime(Rec,true);
-        UpdateStartFinishDateTime("Document Type","Document No.","Line No.",CalcDate('<CY+1D-1Y>',WorkDate),0T,0D,0T,true);
-        ServOrderMgt.UpdatePriority(Rec,true);
-        */
+    ServOrderMgt.UpdateResponseDateTime(Rec,true);
+    UpdateStartFinishDateTime("Document Type","Document No.","Line No.",CalcDate('<CY+1D-1Y>',WorkDate),0T,0D,0T,true);
+    ServOrderMgt.UpdatePriority(Rec,true);
+    */
     //end;
 
 
@@ -2626,140 +2616,140 @@ tableextension 70095 ServiceItemLineExt extends "Service Item Line"
     //Parameters and return type have not been exported.
     //>>>> ORIGINAL CODE:
     //begin
-        /*
-        ServMgtSetup.GET;
-        ServItemLine.RESET;
-        ServItemLine.SETRANGE("Document Type","Document Type");
-        ServItemLine.SETRANGE("Document No.","Document No.");
-        FirstServItemLine := NOT ServItemLine.FIND('-');
-        IF ServMgtSetup."One Service Item Line/Order" THEN
-          IF NOT FirstServItemLine THEN
-            ERROR(Text000,ServMgtSetup.TABLECAPTION,ServItemLine.TABLECAPTION,ServHeader.TABLECAPTION);
+    /*
+    ServMgtSetup.GET;
+    ServItemLine.RESET;
+    ServItemLine.SETRANGE("Document Type","Document Type");
+    ServItemLine.SETRANGE("Document No.","Document No.");
+    FirstServItemLine := NOT ServItemLine.FIND('-');
+    IF ServMgtSetup."One Service Item Line/Order" THEN
+      IF NOT FirstServItemLine THEN
+        ERROR(Text000,ServMgtSetup.TABLECAPTION,ServItemLine.TABLECAPTION,ServHeader.TABLECAPTION);
 
-        GetServHeader;
-        IF ServHeader."Customer No." = '' THEN BEGIN
-          IF (ServHeader.Name <> '') AND (ServHeader.Address <> '') AND (ServHeader.City <> '') THEN
-            ERROR(
-              Text001,
-              TABLECAPTION,ServHeader.FIELDCAPTION("Customer No."),ServHeader.TABLECAPTION,ServHeader."No.");
-          ERROR(
-            Text002,
-            TABLECAPTION,ServHeader.FIELDCAPTION("Customer No."),ServHeader.TABLECAPTION,ServHeader."No.");
-        END;
+    GetServHeader;
+    IF ServHeader."Customer No." = '' THEN BEGIN
+      IF (ServHeader.Name <> '') AND (ServHeader.Address <> '') AND (ServHeader.City <> '') THEN
+        ERROR(
+          Text001,
+          TABLECAPTION,ServHeader.FIELDCAPTION("Customer No."),ServHeader.TABLECAPTION,ServHeader."No.");
+      ERROR(
+        Text002,
+        TABLECAPTION,ServHeader.FIELDCAPTION("Customer No."),ServHeader.TABLECAPTION,ServHeader."No.");
+    END;
 
-        "Responsibility Center" := ServHeader."Responsibility Center";
-        "Customer No." := ServHeader."Customer No.";
-        IF ServHeader."Contract No." <> '' THEN
-          IF "Service Item No." = '' THEN
-            "Contract No." := ServHeader."Contract No."
-          ELSE BEGIN
-            ServContractLine.RESET;
-            ServContractLine.SETRANGE("Contract Type",ServContractLine."Contract Type"::Contract);
-            ServContractLine.SETRANGE("Contract No.",ServHeader."Contract No.");
-            ServContractLine.SETRANGE("Service Item No.","Service Item No.");
-            ServContractLine.SETRANGE("Contract Status",ServContractLine."Contract Status"::Signed);
-            ServContractLine.SETFILTER("Starting Date",'<=%1',ServHeader."Order Date");
-            ServContractLine.SETFILTER("Contract Expiration Date",'>%1 | =%2',ServHeader."Order Date",0D);
-            IF ServContractLine.FINDFIRST THEN
-              "Contract No." := ServHeader."Contract No.";
-          END;
-        IF ("Contract No." <> '') AND ("Service Price Group Code" <> '') THEN
-          VALIDATE("Service Price Group Code",'');
+    "Responsibility Center" := ServHeader."Responsibility Center";
+    "Customer No." := ServHeader."Customer No.";
+    IF ServHeader."Contract No." <> '' THEN
+      IF "Service Item No." = '' THEN
+        "Contract No." := ServHeader."Contract No."
+      ELSE BEGIN
+        ServContractLine.RESET;
+        ServContractLine.SETRANGE("Contract Type",ServContractLine."Contract Type"::Contract);
+        ServContractLine.SETRANGE("Contract No.",ServHeader."Contract No.");
+        ServContractLine.SETRANGE("Service Item No.","Service Item No.");
+        ServContractLine.SETRANGE("Contract Status",ServContractLine."Contract Status"::Signed);
+        ServContractLine.SETFILTER("Starting Date",'<=%1',ServHeader."Order Date");
+        ServContractLine.SETFILTER("Contract Expiration Date",'>%1 | =%2',ServHeader."Order Date",0D);
+        IF ServContractLine.FINDFIRST THEN
+          "Contract No." := ServHeader."Contract No.";
+      END;
+    IF ("Contract No." <> '') AND ("Service Price Group Code" <> '') THEN
+      VALIDATE("Service Price Group Code",'');
 
-        ServOrderAllocMgt.CreateAllocationEntry(
-          "Document Type","Document No.","Line No.","Service Item No.","Serial No.");
+    ServOrderAllocMgt.CreateAllocationEntry(
+      "Document Type","Document No.","Line No.","Service Item No.","Serial No.");
 
-        CLEAR(ServLogMgt);
-        ServLogMgt.ServItemToServOrder(Rec);
+    CLEAR(ServLogMgt);
+    ServLogMgt.ServItemToServOrder(Rec);
 
-        IF (ServHeader."Quote No." = '') AND ("Response Time (Hours)" = 0) THEN
-          UpdateResponseTimeHours;
-        ServOrderMgt.UpdateResponseDateTime(Rec,FALSE);
-        ServOrderMgt.UpdatePriority(Rec,FALSE);
+    IF (ServHeader."Quote No." = '') AND ("Response Time (Hours)" = 0) THEN
+      UpdateResponseTimeHours;
+    ServOrderMgt.UpdateResponseDateTime(Rec,FALSE);
+    ServOrderMgt.UpdatePriority(Rec,FALSE);
 
-        IF "Line No." = 0 THEN
-          LendLoanerWithConfirmation;
+    IF "Line No." = 0 THEN
+      LendLoanerWithConfirmation;
 
-        IF "Service Item No." = '' THEN
-          "Ship-to Code" := ServHeader."Ship-to Code";
-        IF FirstServItemLine AND
-           ("Document Type" = "Document Type"::Order)
-        THEN BEGIN
-          CLEAR(SegManagement);
-          IF ServHeader."Bill-to Contact No." <> '' THEN
-            SegManagement.LogDocument(
-              9,"Document No.",0,0,DATABASE::Contact,ServHeader."Bill-to Contact No.",
-              ServHeader."Salesperson Code",'',ServHeader.Description,'')
-          ELSE
-            SegManagement.LogDocument(
-              9,"Document No.",0,0,DATABASE::Customer,ServHeader."Bill-to Customer No.",
-              ServHeader."Salesperson Code",'',ServHeader.Description,'');
-        END;
-        */
+    IF "Service Item No." = '' THEN
+      "Ship-to Code" := ServHeader."Ship-to Code";
+    IF FirstServItemLine AND
+       ("Document Type" = "Document Type"::Order)
+    THEN BEGIN
+      CLEAR(SegManagement);
+      IF ServHeader."Bill-to Contact No." <> '' THEN
+        SegManagement.LogDocument(
+          9,"Document No.",0,0,DATABASE::Contact,ServHeader."Bill-to Contact No.",
+          ServHeader."Salesperson Code",'',ServHeader.Description,'')
+      ELSE
+        SegManagement.LogDocument(
+          9,"Document No.",0,0,DATABASE::Customer,ServHeader."Bill-to Customer No.",
+          ServHeader."Salesperson Code",'',ServHeader.Description,'');
+    END;
+    */
     //end;
     //>>>> MODIFIED CODE:
     //begin
-        /*
-        ServMgtSetup.Get;
-        ServItemLine.Reset;
-        ServItemLine.SetRange("Document Type","Document Type");
-        ServItemLine.SetRange("Document No.","Document No.");
-        FirstServItemLine := not ServItemLine.Find('-');
-        if ServMgtSetup."One Service Item Line/Order" then
-          if not FirstServItemLine then
-            Error(Text000,ServMgtSetup.TableCaption,ServItemLine.TableCaption,ServHeader.TableCaption);
+    /*
+    ServMgtSetup.Get;
+    ServItemLine.Reset;
+    ServItemLine.SetRange("Document Type","Document Type");
+    ServItemLine.SetRange("Document No.","Document No.");
+    FirstServItemLine := not ServItemLine.Find('-');
+    if ServMgtSetup."One Service Item Line/Order" then
+      if not FirstServItemLine then
+        Error(Text000,ServMgtSetup.TableCaption,ServItemLine.TableCaption,ServHeader.TableCaption);
 
-        GetServHeader;
-        if ServHeader."Customer No." = '' then begin
-          if (ServHeader.Name <> '') and (ServHeader.Address <> '') and (ServHeader.City <> '') then
-            Error(
-              Text001,
-              TableCaption,ServHeader.FieldCaption("Customer No."),ServHeader.TableCaption,ServHeader."No.");
-          Error(
-            Text002,
-            TableCaption,ServHeader.FieldCaption("Customer No."),ServHeader.TableCaption,ServHeader."No.");
-        end;
-        #20..22
-        if ServHeader."Contract No." <> '' then
-          if "Service Item No." = '' then
-            "Contract No." := ServHeader."Contract No."
-          else begin
-            ServContractLine.Reset;
-            ServContractLine.SetRange("Contract Type",ServContractLine."Contract Type"::Contract);
-            ServContractLine.SetRange("Contract No.",ServHeader."Contract No.");
-            ServContractLine.SetRange("Service Item No.","Service Item No.");
-            ServContractLine.SetRange("Contract Status",ServContractLine."Contract Status"::Signed);
-            ServContractLine.SetFilter("Starting Date",'<=%1',ServHeader."Order Date");
-            ServContractLine.SetFilter("Contract Expiration Date",'>%1 | =%2',ServHeader."Order Date",0D);
-            if ServContractLine.FindFirst then
-              "Contract No." := ServHeader."Contract No.";
-          end;
-        if ("Contract No." <> '') and ("Service Price Group Code" <> '') then
-          Validate("Service Price Group Code",'');
-        #39..42
-        Clear(ServLogMgt);
-        ServLogMgt.ServItemToServOrder(Rec);
+    GetServHeader;
+    if ServHeader."Customer No." = '' then begin
+      if (ServHeader.Name <> '') and (ServHeader.Address <> '') and (ServHeader.City <> '') then
+        Error(
+          Text001,
+          TableCaption,ServHeader.FieldCaption("Customer No."),ServHeader.TableCaption,ServHeader."No.");
+      Error(
+        Text002,
+        TableCaption,ServHeader.FieldCaption("Customer No."),ServHeader.TableCaption,ServHeader."No.");
+    end;
+    #20..22
+    if ServHeader."Contract No." <> '' then
+      if "Service Item No." = '' then
+        "Contract No." := ServHeader."Contract No."
+      else begin
+        ServContractLine.Reset;
+        ServContractLine.SetRange("Contract Type",ServContractLine."Contract Type"::Contract);
+        ServContractLine.SetRange("Contract No.",ServHeader."Contract No.");
+        ServContractLine.SetRange("Service Item No.","Service Item No.");
+        ServContractLine.SetRange("Contract Status",ServContractLine."Contract Status"::Signed);
+        ServContractLine.SetFilter("Starting Date",'<=%1',ServHeader."Order Date");
+        ServContractLine.SetFilter("Contract Expiration Date",'>%1 | =%2',ServHeader."Order Date",0D);
+        if ServContractLine.FindFirst then
+          "Contract No." := ServHeader."Contract No.";
+      end;
+    if ("Contract No." <> '') and ("Service Price Group Code" <> '') then
+      Validate("Service Price Group Code",'');
+    #39..42
+    Clear(ServLogMgt);
+    ServLogMgt.ServItemToServOrder(Rec);
 
-        if (ServHeader."Quote No." = '') and ("Response Time (Hours)" = 0) then
-          UpdateResponseTimeHours;
-        ServOrderMgt.UpdateResponseDateTime(Rec,false);
-        ServOrderMgt.UpdatePriority(Rec,false);
+    if (ServHeader."Quote No." = '') and ("Response Time (Hours)" = 0) then
+      UpdateResponseTimeHours;
+    ServOrderMgt.UpdateResponseDateTime(Rec,false);
+    ServOrderMgt.UpdatePriority(Rec,false);
 
-        if "Line No." = 0 then
-          LendLoanerWithConfirmation;
+    if "Line No." = 0 then
+      LendLoanerWithConfirmation;
 
-        if "Service Item No." = '' then
-          "Ship-to Code" := ServHeader."Ship-to Code";
-        if FirstServItemLine and
-           ("Document Type" = "Document Type"::Order)
-        then begin
-          Clear(SegManagement);
-          if ServHeader."Bill-to Contact No." <> '' then
-        #61..63
-          else
-        #65..67
-        end;
-        */
+    if "Service Item No." = '' then
+      "Ship-to Code" := ServHeader."Ship-to Code";
+    if FirstServItemLine and
+       ("Document Type" = "Document Type"::Order)
+    then begin
+      Clear(SegManagement);
+      if ServHeader."Bill-to Contact No." <> '' then
+    #61..63
+      else
+    #65..67
+    end;
+    */
     //end;
 
 
@@ -2769,115 +2759,115 @@ tableextension 70095 ServiceItemLineExt extends "Service Item Line"
     //Parameters and return type have not been exported.
     //>>>> ORIGINAL CODE:
     //begin
-        /*
-        IF UseServItemLineAsxRec THEN BEGIN
-          xRec := ServItemLine;
-          UseServItemLineAsxRec := FALSE;
-        END;
+    /*
+    IF UseServItemLineAsxRec THEN BEGIN
+      xRec := ServItemLine;
+      UseServItemLineAsxRec := FALSE;
+    END;
 
-        OnBeforeOnModify(Rec,xRec);
+    OnBeforeOnModify(Rec,xRec);
 
-        IF ("Service Item No." <> xRec."Service Item No.") OR ("Serial No." <> xRec."Serial No.") THEN BEGIN
-          ServLine.RESET;
-          ServLine.SETCURRENTKEY("Document Type","Document No.","Service Item Line No.");
-          ServLine.SETRANGE("Document Type","Document Type");
-          ServLine.SETRANGE("Document No.","Document No.");
-          ServLine.SETRANGE("Service Item Line No.","Line No.");
-          IF ServLine.FIND('-') THEN
-            REPEAT
-              ServLine."Service Item No." := "Service Item No.";
-              ServLine."Service Item Serial No." := "Serial No.";
-              ServLine.MODIFY(TRUE);
-            UNTIL ServLine.NEXT = 0;
+    IF ("Service Item No." <> xRec."Service Item No.") OR ("Serial No." <> xRec."Serial No.") THEN BEGIN
+      ServLine.RESET;
+      ServLine.SETCURRENTKEY("Document Type","Document No.","Service Item Line No.");
+      ServLine.SETRANGE("Document Type","Document Type");
+      ServLine.SETRANGE("Document No.","Document No.");
+      ServLine.SETRANGE("Service Item Line No.","Line No.");
+      IF ServLine.FIND('-') THEN
+        REPEAT
+          ServLine."Service Item No." := "Service Item No.";
+          ServLine."Service Item Serial No." := "Serial No.";
+          ServLine.MODIFY(TRUE);
+        UNTIL ServLine.NEXT = 0;
 
-          ServOrderAlloc.RESET;
-          ServOrderAlloc.SETCURRENTKEY("Document Type","Document No.","Service Item Line No.");
-          ServOrderAlloc.SETRANGE("Document Type","Document Type");
-          ServOrderAlloc.SETRANGE("Document No.","Document No.");
-          ServOrderAlloc.SETRANGE("Service Item Line No.","Line No.");
-          IF ServOrderAlloc.FIND('-') THEN
-            REPEAT
-              ServOrderAlloc."Service Item No." := "Service Item No.";
-              ServOrderAlloc."Service Item Serial No." := "Serial No.";
-              ServOrderAlloc.MODIFY(TRUE);
-            UNTIL ServOrderAlloc.NEXT = 0;
-        END;
+      ServOrderAlloc.RESET;
+      ServOrderAlloc.SETCURRENTKEY("Document Type","Document No.","Service Item Line No.");
+      ServOrderAlloc.SETRANGE("Document Type","Document Type");
+      ServOrderAlloc.SETRANGE("Document No.","Document No.");
+      ServOrderAlloc.SETRANGE("Service Item Line No.","Line No.");
+      IF ServOrderAlloc.FIND('-') THEN
+        REPEAT
+          ServOrderAlloc."Service Item No." := "Service Item No.";
+          ServOrderAlloc."Service Item Serial No." := "Serial No.";
+          ServOrderAlloc.MODIFY(TRUE);
+        UNTIL ServOrderAlloc.NEXT = 0;
+    END;
 
-        IF (("Fault Area Code" <> xRec."Fault Area Code") OR
-            ("Symptom Code" <> xRec."Symptom Code") OR
-            ("Fault Code" <> xRec."Fault Code") OR
-            ("Resolution Code" <> xRec."Resolution Code")) AND
-           CheckServLineExist
-        THEN
-          MESSAGE(
-            Text003,
-            TABLECAPTION);
-        IF "Service Item No." <> xRec."Service Item No." THEN BEGIN
-          CLEAR(ServLogMgt);
-          ServLogMgt.ServItemOffServOrder(xRec);
-          ServLogMgt.ServItemToServOrder(Rec);
-        END;
+    IF (("Fault Area Code" <> xRec."Fault Area Code") OR
+        ("Symptom Code" <> xRec."Symptom Code") OR
+        ("Fault Code" <> xRec."Fault Code") OR
+        ("Resolution Code" <> xRec."Resolution Code")) AND
+       CheckServLineExist
+    THEN
+      MESSAGE(
+        Text003,
+        TABLECAPTION);
+    IF "Service Item No." <> xRec."Service Item No." THEN BEGIN
+      CLEAR(ServLogMgt);
+      ServLogMgt.ServItemOffServOrder(xRec);
+      ServLogMgt.ServItemToServOrder(Rec);
+    END;
 
-        ServOrderMgt.UpdateResponseDateTime(Rec,FALSE);
-        ServOrderMgt.UpdatePriority(Rec,FALSE);
-        UpdateServiceOrderChangeLog(xRec);
-        */
+    ServOrderMgt.UpdateResponseDateTime(Rec,FALSE);
+    ServOrderMgt.UpdatePriority(Rec,FALSE);
+    UpdateServiceOrderChangeLog(xRec);
+    */
     //end;
     //>>>> MODIFIED CODE:
     //begin
-        /*
-        if UseServItemLineAsxRec then begin
-          xRec := ServItemLine;
-          UseServItemLineAsxRec := false;
-        end;
-        #5..7
-        if ("Service Item No." <> xRec."Service Item No.") or ("Serial No." <> xRec."Serial No.") then begin
-          ServLine.Reset;
-          ServLine.SetCurrentKey("Document Type","Document No.","Service Item Line No.");
-          ServLine.SetRange("Document Type","Document Type");
-          ServLine.SetRange("Document No.","Document No.");
-          ServLine.SetRange("Service Item Line No.","Line No.");
-          if ServLine.Find('-') then
-            repeat
-              ServLine."Service Item No." := "Service Item No.";
-              ServLine."Service Item Serial No." := "Serial No.";
-              ServLine.Modify(true);
-            until ServLine.Next = 0;
+    /*
+    if UseServItemLineAsxRec then begin
+      xRec := ServItemLine;
+      UseServItemLineAsxRec := false;
+    end;
+    #5..7
+    if ("Service Item No." <> xRec."Service Item No.") or ("Serial No." <> xRec."Serial No.") then begin
+      ServLine.Reset;
+      ServLine.SetCurrentKey("Document Type","Document No.","Service Item Line No.");
+      ServLine.SetRange("Document Type","Document Type");
+      ServLine.SetRange("Document No.","Document No.");
+      ServLine.SetRange("Service Item Line No.","Line No.");
+      if ServLine.Find('-') then
+        repeat
+          ServLine."Service Item No." := "Service Item No.";
+          ServLine."Service Item Serial No." := "Serial No.";
+          ServLine.Modify(true);
+        until ServLine.Next = 0;
 
-          ServOrderAlloc.Reset;
-          ServOrderAlloc.SetCurrentKey("Document Type","Document No.","Service Item Line No.");
-          ServOrderAlloc.SetRange("Document Type","Document Type");
-          ServOrderAlloc.SetRange("Document No.","Document No.");
-          ServOrderAlloc.SetRange("Service Item Line No.","Line No.");
-          if ServOrderAlloc.Find('-') then
-            repeat
-              ServOrderAlloc."Service Item No." := "Service Item No.";
-              ServOrderAlloc."Service Item Serial No." := "Serial No.";
-              ServOrderAlloc.Modify(true);
-            until ServOrderAlloc.Next = 0;
-        end;
+      ServOrderAlloc.Reset;
+      ServOrderAlloc.SetCurrentKey("Document Type","Document No.","Service Item Line No.");
+      ServOrderAlloc.SetRange("Document Type","Document Type");
+      ServOrderAlloc.SetRange("Document No.","Document No.");
+      ServOrderAlloc.SetRange("Service Item Line No.","Line No.");
+      if ServOrderAlloc.Find('-') then
+        repeat
+          ServOrderAlloc."Service Item No." := "Service Item No.";
+          ServOrderAlloc."Service Item Serial No." := "Serial No.";
+          ServOrderAlloc.Modify(true);
+        until ServOrderAlloc.Next = 0;
+    end;
 
-        if (("Fault Area Code" <> xRec."Fault Area Code") or
-            ("Symptom Code" <> xRec."Symptom Code") or
-            ("Fault Code" <> xRec."Fault Code") or
-            ("Resolution Code" <> xRec."Resolution Code")) and
-           CheckServLineExist
-        then
-          Message(
-            Text003,
-            TableCaption);
-        if "Service Item No." <> xRec."Service Item No." then begin
-          Clear(ServLogMgt);
-          ServLogMgt.ServItemOffServOrder(xRec);
-          ServLogMgt.ServItemToServOrder(Rec);
-        end;
+    if (("Fault Area Code" <> xRec."Fault Area Code") or
+        ("Symptom Code" <> xRec."Symptom Code") or
+        ("Fault Code" <> xRec."Fault Code") or
+        ("Resolution Code" <> xRec."Resolution Code")) and
+       CheckServLineExist
+    then
+      Message(
+        Text003,
+        TableCaption);
+    if "Service Item No." <> xRec."Service Item No." then begin
+      Clear(ServLogMgt);
+      ServLogMgt.ServItemOffServOrder(xRec);
+      ServLogMgt.ServItemToServOrder(Rec);
+    end;
 
-        ServOrderMgt.UpdateResponseDateTime(Rec,false);
-        ServOrderMgt.UpdatePriority(Rec,false);
-        UpdateServiceOrderChangeLog(xRec);
+    ServOrderMgt.UpdateResponseDateTime(Rec,false);
+    ServOrderMgt.UpdatePriority(Rec,false);
+    UpdateServiceOrderChangeLog(xRec);
 
-        Message('Service Item No. "%1", item: "%2" with Serial No. "%3"  having Repair Status Code : "%5" moved to "%4" Location ', "Service Item No.",Description,"Serial No.","To Location","Repair Status Code" );
-        */
+    Message('Service Item No. "%1", item: "%2" with Serial No. "%3"  having Repair Status Code : "%5" moved to "%4" Location ', "Service Item No.",Description,"Serial No.","To Location","Repair Status Code" );
+    */
     //end;
 
 
@@ -2887,15 +2877,15 @@ tableextension 70095 ServiceItemLineExt extends "Service Item Line"
     //Parameters and return type have not been exported.
     //>>>> ORIGINAL CODE:
     //begin
-        /*
-        ERROR(Text010,TABLECAPTION);
-        */
+    /*
+    ERROR(Text010,TABLECAPTION);
+    */
     //end;
     //>>>> MODIFIED CODE:
     //begin
-        /*
-        Error(Text010,TableCaption);
-        */
+    /*
+    Error(Text010,TableCaption);
+    */
     //end;
 
     //Unsupported feature: PropertyChange. Please convert manually.
@@ -2917,598 +2907,598 @@ tableextension 70095 ServiceItemLineExt extends "Service Item Line"
     //Unsupported feature: PropertyModification on ""Service Item No."(Field 3).OnValidate.Cust(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Service Item No." : 18;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Service Item No." : Customer;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Service Item No." : 18;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Service Item No." : Customer;
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Service Item No."(Field 3).OnValidate.ConfirmManagement(Variable 1002)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Service Item No." : 27;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Service Item No." : "Confirm Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Service Item No." : 27;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Service Item No." : "Confirm Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Service Item No."(Field 3).OnValidate.ServContractList(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Service Item No." : 6075;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Service Item No." : "Serv. Contr. List (Serv. Item)";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Service Item No." : 6075;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Service Item No." : "Serv. Contr. List (Serv. Item)";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "Warranty(Field 21).OnValidate.ConfirmManagement(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //Warranty : 27;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //Warranty : "Confirm Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //Warranty : 27;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //Warranty : "Confirm Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Contract No."(Field 26).OnLookup.ServHeader(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Contract No." : 5900;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Contract No." : "Service Header";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Contract No." : 5900;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Contract No." : "Service Header";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Contract No."(Field 26).OnLookup.ServContractLine(Variable 1003)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Contract No." : 5964;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Contract No." : "Service Contract Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Contract No." : 5964;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Contract No." : "Service Contract Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Contract No."(Field 26).OnLookup.ServContractList(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Contract No." : 6075;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Contract No." : "Serv. Contr. List (Serv. Item)";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Contract No." : 6075;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Contract No." : "Serv. Contr. List (Serv. Item)";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Contract No."(Field 26).OnValidate.ConfirmManagement(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Contract No." : 27;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Contract No." : "Confirm Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Contract No." : 27;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Contract No." : "Confirm Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Loaner No."(Field 28).OnValidate.LoanerEntry(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Loaner No." : 5914;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Loaner No." : "Loaner Entry";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Loaner No." : 5914;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Loaner No." : "Loaner Entry";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Fault Reason Code"(Field 31).OnValidate.FaultReasonCode(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Fault Reason Code" : 5917;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Fault Reason Code" : "Fault Reason Code";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Fault Reason Code" : 5917;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Fault Reason Code" : "Fault Reason Code";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Fault Reason Code"(Field 31).OnValidate.ConfirmManagement(Variable 1004)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Fault Reason Code" : 27;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Fault Reason Code" : "Confirm Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Fault Reason Code" : 27;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Fault Reason Code" : "Confirm Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Service Price Group Code"(Field 32).OnValidate.ServPriceGrSetup(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Service Price Group Code" : 6081;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Service Price Group Code" : "Serv. Price Group Setup";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Service Price Group Code" : 6081;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Service Price Group Code" : "Serv. Price Group Setup";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Service Price Group Code"(Field 32).OnValidate.ServPriceMgmt(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Service Price Group Code" : 6080;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Service Price Group Code" : "Service Price Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Service Price Group Code" : 6080;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Service Price Group Code" : "Service Price Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Service Price Group Code"(Field 32).OnValidate.ConfirmManagement(Variable 1002)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Service Price Group Code" : 27;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Service Price Group Code" : "Confirm Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Service Price Group Code" : 27;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Service Price Group Code" : "Confirm Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Fault Area Code"(Field 33).OnValidate.ServPriceMgmt(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Fault Area Code" : 6080;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Fault Area Code" : "Service Price Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Fault Area Code" : 6080;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Fault Area Code" : "Service Price Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on ""Fault Area Code"(Field 33).OnValidate.ConfirmManagement(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //"Fault Area Code" : 27;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //"Fault Area Code" : "Confirm Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //"Fault Area Code" : 27;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //"Fault Area Code" : "Confirm Management";
+    //Variable type has not been exported.
 
     var
-        FaultArea : Record "Fault Area";
+    //FaultArea: Record "Fault Area";
 
     var
-        SymptomCode : Record "Symptom Code";
+        SymptomCode: Record "Symptom Code";
 
 
     //Unsupported feature: PropertyModification on "OnDelete.LoanerEntry(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //OnDelete.LoanerEntry : 5914;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //OnDelete.LoanerEntry : "Loaner Entry";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //OnDelete.LoanerEntry : 5914;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //OnDelete.LoanerEntry : "Loaner Entry";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CheckIfLoanerOnServOrder(PROCEDURE 5).ServItemLine(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CheckIfLoanerOnServOrder : 5901;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CheckIfLoanerOnServOrder : "Service Item Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CheckIfLoanerOnServOrder : 5901;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CheckIfLoanerOnServOrder : "Service Item Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CalculateResponseDateTime(PROCEDURE 1).CalChange(Variable 1007)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CalculateResponseDateTime : 7602;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CalculateResponseDateTime : "Customized Calendar Change";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CalculateResponseDateTime : 7602;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CalculateResponseDateTime : "Customized Calendar Change";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CalculateResponseDateTime(PROCEDURE 1).CalendarMgmt(Variable 1008)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CalculateResponseDateTime : 7600;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CalculateResponseDateTime : "Calendar Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CalculateResponseDateTime : 7600;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CalculateResponseDateTime : "Calendar Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "UpdateStartFinishDateTime(PROCEDURE 12).ServOrderMgt(Variable 1009)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //UpdateStartFinishDateTime : 5900;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //UpdateStartFinishDateTime : ServOrderManagement;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //UpdateStartFinishDateTime : 5900;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //UpdateStartFinishDateTime : ServOrderManagement;
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "AssistEditSerialNo(PROCEDURE 10).ItemLedgEntry(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //AssistEditSerialNo : 32;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //AssistEditSerialNo : "Item Ledger Entry";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //AssistEditSerialNo : 32;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //AssistEditSerialNo : "Item Ledger Entry";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "GetItemTranslation(PROCEDURE 42).ItemTranslation(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //GetItemTranslation : 30;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //GetItemTranslation : "Item Translation";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //GetItemTranslation : 30;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //GetItemTranslation : "Item Translation";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "RecreateServLines(PROCEDURE 14).TempServLine(Variable 1001)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //RecreateServLines : 5902;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //RecreateServLines : "Service Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //RecreateServLines : 5902;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //RecreateServLines : "Service Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "CreateDim(PROCEDURE 26).SourceCodeSetup(Variable 1006)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //CreateDim : 242;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //CreateDim : "Source Code Setup";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //CreateDim : 242;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //CreateDim : "Source Code Setup";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "UpdateAllLineDim(PROCEDURE 41).ConfirmManagement(Variable 1003)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //UpdateAllLineDim : 27;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //UpdateAllLineDim : "Confirm Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //UpdateAllLineDim : 27;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //UpdateAllLineDim : "Confirm Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "LendLoanerWithConfirmation(PROCEDURE 19).ConfirmManagement(Variable 1000)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //LendLoanerWithConfirmation : 27;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //LendLoanerWithConfirmation : "Confirm Management";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //LendLoanerWithConfirmation : 27;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //LendLoanerWithConfirmation : "Confirm Management";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServMgtSetup(Variable 1035)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServMgtSetup : 5911;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServMgtSetup : "Service Mgt. Setup";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServMgtSetup : 5911;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServMgtSetup : "Service Mgt. Setup";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServOrderAlloc(Variable 1031)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServOrderAlloc : 5950;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServOrderAlloc : "Service Order Allocation";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServOrderAlloc : 5950;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServOrderAlloc : "Service Order Allocation";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServItem(Variable 1032)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServItem : 5940;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServItem : "Service Item";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServItem : 5940;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServItem : "Service Item";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServContract(Variable 1033)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServContract : 5965;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServContract : "Service Contract Header";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServContract : 5965;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServContract : "Service Contract Header";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServLine(Variable 1034)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServLine : 5902;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServLine : "Service Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServLine : 5902;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServLine : "Service Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServItemLine(Variable 1036)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServItemLine : 5901;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServItemLine : "Service Item Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServItemLine : 5901;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServItemLine : "Service Item Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServHour(Variable 1037)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServHour : 5910;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServHour : "Service Hour";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServHour : 5910;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServHour : "Service Hour";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServHour2(Variable 1038)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServHour2 : 5910;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServHour2 : "Service Hour";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServHour2 : 5910;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServHour2 : "Service Hour";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServHeader(Variable 1039)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServHeader : 5900;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServHeader : "Service Header";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServHeader : 5900;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServHeader : "Service Header";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServHeader2(Variable 1066)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServHeader2 : 5900;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServHeader2 : "Service Header";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServHeader2 : 5900;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServHeader2 : "Service Header";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServHeader3(Variable 1068)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServHeader3 : 5900;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServHeader3 : "Service Header";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServHeader3 : 5900;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServHeader3 : "Service Header";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServCommentLine(Variable 1040)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServCommentLine : 5906;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServCommentLine : "Service Comment Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServCommentLine : 5906;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServCommentLine : "Service Comment Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServItemGr(Variable 1041)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServItemGr : 5904;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServItemGr : "Service Item Group";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServItemGr : 5904;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServItemGr : "Service Item Group";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "RepairStatus(Variable 1042)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //RepairStatus : 5927;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //RepairStatus : "Repair Status";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //RepairStatus : 5927;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //RepairStatus : "Repair Status";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "RepairStatus2(Variable 1063)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //RepairStatus2 : 5927;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //RepairStatus2 : "Repair Status";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //RepairStatus2 : 5927;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //RepairStatus2 : "Repair Status";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "Loaner(Variable 1044)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //Loaner : 5913;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //Loaner : Loaner;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //Loaner : 5913;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //Loaner : Loaner;
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServContractLine(Variable 1043)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServContractLine : 5964;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServContractLine : "Service Contract Line";
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServContractLine : 5964;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServContractLine : "Service Contract Line";
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "Item(Variable 1047)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //Item : 27;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //Item : Item;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //Item : 27;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //Item : Item;
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServLogMgt(Variable 1049)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServLogMgt : 5906;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServLogMgt : ServLogManagement;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServLogMgt : 5906;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServLogMgt : ServLogManagement;
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServOrderAllocMgt(Variable 1050)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServOrderAllocMgt : 5930;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServOrderAllocMgt : ServAllocationManagement;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServOrderAllocMgt : 5930;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServOrderAllocMgt : ServAllocationManagement;
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServOrderMgt(Variable 1051)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServOrderMgt : 5900;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServOrderMgt : ServOrderManagement;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServOrderMgt : 5900;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServOrderMgt : ServOrderManagement;
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "SegManagement(Variable 1052)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //SegManagement : 5051;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //SegManagement : SegManagement;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //SegManagement : 5051;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //SegManagement : SegManagement;
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "ServLoanerMgt(Variable 1053)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //ServLoanerMgt : 5901;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //ServLoanerMgt : ServLoanerManagement;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //ServLoanerMgt : 5901;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //ServLoanerMgt : ServLoanerManagement;
+    //Variable type has not been exported.
 
 
     //Unsupported feature: PropertyModification on "DimMgt(Variable 1087)". Please convert manually.
 
     //var
-        //>>>> ORIGINAL VALUE:
-        //DimMgt : 408;
-        //Variable type has not been exported.
-        //>>>> MODIFIED VALUE:
-        //DimMgt : DimensionManagement;
-        //Variable type has not been exported.
+    //>>>> ORIGINAL VALUE:
+    //DimMgt : 408;
+    //Variable type has not been exported.
+    //>>>> MODIFIED VALUE:
+    //DimMgt : DimensionManagement;
+    //Variable type has not been exported.
 
     var
-        "ITEMLEDGER ENTRY" : Record "Item Ledger Entry";
-        "Dimension Value" : Record "Dimension Value";
-        TSH : Record "Troubleshooting Header";
-        FaultArea : Record "Fault Area";
-        PMIH : Record "Posted Material Issues Header";
-        CTHGRec : Record "CS Transaction Header";
-        CTLGRec : Record "CS Transaction Line";
-        CTLedgGRec : Record "CS Stock Ledger";
-        TransNoGVar : Text;
-        StatusGVar : Option Working,"Non Working";
-        totCardsGVar : Decimal;
-        entryNoGVar : Integer;
-        ItemGRec : Record Item;
-        PMIL : Record "Posted Material Issues Line";
-        reasonGvar : Code[20];
-        StatGVar : Code[20];
-        PMIHG : Record "Posted Material Issues Header";
-        Station : Record Station;
-        SH : Record "Service Header";
-        stat : Record Station;
-        Divi : Record Division;
-        buf : Text;
-        buf2 : Text;
-        ServHeader1 : Record "Service Header";
-        SMTP_MAIL : Codeunit "SMTP Mail";
-        Mail_From : Text;
-        Mail_To : Text;
-        Subject : Text;
-        Body : Text;
+        "ITEMLEDGER ENTRY": Record "Item Ledger Entry";
+        "Dimension Value": Record "Dimension Value";
+        TSH: Record "Troubleshooting Header";
+        FaultArea: Record "Fault Area";
+        PMIH: Record "Posted Material Issues Header";
+        // CTHGRec: Record "CS Transaction Header";
+        //CTLGRec: Record "CS Transaction Line";
+        //CTLedgGRec: Record "CS Stock Ledger";
+        TransNoGVar: Text;
+        StatusGVar: Option Working,"Non Working";
+        totCardsGVar: Decimal;
+        entryNoGVar: Integer;
+        ItemGRec: Record Item;
+        PMIL: Record "Posted Material Issues Line";
+        reasonGvar: Code[20];
+        StatGVar: Code[20];
+        PMIHG: Record "Posted Material Issues Header";
+        //Station: Record Station;
+        SH: Record "Service Header";
+        //stat: Record Station;
+        //Divi: Record Division;
+        buf: Text;
+        buf2: Text;
+        ServHeader1: Record "Service Header";
+        SMTP_MAIL: Codeunit "SMTP Mail";
+        Mail_From: Text;
+        Mail_To: Text;
+        Subject: Text;
+        Body: Text;
 }
 

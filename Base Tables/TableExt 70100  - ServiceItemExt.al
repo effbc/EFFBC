@@ -1221,11 +1221,11 @@ tableextension 70100 ServiceItemExt extends "Service Item"
         }
         field(60042; Division; Code[10])
         {
-            TableRelation = Table50012.Field1 WHERE(Field2 = FIELD(Zone));
+            //TableRelation = Table50012.Field1 WHERE(Field2 = FIELD(Zone));
         }
         field(60043; Station; Code[20])
         {
-            TableRelation = Table50013.Field1 WHERE(Field2 = FIELD(Division));
+            //TableRelation = Table50013.Field1 WHERE(Field2 = FIELD(Division));
         }
         field(60044; "Creation Date"; Date)
         {
@@ -1294,27 +1294,27 @@ tableextension 70100 ServiceItemExt extends "Service Item"
 
         //Unsupported feature: Deletion on ""Service Item Group Code"(Key)". Please convert manually.
 
-        key(Key1; "No.")
-        {
-        }
-        key(Key2; "Item No.", "Serial No.")
-        {
-        }
-        key(Key3; "Customer No.", "Ship-to Code", "Item No.", "Serial No.")
-        {
-        }
-        key(Key4; "Warranty Ending Date (Parts)", "Customer No.", "Ship-to Code")
-        {
-        }
-        key(Key5; "Sales/Serv. Shpt. Document No.", "Sales/Serv. Shpt. Line No.")
-        {
-        }
-        key(Key6; "Service Item Group Code")
-        {
-        }
-        key(Key7; "Present Location", "Item No.", "WORKING STATUS")
-        {
-        }
+        /*        key(Key1; "No.")
+                {
+                }
+                key(Key2; "Item No.", "Serial No.")
+                {
+                }
+                key(Key3; "Customer No.", "Ship-to Code", "Item No.", "Serial No.")
+                {
+                }
+                key(Key4; "Warranty Ending Date (Parts)", "Customer No.", "Ship-to Code")
+                {
+                }
+                key(Key5; "Sales/Serv. Shpt. Document No.", "Sales/Serv. Shpt. Line No.")
+                {
+                }
+                key(Key6; "Service Item Group Code")
+                {
+                }
+                key(Key7; "Present Location", "Item No.", "WORKING STATUS")
+                {
+                }*/
     }
 
 

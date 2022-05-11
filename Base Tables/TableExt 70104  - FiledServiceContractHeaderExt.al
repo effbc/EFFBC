@@ -175,7 +175,7 @@ tableextension 70104 FiledServiceContractHeaderExt extends "Filed Service Contra
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -194,7 +194,7 @@ tableextension 70104 FiledServiceContractHeaderExt extends "Filed Service Contra
 
         //Unsupported feature: Deletion on ""Contract Type,Contract No."(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+        /*key(Key1; "Entry No.")
         {
         }
         key(Key2; "Contract Type Relation", "Contract No. Relation", "File Date", "File Time")
@@ -202,7 +202,7 @@ tableextension 70104 FiledServiceContractHeaderExt extends "Filed Service Contra
         }
         key(Key3; "Contract Type", "Contract No.")
         {
-        }
+        }*/
     }
 
 

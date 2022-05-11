@@ -3528,14 +3528,14 @@ tableextension 70096 ServiceLineExt extends "Service Line"
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+            //TableRelation = "Excise Bus. Posting Group";
         }
         field(16502; "Excise Prod. Posting Group"; Code[10])
         {
             CaptionML = ENU = 'Excise Prod. Posting Group',
                         ENN = 'Excise Prod. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Prod. Posting Group";
+            //TableRelation = "Excise Prod. Posting Group";
         }
         field(16503; "Excise Amount"; Decimal)
         {
@@ -3703,7 +3703,7 @@ tableextension 70096 ServiceLineExt extends "Service Line"
 
             trigger OnLookup();
             var
-                StateForm: Record "State Forms";
+            //StateForm: Record "State Forms";
             begin
             end;
 
@@ -3744,7 +3744,7 @@ tableextension 70096 ServiceLineExt extends "Service Line"
             CaptionML = ENU = 'Service Tax Group',
                         ENN = 'Service Tax Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Service Tax Groups".Code;
+            // TableRelation = "Service Tax Groups".Code;
         }
         field(16526; "Service Tax Base"; Decimal)
         {
@@ -4006,7 +4006,7 @@ tableextension 70096 ServiceLineExt extends "Service Line"
             CaptionML = ENU = 'GST Group Code',
                         ENN = 'GST Group Code';
             DataClassification = ToBeClassified;
-            TableRelation = "GST Group";
+            //TableRelation = "GST Group";
         }
         field(16603; "GST Group Type"; Option)
         {
@@ -4085,7 +4085,7 @@ tableextension 70096 ServiceLineExt extends "Service Line"
 
             trigger OnValidate();
             var
-                GSTGroup: Record "GST Group";
+            // GSTGroup: Record "GST Group";
             begin
             end;
         }
@@ -4159,13 +4159,13 @@ tableextension 70096 ServiceLineExt extends "Service Line"
 
             trigger OnValidate();
             begin
-                ServItem.SetRange(ServItem."No.", "Sub Service Item No.");
-                if ServItem.Find('-') then
-                    // "Sub Service Item Serial No.":=ServItem."Serial No.";
-                    "No." := ServItem."Item No.";
-                //Unitcost:=Item."Avg Unit Cost";
-                Description := ServItem.Description;
-                "Unit of Measure Code" := ServItem."Unit of Measure Code";
+                /* ServItem.SetRange(ServItem."No.", "Sub Service Item No.");
+                 if ServItem.Find('-') then
+                     // "Sub Service Item Serial No.":=ServItem."Serial No.";
+                     "No." := ServItem."Item No.";
+                 //Unitcost:=Item."Avg Unit Cost";
+                 Description := ServItem.Description;
+                 "Unit of Measure Code" := ServItem."Unit of Measure Code";*/
             end;
         }
         field(60018; "Service item Lot No"; Code[20])
@@ -4230,7 +4230,7 @@ tableextension 70096 ServiceLineExt extends "Service Line"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -4282,52 +4282,52 @@ tableextension 70096 ServiceLineExt extends "Service Line"
 
         //Unsupported feature: Deletion on ""Document Type,Document No.,Type,No."(Key)". Please convert manually.
 
-        key(Key1; "Document Type", "Document No.", "Line No.")
-        {
-        }
-        key(Key2; Type, "No.", "Order Date")
-        {
-        }
-        key(Key3; "Service Item No.", Type, "Posting Date")
-        {
-        }
-        key(Key4; "Document Type", "Bill-to Customer No.", "Currency Code", "Document No.")
-        {
-            SumIndexFields = "Outstanding Amount", "Shipped Not Invoiced", "Outstanding Amount (LCY)", "Shipped Not Invoiced (LCY)";
-        }
-        key(Key5; "Document Type", "Document No.", "Service Item No.")
-        {
-        }
-        key(Key6; "Document Type", "Document No.", "Service Item Line No.", "Serv. Price Adjmt. Gr. Code")
-        {
-            SumIndexFields = "Line Amount";
-        }
-        key(Key7; "Document Type", "Document No.", "Service Item Line No.", Type, "No.")
-        {
-        }
-        key(Key8; Type, "No.", "Variant Code", "Location Code", "Needed by Date", "Document Type", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code")
-        {
-            SumIndexFields = "Quantity (Base)", "Outstanding Qty. (Base)";
-        }
-        key(Key9; "Appl.-to Service Entry")
-        {
-        }
-        key(Key10; "Document Type", "Document No.", "Service Item Line No.", "Component Line No.")
-        {
-        }
-        key(Key11; "Fault Reason Code")
-        {
-        }
-        key(Key12; "Document Type", "Customer No.", "Shipment No.", "Document No.")
-        {
-            SumIndexFields = "Outstanding Amount (LCY)";
-        }
-        key(Key13; "Document Type", "Document No.", "Location Code")
-        {
-        }
-        key(Key14; "Document Type", "Document No.", Type, "No.")
-        {
-        }
+        /*        key(Key1; "Document Type", "Document No.", "Line No.")
+                {
+                }
+                key(Key2; Type, "No.", "Order Date")
+                {
+                }
+                key(Key3; "Service Item No.", Type, "Posting Date")
+                {
+                }
+                key(Key4; "Document Type", "Bill-to Customer No.", "Currency Code", "Document No.")
+                {
+                    SumIndexFields = "Outstanding Amount", "Shipped Not Invoiced", "Outstanding Amount (LCY)", "Shipped Not Invoiced (LCY)";
+                }
+                key(Key5; "Document Type", "Document No.", "Service Item No.")
+                {
+                }
+                key(Key6; "Document Type", "Document No.", "Service Item Line No.", "Serv. Price Adjmt. Gr. Code")
+                {
+                    SumIndexFields = "Line Amount";
+                }
+                key(Key7; "Document Type", "Document No.", "Service Item Line No.", Type, "No.")
+                {
+                }
+                key(Key8; Type, "No.", "Variant Code", "Location Code", "Needed by Date", "Document Type", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code")
+                {
+                    SumIndexFields = "Quantity (Base)", "Outstanding Qty. (Base)";
+                }
+                key(Key9; "Appl.-to Service Entry")
+                {
+                }
+                key(Key10; "Document Type", "Document No.", "Service Item Line No.", "Component Line No.")
+                {
+                }
+                key(Key11; "Fault Reason Code")
+                {
+                }
+                key(Key12; "Document Type", "Customer No.", "Shipment No.", "Document No.")
+                {
+                    SumIndexFields = "Outstanding Amount (LCY)";
+                }
+                key(Key13; "Document Type", "Document No.", "Location Code")
+                {
+                }
+                key(Key14; "Document Type", "Document No.", Type, "No.")
+                {
+                }*/
     }
 
 

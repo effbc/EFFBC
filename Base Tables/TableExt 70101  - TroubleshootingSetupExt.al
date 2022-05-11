@@ -81,7 +81,7 @@ tableextension 70101 TroubleshootingSetupExt extends "Troubleshooting Setup"
 
         //Unsupported feature: Deletion on ""Troubleshooting No.,Type,No."(Key)". Please convert manually.
 
-        key(Key1; Type, "No.", "Troubleshooting No.", "Line No.", Date)
+        /*key(Key1; Type, "No.", "Troubleshooting No.", "Line No.", Date)
         {
         }
         key(Key2; "Troubleshooting No.", Type, "No.")
@@ -89,7 +89,7 @@ tableextension 70101 TroubleshootingSetupExt extends "Troubleshooting Setup"
         }
         key(Key3; Type, "No.", Date, "Troubleshooting No.", Comment)
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.
