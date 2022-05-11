@@ -19,9 +19,9 @@ tableextension 70197 ProductionMatrixBOMLineExt extends "Production Matrix BOM L
 
         //Unsupported feature: Deletion on ""Item No.,Variant Code"(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code")
+      /*  key(Key1; "Item No.", "Variant Code")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

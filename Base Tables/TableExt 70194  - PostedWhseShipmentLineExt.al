@@ -109,7 +109,7 @@ tableextension 70194 PostedWhseShipmentLineExt extends "Posted Whse. Shipment Li
 
         //Unsupported feature: Deletion on ""Source Type,Source Subtype,Source No.,Source Line No."(Key)". Please convert manually.
 
-        key(Key1; "No.", "Line No.")
+/* key(Key1; "No.", "Line No.")
         {
         }
         key(Key2; "Whse. Shipment No.", "Whse Shipment Line No.")
@@ -120,7 +120,7 @@ tableextension 70194 PostedWhseShipmentLineExt extends "Posted Whse. Shipment Li
         }
         key(Key4; "Source Type", "Source Subtype", "Source No.", "Source Line No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

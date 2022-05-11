@@ -146,9 +146,9 @@ tableextension 70181 OrderAddressExt extends "Order Address"
 
         //Unsupported feature: Deletion on ""Vendor No.,Code"(Key)". Please convert manually.
 
-        key(Key1; "Vendor No.", "Code")
+       /* key(Key1; "Vendor No.", "Code")
         {
-        }
+        }*/
     }
 
 

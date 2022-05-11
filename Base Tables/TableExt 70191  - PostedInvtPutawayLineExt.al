@@ -67,7 +67,7 @@ tableextension 70192 PostedInvtPutawayLineExt extends "Posted Invt. Put-away Lin
 
         //Unsupported feature: Deletion on ""Serial No."(Key)". Please convert manually.
 
-        key(Key1; "No.", "Line No.")
+       /* key(Key1; "No.", "Line No.")
         {
         }
         key(Key2; "No.", "Sorting Sequence No.")
@@ -83,7 +83,7 @@ tableextension 70192 PostedInvtPutawayLineExt extends "Posted Invt. Put-away Lin
         key(Key5; "Serial No.")
         {
             Enabled = false;
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

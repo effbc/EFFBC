@@ -1797,9 +1797,9 @@ tableextension 70215 StandardGeneralJournalLineExt extends "Standard General Jou
 
         //Unsupported feature: Deletion on ""Journal Template Name,Standard Journal Code,Line No."(Key)". Please convert manually.
 
-        key(Key1; "Journal Template Name", "Standard Journal Code", "Line No.")
+       /* key(Key1; "Journal Template Name", "Standard Journal Code", "Line No.")
         {
-        }
+        }*/
     }
 
 

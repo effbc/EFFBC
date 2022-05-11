@@ -58,9 +58,9 @@ tableextension 70185 PhysInvtItemSelectionExt extends "Phys. Invt. Item Selectio
 
         //Unsupported feature: Deletion on ""Item No.,Variant Code,Location Code,Phys Invt Counting Period Code"(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code", "Location Code", "Phys Invt Counting Period Code")
+        /*key(Key1; "Item No.", "Variant Code", "Location Code", "Phys Invt Counting Period Code")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

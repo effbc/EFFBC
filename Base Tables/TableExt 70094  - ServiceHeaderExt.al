@@ -3330,7 +3330,7 @@ tableextension 70094 ServiceHeaderExt extends "Service Header"
             CaptionML = ENU = 'Structure',
                         ENN = 'Structure';
             DataClassification = ToBeClassified;
-            TableRelation = "Structure Header";
+            // TableRelation = "Structure Header";
 
             trigger OnValidate();
             var
@@ -3350,7 +3350,7 @@ tableextension 70094 ServiceHeaderExt extends "Service Header"
 
             trigger OnValidate();
             begin
-                ServSetup.Get;
+                // ServSetup.Get;
                 InitRecord;
             end;
         }
@@ -3359,7 +3359,7 @@ tableextension 70094 ServiceHeaderExt extends "Service Header"
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+            //  TableRelation = "Excise Bus. Posting Group";
         }
         field(16503; "Amount to Customer"; Decimal)
         {
@@ -3385,12 +3385,12 @@ tableextension 70094 ServiceHeaderExt extends "Service Header"
             CaptionML = ENU = 'Form Code',
                         ENN = 'Form Code';
             DataClassification = ToBeClassified;
-            TableRelation = "State Forms"."Form Code" WHERE(State = FIELD(State),
-                                                             "Transit Document" = CONST(false));
+            //   TableRelation = "State Forms"."Form Code" WHERE(State = FIELD(State),
+            //  "Transit Document" = CONST(false));
 
             trigger OnLookup();
             var
-                StateForms: Record "State Forms";
+            //    StateForms: Record "State Forms";
             begin
                 //StateForms.LookupStateForm(State,"Form Code")
             end;
@@ -3737,13 +3737,13 @@ tableextension 70094 ServiceHeaderExt extends "Service Header"
 
             trigger OnValidate();
             begin
-                ServItemLine.Reset;
-                ServItemLine.SetFilter(ServItemLine."Document No.", "No.");
-                ServItemLine.SetFilter(ServItemLine."To Location", '<>%1', '');
-                if ServItemLine.FindFirst then begin
-                    Error('One or more cards are already Transfered to Other Locations');
-                end;
+                //   ServItemLine.Reset;
+                //  ServItemLine.SetFilter(ServItemLine."Document No.", "No.");
+                //  ServItemLine.SetFilter(ServItemLine."To Location", '<>%1', '');
+                //   if ServItemLine.FindFirst then begin
+                //   Error('One or more cards are already Transfered to Other Locations');
             end;
+            //  end;
         }
         field(60010; "Transation ID"; Code[10])
         {
@@ -3757,7 +3757,7 @@ tableextension 70094 ServiceHeaderExt extends "Service Header"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -3788,28 +3788,28 @@ tableextension 70094 ServiceHeaderExt extends "Service Header"
 
         //Unsupported feature: Deletion on ""Document Type,Customer No.,Order Date"(Key)". Please convert manually.
 
-        key(Key1; "Document Type", "No.")
-        {
-        }
-        key(Key2; "No.", "Document Type")
-        {
-        }
-        key(Key3; "Customer No.", "Order Date")
-        {
-        }
-        key(Key4; "Contract No.", Status, "Posting Date")
-        {
-        }
-        key(Key5; Status, "Response Date", "Response Time", Priority, "Responsibility Center")
-        {
-        }
-        key(Key6; Status, Priority, "Response Date", "Response Time")
-        {
-        }
-        key(Key7; "Document Type", "Customer No.", "Order Date")
-        {
-            MaintainSQLIndex = false;
-        }
+        /* key(Key1; "Document Type", "No.")
+         {
+         }
+         key(Key2; "No.", "Document Type")
+         {
+         }
+         key(Key3; "Customer No.", "Order Date")
+         {
+         }
+         key(Key4; "Contract No.", Status, "Posting Date")
+         {
+         }
+         key(Key5; Status, "Response Date", "Response Time", Priority, "Responsibility Center")
+         {
+         }
+         key(Key6; Status, Priority, "Response Date", "Response Time")
+         {
+         }
+         key(Key7; "Document Type", "Customer No.", "Order Date")
+         {
+             MaintainSQLIndex = false;
+         }*/
     }
 
 

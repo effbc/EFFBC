@@ -43,13 +43,13 @@ tableextension 70210 SerialNoInformationExt extends "Serial No. Information"
 
         //Unsupported feature: Deletion on ""Serial No."(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code", "Serial No.")
+        /*key(Key1; "Item No.", "Variant Code", "Serial No.")
         {
         }
         key(Key2; "Serial No.")
         {
             Enabled = false;
-        }
+        }*/
     }
 
 

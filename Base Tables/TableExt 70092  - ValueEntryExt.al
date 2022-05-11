@@ -145,7 +145,7 @@ tableextension 70092 ValueEntryExt extends "Value Entry"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+         //  TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -206,7 +206,7 @@ tableextension 70092 ValueEntryExt extends "Value Entry"
 
         //Unsupported feature: Deletion on ""Item Ledger Entry Type,Order No.,Valuation Date"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+       /* key(Key1; "Entry No.")
         {
         }
         key(Key2; "Item Ledger Entry No.", "Entry Type")
@@ -284,7 +284,7 @@ tableextension 70092 ValueEntryExt extends "Value Entry"
         }
         key(Key22; "Item Ledger Entry No.")
         {
-        }
+        }*/
     }
 
 

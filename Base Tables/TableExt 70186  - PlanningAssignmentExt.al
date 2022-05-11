@@ -58,9 +58,9 @@ tableextension 70186 PlanningAssignmentExt extends "Planning Assignment"
 
         //Unsupported feature: Deletion on ""Item No.,Variant Code,Location Code"(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code", "Location Code")
+       /* key(Key1; "Item No.", "Variant Code", "Location Code")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

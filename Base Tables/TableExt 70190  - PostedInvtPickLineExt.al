@@ -67,7 +67,7 @@ tableextension 70190 PostedInvtPickLineExt extends "Posted Invt. Pick Line"
 
         //Unsupported feature: Deletion on ""Serial No."(Key)". Please convert manually.
 
-        key(Key1; "No.", "Line No.")
+      /*  key(Key1; "No.", "Line No.")
         {
         }
         key(Key2; "No.", "Sorting Sequence No.")
@@ -83,7 +83,7 @@ tableextension 70190 PostedInvtPickLineExt extends "Posted Invt. Pick Line"
         key(Key5; "Serial No.")
         {
             Enabled = false;
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

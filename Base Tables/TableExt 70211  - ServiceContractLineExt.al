@@ -853,7 +853,7 @@ tableextension 70211 ServiceContractLineExt extends "Service Contract Line"
 
         //Unsupported feature: Deletion on ""Customer No.,Ship-to Code"(Key)". Please convert manually.
 
-        key(Key1; "Contract Type", "Contract No.", "Line No.")
+        /*key(Key1; "Contract Type", "Contract No.", "Line No.")
         {
         }
         key(Key2; "Contract No.", "Line No.", "Contract Type")
@@ -870,7 +870,7 @@ tableextension 70211 ServiceContractLineExt extends "Service Contract Line"
         }
         key(Key5; "Customer No.", "Ship-to Code")
         {
-        }
+        }*/
     }
 
 

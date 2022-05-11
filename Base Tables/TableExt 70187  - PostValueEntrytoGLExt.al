@@ -13,7 +13,7 @@ tableextension 70187 PostValueEntrytoGLExt extends "Post Value Entry to G/L"
 
         //Unsupported feature: Deletion on ""Item No."(Key)". Please convert manually.
 
-        key(Key1; "Value Entry No.")
+       /*key(Key1; "Value Entry No.")
         {
         }
         key(Key2; "Item No.", "Posting Date")
@@ -21,7 +21,7 @@ tableextension 70187 PostValueEntrytoGLExt extends "Post Value Entry to G/L"
         }
         key(Key3; "Item No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

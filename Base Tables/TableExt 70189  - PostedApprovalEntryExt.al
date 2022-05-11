@@ -43,9 +43,9 @@ tableextension 70189 PostedApprovalEntryExt extends "Posted Approval Entry"
 
         //Unsupported feature: Deletion on ""Entry No."(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+        /*key(Key1; "Entry No.")
         {
-        }
+        }*/
     }
 
 

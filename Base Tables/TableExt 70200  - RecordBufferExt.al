@@ -49,7 +49,7 @@ tableextension 70200 RecordBufferExt extends "Record Buffer"
 
         //Unsupported feature: Deletion on ""Search Record ID"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+       /* key(Key1; "Entry No.")
         {
         }
         key(Key2; "Table No.", "Search Record ID")
@@ -57,7 +57,7 @@ tableextension 70200 RecordBufferExt extends "Record Buffer"
         }
         key(Key3; "Search Record ID")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

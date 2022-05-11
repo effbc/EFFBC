@@ -101,9 +101,9 @@ tableextension 70174 JobItemPriceExt extends "Job Item Price"
 
         //Unsupported feature: Deletion on ""Job No.,Job Task No.,Item No.,Variant Code,Unit of Measure Code,Currency Code"(Key)". Please convert manually.
 
-        key(Key1; "Job No.", "Job Task No.", "Item No.", "Variant Code", "Unit of Measure Code", "Currency Code")
+      /*  key(Key1; "Job No.", "Job Task No.", "Item No.", "Variant Code", "Unit of Measure Code", "Currency Code")
         {
-        }
+        }*/
     }
 
 

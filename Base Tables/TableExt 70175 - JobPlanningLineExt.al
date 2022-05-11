@@ -1342,7 +1342,7 @@ tableextension 70175 JobPlanningLineExt extends "Job Planning Line"
 
         //Unsupported feature: Deletion on ""Job No.,Planning Date,Document No."(Key)". Please convert manually.
 
-        key(Key1; "Job No.", "Job Task No.", "Line No.")
+       /* key(Key1; "Job No.", "Job Task No.", "Line No.")
         {
         }
         key(Key2; "Job No.", "Job Task No.", "Schedule Line", "Planning Date")
@@ -1390,7 +1390,7 @@ tableextension 70175 JobPlanningLineExt extends "Job Planning Line"
         }
         key(Key14; "Job No.", "Planning Date", "Document No.")
         {
-        }
+        }*/
     }
 
 

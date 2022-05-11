@@ -19,12 +19,12 @@ tableextension 70188 PostedApprovalCommentLineExts extends "Posted Approval Comm
 
         //Unsupported feature: Deletion on ""Table ID,Document No.,Date and Time"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+       /* key(Key1; "Entry No.")
         {
         }
         key(Key2; "Table ID", "Document No.", "Date and Time")
         {
-        }
+        }*/
     }
 
 

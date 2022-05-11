@@ -52,7 +52,7 @@ tableextension 70192 PostedWhseReceiptHeaderExt extends "Posted Whse. Receipt He
 
         //Unsupported feature: Deletion on ""Posting Date"(Key)". Please convert manually.
 
-        key(Key1; "No.")
+       /* key(Key1; "No.")
         {
         }
         key(Key2; "Location Code")
@@ -63,7 +63,7 @@ tableextension 70192 PostedWhseReceiptHeaderExt extends "Posted Whse. Receipt He
         }
         key(Key4; "Posting Date")
         {
-        }
+        }*/
     }
 
 

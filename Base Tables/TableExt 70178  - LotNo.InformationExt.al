@@ -46,13 +46,13 @@ tableextension 70178 LotNoInformationExt extends "Lot No. Information"
 
         //Unsupported feature: Deletion on ""Lot No."(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code", "Lot No.")
+       /* key(Key1; "Item No.", "Variant Code", "Lot No.")
         {
         }
         key(Key2; "Lot No.")
         {
             Enabled = false;
-        }
+        }*/
     }
 
 

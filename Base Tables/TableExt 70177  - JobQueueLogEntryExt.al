@@ -31,12 +31,12 @@ tableextension 70177 JobQueueLogEntryExt extends "Job Queue Log Entry"
 
         //Unsupported feature: Deletion on ""Start Date/Time,ID"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+       /*key(Key1; "Entry No.")
         {
         }
         key(Key2; "Start Date/Time", ID)
         {
-        }
+        }*/
     }
 
 
@@ -124,6 +124,6 @@ tableextension 70177 JobQueueLogEntryExt extends "Job Queue Log Entry"
         Subject: Text;
         Mail_To: Text;
         Mail_From: Text;
-        SMTP_MAIL: Codeunit "SMTP Mail";
+        //SMTP_MAIL: Codeunit "SMTP Mail";
 }
 

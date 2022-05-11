@@ -19,9 +19,9 @@ tableextension 70183 OutlookSynchLinkExt extends "Outlook Synch. Link"
 
         //Unsupported feature: Deletion on ""User ID,Record ID"(Key)". Please convert manually.
 
-        key(Key1; "User ID", "Record ID")
+       /* key(Key1; "User ID", "Record ID")
         {
-        }
+        }*/
     }
 
 

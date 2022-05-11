@@ -276,7 +276,7 @@ tableextension 70212 ServiceItemComponentExt extends "Service Item Component"
 
         //Unsupported feature: Deletion on ""Parent Service Item No.,Line No."(Key)". Please convert manually.
 
-        key(Key1; Active, "Parent Service Item No.", "Line No.")
+      /*  key(Key1; Active, "Parent Service Item No.", "Line No.")
         {
         }
         key(Key2; Active, "Parent Service Item No.", "From Line No.")
@@ -290,7 +290,7 @@ tableextension 70212 ServiceItemComponentExt extends "Service Item Component"
         }
         key(Key5; "Parent Service Item No.", "Line No.")
         {
-        }
+        }*/
     }
 
 

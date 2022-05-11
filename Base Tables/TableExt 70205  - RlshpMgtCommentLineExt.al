@@ -26,9 +26,9 @@ tableextension 70205 RlshpMgtCommentLineExt extends "Rlshp. Mgt. Comment Line"
 
         //Unsupported feature: Deletion on ""Table Name,No.,Sub No.,Line No."(Key)". Please convert manually.
 
-        key(Key1; "Table Name", "No.", "Sub No.", "Line No.")
+/*        key(Key1; "Table Name", "No.", "Sub No.", "Line No.")
         {
-        }
+        }*/
     }
 
 

@@ -231,12 +231,12 @@ tableextension 70208 SalesPriceWorksheetExt extends "Sales Price Worksheet"
 
         //Unsupported feature: Deletion on ""Item No.,Variant Code,Unit of Measure Code,Minimum Quantity,Starting Date,Ending Date,Sales Type,Sales Code,Currency Code"(Key)". Please convert manually.
 
-        key(Key1; "Starting Date", "Ending Date", "Sales Type", "Sales Code", "Currency Code", "Item No.", "Variant Code", "Unit of Measure Code", "Minimum Quantity")
+        /*key(Key1; "Starting Date", "Ending Date", "Sales Type", "Sales Code", "Currency Code", "Item No.", "Variant Code", "Unit of Measure Code", "Minimum Quantity")
         {
         }
         key(Key2; "Item No.", "Variant Code", "Unit of Measure Code", "Minimum Quantity", "Starting Date", "Ending Date", "Sales Type", "Sales Code", "Currency Code")
         {
-        }
+        }*/
     }
 
 

@@ -375,9 +375,9 @@ tableextension 70165 ItemAnalysisViewExt extends "Item Analysis View"
 
         //Unsupported feature: Deletion on ""Analysis Area,Code"(Key)". Please convert manually.
 
-        key(Key1; "Analysis Area", "Code")
+      /*  key(Key1; "Analysis Area", "Code")
         {
-        }
+        }*/
     }
 
 

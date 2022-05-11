@@ -108,7 +108,7 @@ tableextension 70202 ReservationEntryExt extends "Reservation Entry"
 
         //Unsupported feature: Deletion on ""Serial No."(Key)". Please convert manually.
 
-        key(Key1; "Entry No.", Positive)
+        /*key(Key1; "Entry No.", Positive)
         {
         }
         key(Key2; "Source ID", "Source Ref. No.", "Source Type", "Source Subtype", "Source Batch Name", "Source Prod. Order Line", "Reservation Status", "Shipment Date", "Expected Receipt Date")
@@ -147,7 +147,7 @@ tableextension 70202 ReservationEntryExt extends "Reservation Entry"
         }
         key(Key9; "Item No.", "Variant Code", "Location Code", "Source Type", "Source Subtype", "Reservation Status", "Expected Receipt Date")
         {
-        }
+        }*/
     }
 
 

@@ -22,9 +22,9 @@ tableextension 70195 ProductionBOMCommentLineExt extends "Production BOM Comment
 
         //Unsupported feature: Change OptionString on ""Production BOM No.,BOM Line No.,Version Code,Line No."(Key)". Please convert manually.
 
-        key(Key1; "Production BOM No.", "BOM Line No.", "Version Code", "Line No.")
+        /*key(Key1; "Production BOM No.", "BOM Line No.", "Version Code", "Line No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

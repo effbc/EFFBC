@@ -100,7 +100,7 @@ tableextension 70201 RegisteredWhseActivityLineExt extends "Registered Whse. Act
 
         //Unsupported feature: Deletion on ""Serial No."(Key)". Please convert manually.
 
-        key(Key1; "Activity Type", "No.", "Line No.")
+/* key(Key1; "Activity Type", "No.", "Line No.")
         {
         }
         key(Key2; "No.", "Line No.", "Activity Type")
@@ -124,7 +124,7 @@ tableextension 70201 RegisteredWhseActivityLineExt extends "Registered Whse. Act
         key(Key7; "Serial No.")
         {
             Enabled = false;
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

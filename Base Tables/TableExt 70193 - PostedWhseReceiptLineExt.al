@@ -145,7 +145,7 @@ tableextension 70193 PostedWhseReceiptLineExt extends "Posted Whse. Receipt Line
 
         //Unsupported feature: Deletion on ""Serial No."(Key)". Please convert manually.
 
-        key(Key1; "No.", "Line No.")
+      /*  key(Key1; "No.", "Line No.")
         {
         }
         key(Key2; "Posted Source No.", "Posting Date")
@@ -166,7 +166,7 @@ tableextension 70193 PostedWhseReceiptLineExt extends "Posted Whse. Receipt Line
         key(Key6; "Serial No.")
         {
             Enabled = false;
-        }
+        }*/
     }
 
 

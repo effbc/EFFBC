@@ -249,7 +249,7 @@ tableextension 70209 SalesPriceExt extends "Sales Price"
             CaptionML = ENU = 'PIT Structure',
                         ENN = 'PIT Structure';
             DataClassification = ToBeClassified;
-            TableRelation = "Structure Header";
+            //TableRelation = "Structure Header";
         }
         field(16504; "Price Inclusive of Tax"; Boolean)
         {

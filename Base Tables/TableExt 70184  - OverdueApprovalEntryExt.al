@@ -31,12 +31,12 @@ tableextension 70184 OverdueApprovalEntryExt extends "Overdue Approval Entry"
 
         //Unsupported feature: Deletion on ""Approver ID"(Key)". Please convert manually.
 
-        key(Key1; "Table ID", "Document Type", "Document No.", "Sequence No.", "Sent Date", "Sent Time", "Record ID to Approve")
+      /*  key(Key1; "Table ID", "Document Type", "Document No.", "Sequence No.", "Sent Date", "Sent Time", "Record ID to Approve")
         {
         }
         key(Key2; "Approver ID")
         {
-        }
+        }*/
     }
 
 

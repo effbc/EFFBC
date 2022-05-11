@@ -13,9 +13,9 @@ tableextension 70196 ProductionMatrixBOMEntryExt extends "Production Matrix  BOM
 
         //Unsupported feature: Deletion on ""Item No.,Variant Code,ID"(Key)". Please convert manually.
 
-        key(Key1; "Item No.", "Variant Code", ID)
+       /* key(Key1; "Item No.", "Variant Code", ID)
         {
-        }
+        }*/
     }
 }
 

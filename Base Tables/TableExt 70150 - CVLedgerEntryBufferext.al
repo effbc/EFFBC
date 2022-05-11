@@ -76,9 +76,9 @@ tableextension 70150 CVLedgerEntryBufferext extends "CV Ledger Entry Buffer"
 
         //Unsupported feature: Deletion on ""Entry No."(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+      /*  key(Key1; "Entry No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

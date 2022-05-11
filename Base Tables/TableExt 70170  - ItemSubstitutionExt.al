@@ -288,9 +288,9 @@ tableextension 70170 ItemSubstitutionExt extends "Item Substitution"
 
         //Unsupported feature: Deletion on ""Type,No.,Variant Code,Substitute Type,Substitute No.,Substitute Variant Code"(Key)". Please convert manually.
 
-        key(Key1; Type, "No.", "Variant Code", "Substitute Type", "Substitute No.", "Substitute Variant Code")
+        /*key(Key1; Type, "No.", "Variant Code", "Substitute Type", "Substitute No.", "Substitute Variant Code")
         {
-        }
+        }*/
     }
 
 

@@ -147,7 +147,7 @@ tableextension 70093 CapacityLedgerEntryExt extends "Capacity Ledger Entry"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+          //  TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -175,7 +175,7 @@ tableextension 70093 CapacityLedgerEntryExt extends "Capacity Ledger Entry"
 
         //Unsupported feature: Deletion on ""Type,No.,Work Shift Code,Item No.,Posting Date"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+      /*  key(Key1; "Entry No.")
         {
         }
         key(Key2; "Document No.", "Posting Date")
@@ -198,7 +198,7 @@ tableextension 70093 CapacityLedgerEntryExt extends "Capacity Ledger Entry"
         key(Key7; "Order No.", "Order Line No.", "Routing No.", "Routing Reference No.", "Operation No.", "Last Output Line")
         {
             SumIndexFields = "Actual Run Time", "Output Quantity";
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

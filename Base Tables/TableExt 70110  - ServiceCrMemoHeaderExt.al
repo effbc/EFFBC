@@ -227,7 +227,7 @@ tableextension 70110 ServiceCrMemoHeaderExt extends "Service Cr.Memo Header"
             CaptionML = ENU = 'Structure',
                         ENN = 'Structure';
             DataClassification = ToBeClassified;
-            TableRelation = "Structure Header";
+          //  TableRelation = "Structure Header";
         }
         field(16501; Trading; Boolean)
         {
@@ -240,7 +240,7 @@ tableextension 70110 ServiceCrMemoHeaderExt extends "Service Cr.Memo Header"
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+           // TableRelation = "Excise Bus. Posting Group";
         }
         field(16503; "Amount to Customer"; Decimal)
         {
@@ -264,8 +264,8 @@ tableextension 70110 ServiceCrMemoHeaderExt extends "Service Cr.Memo Header"
             CaptionML = ENU = 'Form Code',
                         ENN = 'Form Code';
             DataClassification = ToBeClassified;
-            TableRelation = "State Forms"."Form Code" WHERE(State = FIELD(State),
-                                                             "Transit Document" = CONST(false));
+        /*    TableRelation = "State Forms"."Form Code" WHERE(State = FIELD(State),
+                                                             "Transit Document" = CONST(false));*/
         }
         field(16506; "Form No."; Code[10])
         {
@@ -474,7 +474,7 @@ tableextension 70110 ServiceCrMemoHeaderExt extends "Service Cr.Memo Header"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+          //  TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -502,7 +502,7 @@ tableextension 70110 ServiceCrMemoHeaderExt extends "Service Cr.Memo Header"
 
         //Unsupported feature: Deletion on ""Posting Date"(Key)". Please convert manually.
 
-        key(Key1; "No.")
+       /* key(Key1; "No.")
         {
         }
         key(Key2; "Customer No.")
@@ -519,7 +519,7 @@ tableextension 70110 ServiceCrMemoHeaderExt extends "Service Cr.Memo Header"
         }
         key(Key6; "Posting Date")
         {
-        }
+        }*/
     }
 
 

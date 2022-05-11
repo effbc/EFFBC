@@ -22,9 +22,9 @@ tableextension 70176 JobPostingBufferExt extends "Job Posting Buffer"
 
         //Unsupported feature: Deletion on ""Job No.,Entry Type,Posting Group Type,No.,Variant Code,Posting Group,Gen. Bus. Posting Group,Gen. Prod. Posting Group,Unit of Measure Code,Work Type Code,Dimension Entry No."(Key)". Please convert manually.
 
-        key(Key1; "Job No.", "Entry Type", "Posting Group Type", "No.", "Variant Code", "Posting Group", "Gen. Bus. Posting Group", "Gen. Prod. Posting Group", "Unit of Measure Code", "Work Type Code", "Dimension Entry No.")
+       /* key(Key1; "Job No.", "Entry Type", "Posting Group Type", "No.", "Variant Code", "Posting Group", "Gen. Bus. Posting Group", "Gen. Prod. Posting Group", "Unit of Measure Code", "Work Type Code", "Dimension Entry No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

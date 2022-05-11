@@ -76,7 +76,7 @@ tableextension 70204 ReversalEntryExt extends "Reversal Entry"
 
         //Unsupported feature: Deletion on ""Transaction No."(Key)". Please convert manually.
 
-        key(Key1; "Line No.")
+/*        key(Key1; "Line No.")
         {
         }
         key(Key2; "Entry Type")
@@ -90,7 +90,7 @@ tableextension 70204 ReversalEntryExt extends "Reversal Entry"
         }
         key(Key5; "Transaction No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

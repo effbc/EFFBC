@@ -124,7 +124,7 @@ tableextension 70179 NoSeriesLineExt extends "No. Series Line"
 
         //Unsupported feature: Deletion on ""Starting No."(Key)". Please convert manually.
 
-        key(Key1; "Series Code", "Line No.")
+/*key(Key1; "Series Code", "Line No.")
         {
         }
         key(Key2; "Series Code", "Starting Date", "Starting No.")
@@ -132,7 +132,7 @@ tableextension 70179 NoSeriesLineExt extends "No. Series Line"
         }
         key(Key3; "Starting No.")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.
