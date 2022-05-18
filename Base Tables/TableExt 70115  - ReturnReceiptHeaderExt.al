@@ -293,14 +293,14 @@ tableextension 70115 ReturnReceiptHeaderExt extends "Return Receipt Header"
             CaptionML = ENU = 'Assessee Code',
                         ENN = 'Assessee Code';
             DataClassification = ToBeClassified;
-            TableRelation = "Assessee Code";
+            //TableRelation = "Assessee Code";
         }
         field(13706; "Excise Bus. Posting Group"; Code[10])
         {
             CaptionML = ENU = 'Excise Bus. Posting Group',
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Excise Bus. Posting Group";
+            //TableRelation = "Excise Bus. Posting Group";
         }
         field(13736; "Bill to Customer State"; Code[10])
         {
@@ -314,8 +314,8 @@ tableextension 70115 ReturnReceiptHeaderExt extends "Return Receipt Header"
             CaptionML = ENU = 'Form Code',
                         ENN = 'Form Code';
             DataClassification = ToBeClassified;
-            TableRelation = "State Forms"."Form Code" WHERE(State = FIELD(State),
-                                                             "Transit Document" = CONST(false));
+            /* TableRelation = "State Forms"."Form Code" WHERE(State = FIELD(State),
+                                                              "Transit Document" = CONST(false));*/
         }
         field(13738; "Form No."; Code[10])
         {
@@ -341,17 +341,17 @@ tableextension 70115 ReturnReceiptHeaderExt extends "Return Receipt Header"
             CaptionML = ENU = 'LC No.',
                         ENN = 'LC No.';
             DataClassification = ToBeClassified;
-            TableRelation = "LC Detail"."No." WHERE("Transaction Type" = CONST(Sale),
-                                                     "Issued To/Received From" = FIELD("Bill-to Customer No."),
-                                                     Closed = CONST(false),
-                                                     Released = CONST(true));
+            /* TableRelation = "LC Detail"."No." WHERE("Transaction Type" = CONST(Sale),
+                                                      "Issued To/Received From" = FIELD("Bill-to Customer No."),
+                                                      Closed = CONST(false),
+                                                      Released = CONST(true));*/
         }
         field(13790; Structure; Code[10])
         {
             CaptionML = ENU = 'Structure',
                         ENN = 'Structure';
             DataClassification = ToBeClassified;
-            TableRelation = "Structure Header";
+            //TableRelation = "Structure Header";
         }
         field(16341; Authorized; Boolean)
         {
@@ -487,7 +487,7 @@ tableextension 70115 ReturnReceiptHeaderExt extends "Return Receipt Header"
             CaptionML = ENU = 'e-Commerce Merchant Id',
                         ENN = 'e-Commerce Merchant Id';
             DataClassification = ToBeClassified;
-            TableRelation = "e-Commerce Merchant Id"."Merchant Id";
+            //TableRelation = "e-Commerce Merchant Id"."Merchant Id";
         }
         field(16610; "GST Bill-to State Code"; Code[10])
         {
@@ -594,7 +594,7 @@ tableextension 70115 ReturnReceiptHeaderExt extends "Return Receipt Header"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -619,21 +619,21 @@ tableextension 70115 ReturnReceiptHeaderExt extends "Return Receipt Header"
 
         //Unsupported feature: Deletion on ""Posting Date"(Key)". Please convert manually.
 
-        key(Key1; "No.")
-        {
-        }
-        key(Key2; "Return Order No.")
-        {
-        }
-        key(Key3; "Sell-to Customer No.", "External Document No.")
-        {
-        }
-        key(Key4; "Bill-to Customer No.")
-        {
-        }
-        key(Key5; "Posting Date")
-        {
-        }
+        /* key(Key1; "No.")
+         {
+         }
+         key(Key2; "Return Order No.")
+         {
+         }
+         key(Key3; "Sell-to Customer No.", "External Document No.")
+         {
+         }
+         key(Key4; "Bill-to Customer No.")
+         {
+         }
+         key(Key5; "Posting Date")
+         {
+         }*/
     }
 
 

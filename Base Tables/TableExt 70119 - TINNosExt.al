@@ -5,9 +5,9 @@ Tableextension 70119 TINNosExt extends "T.I.N. Nos."
 
     CaptionML = ENU = 'T.I.N. Nos.',
                 ENN = 'T.I.N. Nos.';
-    DataCaptionFields = "Code", Description;
-    DrillDownPageID = 13720;
-    LookupPageID = 13720;
+    //DataCaptionFields = "Code", Description;
+    //DrillDownPageID = 13720;
+    //LookupPageID = 13720;
 
     fields
     {
@@ -19,8 +19,8 @@ Tableextension 70119 TINNosExt extends "T.I.N. Nos."
 
             trigger OnValidate();
             begin
-                if StrLen(Code) < 11 then
-                    Error(Text16500);
+                //if StrLen(Code) < 11 then
+                //   Error(Text16500);
             end;
         }
         field(2; Description; Text[30])
@@ -45,12 +45,12 @@ Tableextension 70119 TINNosExt extends "T.I.N. Nos."
 
     fieldgroups
     {
-        fieldgroup(DropDown;"Code",Description)
-        {
-        }
+        /* fieldgroup(DropDown;"Code",Description)
+         {
+         }*/
     }
 
     var
-        Text16500 : TextConst ENU='T.I.N. No. should not be less then 11 characters.',ENN='T.I.N. No. should not be less then 11 characters.';
+        Text16500: TextConst ENU = 'T.I.N. No. should not be less then 11 characters.', ENN = 'T.I.N. No. should not be less then 11 characters.';
 }
 

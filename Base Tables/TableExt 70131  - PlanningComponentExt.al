@@ -643,7 +643,7 @@ tableextension 70131 PlanningComponentExt extends "Planning Component"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            //TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -665,25 +665,26 @@ tableextension 70131 PlanningComponentExt extends "Planning Component"
 
         //Unsupported feature: Deletion on ""Worksheet Template Name,Worksheet Batch Name,Worksheet Line No.,Item No."(Key)". Please convert manually.
 
-        key(Key1; "Worksheet Template Name", "Worksheet Batch Name", "Worksheet Line No.", "Line No.")
-        {
-        }
-        key(Key2; "Item No.", "Variant Code", "Location Code", "Due Date", "Planning Line Origin")
-        {
-            MaintainSIFTIndex = false;
-            SumIndexFields = "Expected Quantity (Base)", "Cost Amount";
-        }
-        key(Key3; "Item No.", "Variant Code", "Location Code", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Planning Line Origin", "Due Date")
-        {
-            Enabled = false;
-            MaintainSIFTIndex = false;
-            MaintainSQLIndex = false;
-            SumIndexFields = "Expected Quantity (Base)", "Cost Amount";
-        }
-        key(Key4; "Worksheet Template Name", "Worksheet Batch Name", "Worksheet Line No.", "Item No.")
-        {
-            MaintainSQLIndex = false;
-        }
+        /*        key(Key1; "Worksheet Template Name", "Worksheet Batch Name", "Worksheet Line No.", "Line No.")
+                {
+                }
+                key(Key2; "Item No.", "Variant Code", "Location Code", "Due Date", "Planning Line Origin")
+                {
+                    MaintainSIFTIndex = false;
+                    SumIndexFields = "Expected Quantity (Base)", "Cost Amount";
+                }
+                key(Key3; "Item No.", "Variant Code", "Location Code", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Planning Line Origin", "Due Date")
+                {
+                    Enabled = false;
+                    MaintainSIFTIndex = false;
+                    MaintainSQLIndex = false;
+                    SumIndexFields = "Expected Quantity (Base)", "Cost Amount";
+                }
+                key(Key4; "Worksheet Template Name", "Worksheet Batch Name", "Worksheet Line No.", "Item No.")
+                {
+                    MaintainSQLIndex = false;
+                }
+                */
     }
 
 

@@ -135,12 +135,13 @@ tableextension 70123 RoutingHeaderExt extends "Routing Header"
 
         //Unsupported feature: Deletion on ""Search Description"(Key)". Please convert manually.
 
-        key(Key1; "No.")
+       /* key(Key1; "No.")
         {
         }
         key(Key2; "Search Description")
         {
         }
+*/
     }
 
 

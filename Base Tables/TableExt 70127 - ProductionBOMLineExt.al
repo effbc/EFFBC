@@ -1142,160 +1142,160 @@ tableextension 70127 ProductionBOMLineExt extends "Production BOM Line"
 
             trigger OnValidate();
             begin
-                Item.Reset;
-                Item.SetFilter(Item."No.", "No.");
-                if Item.FindFirst then begin
-                    if not (Item."Item Category Code" = 'MECH') then begin
+                /* Item.Reset;
+                 Item.SetFilter(Item."No.", "No.");
+                 if Item.FindFirst then begin
+                     if not (Item."Item Category Code" = 'MECH') then begin
 
-                        CODE := '';
-                        single_pos := false; //indicates if only single postion is used(Ex:R1)
-                        range_pos := false;
-                        is_slash := false; //defines a range(Ex:R1-R5)
-                        first_val := ''; //stores the first char(say R)alphabet
-                        sec_val := ''; //stores the second char(say 1)numeric
-                        multi_first_val := '';
-                        multi_sec_val := '';
-                        First_Num := 0;
-                        Second_Num := 0;
-                        IS_SKIPPED := false;
-                        CODE := "Position 4";
-                        Curr_Pos := 1;
-                        if StrLen(CODE) > 2 then begin
-                            if IS_SKIPPED = false then
-                                repeat
-                                    char := CopyStr(CODE, Curr_Pos, 1);
-                                    if char = '-' then begin
-                                        is_slash := true;
-                                        if single_pos = false then
-                                            Error('no comments/space inside range value')
-                                        else
-                                            single_pos := false;
+                         CODE := '';
+                         single_pos := false; //indicates if only single postion is used(Ex:R1)
+                         range_pos := false;
+                         is_slash := false; //defines a range(Ex:R1-R5)
+                         first_val := ''; //stores the first char(say R)alphabet
+                         sec_val := ''; //stores the second char(say 1)numeric
+                         multi_first_val := '';
+                         multi_sec_val := '';
+                         First_Num := 0;
+                         Second_Num := 0;
+                         IS_SKIPPED := false;
+                         CODE := "Position 4";
+                         Curr_Pos := 1;
+                         if StrLen(CODE) > 2 then begin
+                             if IS_SKIPPED = false then
+                                 repeat
+                                     char := CopyStr(CODE, Curr_Pos, 1);
+                                     if char = '-' then begin
+                                         is_slash := true;
+                                         if single_pos = false then
+                                             Error('no comments/space inside range value')
+                                         else
+                                             single_pos := false;
 
-                                    end
-                                    else
-                                        if char = ' ' then begin
-                                            if Curr_Pos = StrLen(CODE) then
-                                                Error('Un-necessary space at the ending');
-                                            char1 := ' ';
-                                            if Curr_Pos - 2 > 0 then
-                                                char1 := CopyStr(CODE, Curr_Pos - 1, 1);
-                                            if (first_val = '') and (char1 <> ')') then
-                                                Error('Un necessary space detected');
+                                     end
+                                     else
+                                         if char = ' ' then begin
+                                             if Curr_Pos = StrLen(CODE) then
+                                                 Error('Un-necessary space at the ending');
+                                             char1 := ' ';
+                                             if Curr_Pos - 2 > 0 then
+                                                 char1 := CopyStr(CODE, Curr_Pos - 1, 1);
+                                             if (first_val = '') and (char1 <> ')') then
+                                                 Error('Un necessary space detected');
 
-                                            if range_pos then begin
-                                                if first_val <> sec_val then
-                                                    Error('ERROR AT 1ST CHAR IN RANGE');
-                                                if multi_first_val <> multi_sec_val then
-                                                    Error('ERROR AT 3RD CHAR IN RANGE');
-                                                if Second_Num <= First_Num then
-                                                    Error('ERROR IN RANGE');
-                                            end
-                                            else
-                                                if is_slash then
-                                                    Error('Un necessary1 "-"');
-                                            single_pos := false;
-                                            range_pos := false;
-                                            is_slash := false;
-                                            first_val := '';
-                                            sec_val := '';
-                                            multi_first_val := '';
-                                            multi_sec_val := '';
-                                            First_Num := 0;
-                                            Second_Num := 0;
-                                        end
-                                        else
-                                            if char = '(' then begin
-                                                if Curr_Pos > 1 then begin
-                                                    char1 := CopyStr(CODE, Curr_Pos - 1, 1);
-                                                    if (char1 <> ' ') and (char1 <> ')') then
-                                                        Error('No space between comment and position-1');
-                                                end
-                                                else
-                                                    first_val := '@';
-                                                Curr_Pos_inner := Curr_Pos + 1;
-                                                No_times_Rep := 1;
-                                                repeat
-                                                    char := CopyStr(CODE, Curr_Pos_inner, 1);
-                                                    if char = ')' then
-                                                        No_times_Rep := No_times_Rep - 1;
-                                                    if char = '(' then
-                                                        No_times_Rep := No_times_Rep + 1;
+                                             if range_pos then begin
+                                                 if first_val <> sec_val then
+                                                     Error('ERROR AT 1ST CHAR IN RANGE');
+                                                 if multi_first_val <> multi_sec_val then
+                                                     Error('ERROR AT 3RD CHAR IN RANGE');
+                                                 if Second_Num <= First_Num then
+                                                     Error('ERROR IN RANGE');
+                                             end
+                                             else
+                                                 if is_slash then
+                                                     Error('Un necessary1 "-"');
+                                             single_pos := false;
+                                             range_pos := false;
+                                             is_slash := false;
+                                             first_val := '';
+                                             sec_val := '';
+                                             multi_first_val := '';
+                                             multi_sec_val := '';
+                                             First_Num := 0;
+                                             Second_Num := 0;
+                                         end
+                                         else
+                                             if char = '(' then begin
+                                                 if Curr_Pos > 1 then begin
+                                                     char1 := CopyStr(CODE, Curr_Pos - 1, 1);
+                                                     if (char1 <> ' ') and (char1 <> ')') then
+                                                         Error('No space between comment and position-1');
+                                                 end
+                                                 else
+                                                     first_val := '@';
+                                                 Curr_Pos_inner := Curr_Pos + 1;
+                                                 No_times_Rep := 1;
+                                                 repeat
+                                                     char := CopyStr(CODE, Curr_Pos_inner, 1);
+                                                     if char = ')' then
+                                                         No_times_Rep := No_times_Rep - 1;
+                                                     if char = '(' then
+                                                         No_times_Rep := No_times_Rep + 1;
 
-                                                    Curr_Pos_inner := Curr_Pos_inner + 1;
+                                                     Curr_Pos_inner := Curr_Pos_inner + 1;
 
-                                                until (No_times_Rep = 0) or (Curr_Pos_inner > StrLen(CODE));
+                                                 until (No_times_Rep = 0) or (Curr_Pos_inner > StrLen(CODE));
 
-                                                if No_times_Rep > 0 then
-                                                    Error('COMMENT NOT PROPERLY ENDED');
-                                                Curr_Pos := Curr_Pos_inner - 1;
-                                                if Curr_Pos_inner < StrLen(CODE) then begin
-                                                    char := CopyStr(CODE, Curr_Pos_inner, 1);
-                                                    if (char <> ' ') and (char <> '(') then
-                                                        Error('No space between comment and position-2');
-                                                end;
-                                            end
-                                            else
-                                                if (char in ['A' .. 'Z']) or (char = '/') then begin
-                                                    if single_pos then begin
-                                                        multi_first_val := multi_first_val + char;
-                                                    end else
-                                                        if range_pos then begin
-                                                            multi_sec_val := multi_sec_val + char;
-                                                        end else
-                                                            if is_slash then begin
-                                                                sec_val := sec_val + char;
-                                                            end else
-                                                                first_val := first_val + char;
-                                                end
-                                                else
-                                                    if (char in ['0' .. '9']) or (char = '.') then begin
-                                                        if first_val = '' then
-                                                            Error('1');
-                                                        //IF multi_first_val <>'' THEN
-                                                        //ERROR('No Numeric in Multi Value');
-                                                        if is_slash then begin
-                                                            range_pos := true;
-                                                            if Evaluate(test_int, char) then begin
-                                                                if Second_Num = 0 then
-                                                                    Second_Num := Second_Num + test_int
-                                                                else
-                                                                    Second_Num := Second_Num * 10 + test_int;
+                                                 if No_times_Rep > 0 then
+                                                     Error('COMMENT NOT PROPERLY ENDED');
+                                                 Curr_Pos := Curr_Pos_inner - 1;
+                                                 if Curr_Pos_inner < StrLen(CODE) then begin
+                                                     char := CopyStr(CODE, Curr_Pos_inner, 1);
+                                                     if (char <> ' ') and (char <> '(') then
+                                                         Error('No space between comment and position-2');
+                                                 end;
+                                             end
+                                             else
+                                                 if (char in ['A' .. 'Z']) or (char = '/') then begin
+                                                     if single_pos then begin
+                                                         multi_first_val := multi_first_val + char;
+                                                     end else
+                                                         if range_pos then begin
+                                                             multi_sec_val := multi_sec_val + char;
+                                                         end else
+                                                             if is_slash then begin
+                                                                 sec_val := sec_val + char;
+                                                             end else
+                                                                 first_val := first_val + char;
+                                                 end
+                                                 else
+                                                     if (char in ['0' .. '9']) or (char = '.') then begin
+                                                         if first_val = '' then
+                                                             Error('1');
+                                                         //IF multi_first_val <>'' THEN
+                                                         //ERROR('No Numeric in Multi Value');
+                                                         if is_slash then begin
+                                                             range_pos := true;
+                                                             if Evaluate(test_int, char) then begin
+                                                                 if Second_Num = 0 then
+                                                                     Second_Num := Second_Num + test_int
+                                                                 else
+                                                                     Second_Num := Second_Num * 10 + test_int;
 
-                                                            end;
-                                                        end
-                                                        else begin
-                                                            if Evaluate(test_int, char) then begin
-                                                                if First_Num = 0 then
-                                                                    First_Num := First_Num + test_int
-                                                                else
-                                                                    First_Num := First_Num * 10 + test_int;
+                                                             end;
+                                                         end
+                                                         else begin
+                                                             if Evaluate(test_int, char) then begin
+                                                                 if First_Num = 0 then
+                                                                     First_Num := First_Num + test_int
+                                                                 else
+                                                                     First_Num := First_Num * 10 + test_int;
 
-                                                            end;
-                                                            single_pos := true;
-                                                            if First_Num = 0 then
-                                                                Error('0 IS NOT A VALID POSITION');
-                                                        end;
-                                                    end
-                                                    else
-                                                        Error('Unknown character');
-                                    Curr_Pos := Curr_Pos + 1;
-                                until Curr_Pos > StrLen(CODE);
-                            if range_pos then begin
-                                if first_val <> sec_val then
-                                    Error('ERROR AT 1ST CHAR IN RANGE');
-                                if multi_first_val <> multi_sec_val then
-                                    Error('ERROR AT 3RD CHAR IN RANGE');
-                                if Second_Num <= First_Num then
-                                    Error('ERROR IN RANGE');
+                                                             end;
+                                                             single_pos := true;
+                                                             if First_Num = 0 then
+                                                                 Error('0 IS NOT A VALID POSITION');
+                                                         end;
+                                                     end
+                                                     else
+                                                         Error('Unknown character');
+                                     Curr_Pos := Curr_Pos + 1;
+                                 until Curr_Pos > StrLen(CODE);
+                             if range_pos then begin
+                                 if first_val <> sec_val then
+                                     Error('ERROR AT 1ST CHAR IN RANGE');
+                                 if multi_first_val <> multi_sec_val then
+                                     Error('ERROR AT 3RD CHAR IN RANGE');
+                                 if Second_Num <= First_Num then
+                                     Error('ERROR IN RANGE');
 
-                                range_pos := false;
-                                is_slash := false;
-                            end;
-                            if is_slash then
-                                Error('UN NECESSARY "-"');
-                        end;
-                    end;
-                end;
+                                 range_pos := false;
+                                 is_slash := false;
+                             end;
+                             if is_slash then
+                                 Error('UN NECESSARY "-"');
+                         end;
+                     end;
+                 end;*/
             end;
         }
         field(60011; "Description 2"; Text[50])
@@ -1347,8 +1347,8 @@ tableextension 70127 ProductionBOMLineExt extends "Production BOM Line"
 
             trigger OnValidate();
             begin
-                if Item.Get("No.") then
-                    "No. of Soldering Points" := Item."No. of Soldering Points" * ("Quantity per" - "Scrap Quantity");
+                /* if Item.Get("No.") then
+                     "No. of Soldering Points" := Item."No. of Soldering Points" * ("Quantity per" - "Scrap Quantity");*/
             end;
         }
         field(60022; "No. of SMD Points"; Decimal)
@@ -1365,8 +1365,8 @@ tableextension 70127 ProductionBOMLineExt extends "Production BOM Line"
 
             trigger OnValidate();
             begin
-                if Item.Get("No.") then
-                    "Storage Temperature" := Item."Storage Temperature";
+                /* if Item.Get("No.") then
+                     "Storage Temperature" := Item."Storage Temperature";*/
             end;
         }
         field(60026; Make; Code[30])
@@ -1416,17 +1416,17 @@ tableextension 70127 ProductionBOMLineExt extends "Production BOM Line"
 
 
         //Unsupported feature: Deletion on ""Type,No."(Key)". Please convert manually.
-
-        key(Key1; "Production BOM No.", "Version Code", "Line No.")
-        {
-            SumIndexFields = "Manufacturing Cost", "Tot Avg Cost";
-        }
-        key(Key2; Type, "No.")
-        {
-        }
-        key(Key3; "Tot Avg Cost")
-        {
-        }
+        /*
+                key(Key1; "Production BOM No.", "Version Code", "Line No.")
+                {
+                    SumIndexFields = "Manufacturing Cost", "Tot Avg Cost";
+                }
+                key(Key2; Type, "No.")
+                {
+                }
+                key(Key3; "Tot Avg Cost")
+                {
+                }*/
     }
 
 
@@ -1901,10 +1901,10 @@ tableextension 70127 ProductionBOMLineExt extends "Production BOM Line"
         SMTP_MAIL: Codeunit "SMTP Mail";
         SQLQuery: Text[1000];
         RowCount: Integer;
-        SQLConnection: Automation "'{2A75196C-D9EB-4129-B803-931327F72D5C}' 2.8:'{00000514-0000-0010-8000-00AA006D2EA4}':''{2A75196C-D9EB-4129-B803-931327F72D5C}' 2.8'.Connection";
+        //SQLConnection: Automation "'{2A75196C-D9EB-4129-B803-931327F72D5C}' 2.8:'{00000514-0000-0010-8000-00AA006D2EA4}':''{2A75196C-D9EB-4129-B803-931327F72D5C}' 2.8'.Connection";
         SQLQuery1: Text;
         ConnectionOpen: Integer;
-        RecordSet: Automation "'{2A75196C-D9EB-4129-B803-931327F72D5C}' 2.8:'{00000535-0000-0010-8000-00AA006D2EA4}':''{2A75196C-D9EB-4129-B803-931327F72D5C}' 2.8'.Recordset";
+        //RecordSet: Automation "'{2A75196C-D9EB-4129-B803-931327F72D5C}' 2.8:'{00000535-0000-0010-8000-00AA006D2EA4}':''{2A75196C-D9EB-4129-B803-931327F72D5C}' 2.8'.Recordset";
         LastdateM: Date;
         Day: Integer;
         Month: Integer;

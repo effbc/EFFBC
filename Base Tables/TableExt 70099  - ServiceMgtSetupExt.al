@@ -137,9 +137,9 @@ tableextension 70099 ServiceMgtSetupExt extends "Service Mgt. Setup"
 
         //Unsupported feature: Deletion on ""Primary Key"(Key)". Please convert manually.
 
-        key(Key1; "Primary Key")
-        {
-        }
+        /* key(KeyPrimary Key")
+         {
+         }*/
     }
 
 

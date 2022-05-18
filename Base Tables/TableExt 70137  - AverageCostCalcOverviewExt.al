@@ -19,15 +19,15 @@ tableextension 70137 AverageCostCalcOverviewExt extends "Average Cost Calc. Over
 
         //Unsupported feature: Deletion on ""Item Ledger Entry No."(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
-        {
-        }
-        key(Key2; "Attached to Valuation Date", "Attached to Entry No.", Type)
-        {
-        }
-        key(Key3; "Item Ledger Entry No.")
-        {
-        }
+        /* key(Key1; "Entry No.")
+         {
+         }
+         key(Key2; "Attached to Valuation Date", "Attached to Entry No.", Type)
+         {
+         }
+         key(Key3; "Item Ledger Entry No.")
+         {
+         }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

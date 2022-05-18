@@ -46,16 +46,16 @@ tableextension 70133 AnalysisViewEntryExt extends "Analysis View Entry"
 
         //Unsupported feature: Deletion on ""Analysis View Code,Account No.,Account Source,Dimension 1 Value Code,Dimension 2 Value Code,Dimension 3 Value Code,Dimension 4 Value Code,Business Unit Code,Posting Date,Cash Flow Forecast No."(Key)". Please convert manually.
 
-        key(Key1; "Analysis View Code", "Account No.", "Account Source", "Dimension 1 Value Code", "Dimension 2 Value Code", "Dimension 3 Value Code", "Dimension 4 Value Code", "Business Unit Code", "Posting Date", "Entry No.", "Cash Flow Forecast No.")
-        {
-        }
-        key(Key2; "Analysis View Code", "Account No.", "Account Source", "Dimension 1 Value Code", "Dimension 2 Value Code", "Dimension 3 Value Code", "Dimension 4 Value Code", "Business Unit Code", "Posting Date", "Cash Flow Forecast No.")
-        {
-            SumIndexFields = Amount, "Debit Amount", "Credit Amount", "Add.-Curr. Amount", "Add.-Curr. Debit Amount", "Add.-Curr. Credit Amount";
-        }
-        key(Key3; "Posting Date")
-        {
-        }
+        /* key(Key1; "Analysis View Code", "Account No.", "Account Source", "Dimension 1 Value Code", "Dimension 2 Value Code", "Dimension 3 Value Code", "Dimension 4 Value Code", "Business Unit Code", "Posting Date", "Entry No.", "Cash Flow Forecast No.")
+         {
+         }
+         key(Key2; "Analysis View Code", "Account No.", "Account Source", "Dimension 1 Value Code", "Dimension 2 Value Code", "Dimension 3 Value Code", "Dimension 4 Value Code", "Business Unit Code", "Posting Date", "Cash Flow Forecast No.")
+         {
+             SumIndexFields = Amount, "Debit Amount", "Credit Amount", "Add.-Curr. Amount", "Add.-Curr. Debit Amount", "Add.-Curr. Credit Amount";
+         }
+         key(Key3; "Posting Date")
+         {
+         }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

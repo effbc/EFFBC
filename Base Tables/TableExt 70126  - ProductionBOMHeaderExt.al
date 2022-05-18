@@ -616,8 +616,8 @@ tableextension 70126 ProductionBOMHeaderExt extends "Production BOM Header"
         field(60026; Configuration; Code[50])
         {
             Description = 'Added by sujani for Configuration tracking';
-            TableRelation = "Product Configurations Master".Configuration;
-            ValidateTableRelation = false;
+            // TableRelation = "Product Configurations Master".Configuration;
+            // ValidateTableRelation = false;
         }
         field(60027; "BOM Category"; Option)
         {
@@ -648,13 +648,13 @@ tableextension 70126 ProductionBOMHeaderExt extends "Production BOM Header"
 
 
         //Unsupported feature: Deletion on ""Search Name"(Key)". Please convert manually.
-
-        key(Key1; "No.")
-        {
-        }
-        key(Key2; "Search Name")
-        {
-        }
+        /*keKey1; "No.")
+                {
+                }
+                key(Key2; "Search Name")
+                {
+                }
+                */
     }
 
 
@@ -980,9 +980,9 @@ tableextension 70126 ProductionBOMHeaderExt extends "Production BOM Header"
         PBMV: Record "Production BOM Version";
         Version1: Code[30];
         SMTPSETUP: Record "SMTP SETUP";
-        objEmailConf: Automation "'{CD000000-8B95-11D1-82DB-00C04FB1625D}' 1.0:'{CD000002-8B95-11D1-82DB-00C04FB1625D}':''{CD000000-8B95-11D1-82DB-00C04FB1625D}' 1.0'.Configuration";
-        objEmail: Automation "'{CD000000-8B95-11D1-82DB-00C04FB1625D}' 1.0:'{CD000001-8B95-11D1-82DB-00C04FB1625D}':''{CD000000-8B95-11D1-82DB-00C04FB1625D}' 1.0'.Message";
-        flds: Automation "'{00000205-0000-0010-8000-00AA006D2EA4}' 2.5:'{00000564-0000-0010-8000-00AA006D2EA4}':''{00000205-0000-0010-8000-00AA006D2EA4}' 2.5'.Fields";
+        // objEmailConf: Automation "'{CD000000-8B95-11D1-82DB-00C04FB1625D}' 1.0:'{CD000002-8B95-11D1-82DB-00C04FB1625D}':''{CD000000-8B95-11D1-82DB-00C04FB1625D}' 1.0'.Configuration";
+        // objEmail: Automation "'{CD000000-8B95-11D1-82DB-00C04FB1625D}' 1.0:'{CD000001-8B95-11D1-82DB-00C04FB1625D}':''{CD000000-8B95-11D1-82DB-00C04FB1625D}' 1.0'.Message";
+        // flds: Automation "'{00000205-0000-0010-8000-00AA006D2EA4}' 2.5:'{00000564-0000-0010-8000-00AA006D2EA4}':''{00000205-0000-0010-8000-00AA006D2EA4}' 2.5'.Fields";
         fld: Integer;
         Mail_Body: array[5] of Text[30];
         Attachment: Text[1000];
@@ -990,7 +990,7 @@ tableextension 70126 ProductionBOMHeaderExt extends "Production BOM Header"
         from_Mail: Text[1000];
         to_mail: Text[1000];
         Mail_Subject: Text[1000];
-        SMTP_MAIL: Codeunit "SMTP Mail";
+        //SMTP_MAIL: Codeunit "SMTP Mail";
         Body: Text[1000];
         user: Record User;
         NAME: Text[100];

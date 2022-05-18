@@ -106,12 +106,12 @@ tableextension 70128 ProductionBOMVersionExt extends "Production BOM Version"
 
         //Unsupported feature: Deletion on ""Production BOM No.,Starting Date"(Key)". Please convert manually.
 
-        key(Key1; "Production BOM No.", "Version Code")
-        {
-        }
-        key(Key2; "Production BOM No.", "Starting Date")
-        {
-        }
+        /*        key(Key1; "Production BOM No.", "Version Code")
+                {
+                }
+                key(Key2; "Production BOM No.", "Starting Date")
+                {
+                }*/
     }
 
 

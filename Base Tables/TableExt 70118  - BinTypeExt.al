@@ -36,9 +36,9 @@ tableextension 70118 BinTypeExt extends "Bin Type"
 
         //Unsupported feature: Deletion on "Code(Key)". Please convert manually.
 
-        key(Key1; "Code", "Item No")
-        {
-        }
+        /* key(Key1; "Code", "Item No")
+         {
+         }*/
     }
 
 

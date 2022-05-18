@@ -98,7 +98,7 @@ tableextension 70135 ApprovalEntryExt extends "Approval Entry"
 
         //Unsupported feature: Deletion on ""Table ID,Document Type,Document No.,Date-Time Sent for Approval"(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+        /*key(Key1; "Entry No.")
         {
         }
         key(Key2; "Record ID to Approve", "Workflow Step Instance ID", "Sequence No.")
@@ -121,7 +121,7 @@ tableextension 70135 ApprovalEntryExt extends "Approval Entry"
         }
         key(Key8; "Table ID", "Document Type", "Document No.", "Date-Time Sent for Approval")
         {
-        }
+        }*/
     }
 
 

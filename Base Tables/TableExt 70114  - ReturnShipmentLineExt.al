@@ -152,7 +152,7 @@ tableextension 70114 ReturnShipmentLineExt extends "Return Shipment Line"
 
             trigger OnLookup();
             var
-                StateForm: Record "State Forms";
+            //StateForm: Record "State Forms";
             begin
             end;
         }
@@ -187,7 +187,7 @@ tableextension 70114 ReturnShipmentLineExt extends "Return Shipment Line"
                         ENN = 'Excise Bus. Posting Group';
             DataClassification = ToBeClassified;
             Editable = false;
-            TableRelation = "Excise Bus. Posting Group";
+            //TableRelation = "Excise Bus. Posting Group";
         }
         field(13714; "Excise Prod. Posting Group"; Code[10])
         {
@@ -195,7 +195,7 @@ tableextension 70114 ReturnShipmentLineExt extends "Return Shipment Line"
                         ENN = 'Excise Prod. Posting Group';
             DataClassification = ToBeClassified;
             Editable = false;
-            TableRelation = "Excise Prod. Posting Group";
+            //TableRelation = "Excise Prod. Posting Group";
         }
         field(13717; "Amount Including Excise"; Decimal)
         {
@@ -358,7 +358,7 @@ tableextension 70114 ReturnShipmentLineExt extends "Return Shipment Line"
             CaptionML = ENU = 'Service Tax Group',
                         ENN = 'Service Tax Group';
             DataClassification = ToBeClassified;
-            TableRelation = "Service Tax Groups".Code;
+            // TableRelation = "Service Tax Groups".Code;
 
             trigger OnValidate();
             var
@@ -583,7 +583,7 @@ tableextension 70114 ReturnShipmentLineExt extends "Return Shipment Line"
             CaptionML = ENU = 'GST Group Code',
                         ENN = 'GST Group Code';
             DataClassification = ToBeClassified;
-            TableRelation = "GST Group";
+            // TableRelation = "GST Group";
         }
         field(16602; "GST Group Type"; Option)
         {
@@ -694,7 +694,7 @@ tableextension 70114 ReturnShipmentLineExt extends "Return Shipment Line"
         {
             Description = 'added  by sujani for Dimension issue clearance (B2B Assistance)';
             Editable = false;
-            TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
+            // TableRelation = "Dimension Set Entry Backup2"."Dimension Set ID" WHERE("Dimension Set ID" = FIELD("OLD Dim Set ID"));
 
             trigger OnLookup();
             begin
@@ -719,21 +719,21 @@ tableextension 70114 ReturnShipmentLineExt extends "Return Shipment Line"
 
         //Unsupported feature: Deletion on ""Buy-from Vendor No."(Key)". Please convert manually.
 
-        key(Key1; "Document No.", "Line No.")
-        {
-        }
-        key(Key2; "Return Order No.", "Return Order Line No.")
-        {
-        }
-        key(Key3; "Blanket Order No.", "Blanket Order Line No.")
-        {
-        }
-        key(Key4; "Pay-to Vendor No.")
-        {
-        }
-        key(Key5; "Buy-from Vendor No.")
-        {
-        }
+        /* key(Key1; "Document No.", "Line No.")
+         {
+         }
+         key(Key2; "Return Order No.", "Return Order Line No.")
+         {
+         }
+         key(Key3; "Blanket Order No.", "Blanket Order Line No.")
+         {
+         }
+         key(Key4; "Pay-to Vendor No.")
+         {
+         }
+         key(Key5; "Buy-from Vendor No.")
+         {
+         }*/
     }
 
 

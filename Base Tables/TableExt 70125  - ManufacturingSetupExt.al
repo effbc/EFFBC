@@ -79,7 +79,7 @@ tableextension 70125 ManufacturingSetupExt extends "Manufacturing Setup"
 
         //Unsupported feature: Deletion on ""Primary Key"(Key)". Please convert manually.
 
-        key(Key1; "Primary Key")
+        key(Pri1; "Primary Key")
         {
         }
     }

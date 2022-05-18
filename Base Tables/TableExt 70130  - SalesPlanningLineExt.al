@@ -53,12 +53,12 @@ tableextension 70130 SalesPlanningLineExt extends "Sales Planning Line"
 
         //Unsupported feature: Deletion on ""Low-Level Code"(Key)". Please convert manually.
 
-        key(Key1; "Sales Order No.", "Sales Order Line No.")
+        /*key(Key1; "Sales Order No.", "Sales Order Line No.")
         {
         }
         key(Key2; "Low-Level Code")
         {
-        }
+        }*/
     }
 
     //Unsupported feature: PropertyChange. Please convert manually.

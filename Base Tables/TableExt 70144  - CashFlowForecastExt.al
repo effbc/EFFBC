@@ -73,9 +73,9 @@ tableextension 70144 CashFlowForecastExt extends "Cash Flow Forecast"
 
         //Unsupported feature: Deletion on ""No."(Key)". Please convert manually.
 
-        key(Key1; "No.")
+        /*key(Key1; "No.")
         {
-        }
+        }*/
     }
 
 

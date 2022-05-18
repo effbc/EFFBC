@@ -660,18 +660,18 @@ tableextension 70120 WorkCenterExt extends "Work Center"
 
         //Unsupported feature: Deletion on ""Subcontractor No."(Key)". Please convert manually.
 
-        key(Key1; "No.")
-        {
-        }
-        key(Key2; "Search Name")
-        {
-        }
-        key(Key3; "Work Center Group Code")
-        {
-        }
-        key(Key4; "Subcontractor No.")
-        {
-        }
+        /* key(Key1; "No.")
+         {
+         }
+         key(Key2; "Search Name")
+         {
+         }
+         key(Key3; "Work Center Group Code")
+         {
+         }
+         key(Key4; "Subcontractor No.")
+         {
+         }*/
     }
 
 

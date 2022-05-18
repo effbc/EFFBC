@@ -19,7 +19,7 @@ tableextension 70129 WhereUsedLineExt extends "Where-Used Line"
 
         //Unsupported feature: Deletion on ""Entry No."(Key)". Please convert manually.
 
-        key(Key1; "Entry No.")
+        key(Ent1; "Entry No.")
         {
         }
     }

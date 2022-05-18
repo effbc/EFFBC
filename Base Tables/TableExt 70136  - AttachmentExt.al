@@ -19,12 +19,12 @@ tableextension 70136 AttachmentExt extends Attachment
 
         //Unsupported feature: Deletion on ""Email Message Checksum"(Key)". Please convert manually.
 
-        key(Key1; "No.")
-        {
-        }
-        key(Key2; "Email Message Checksum")
-        {
-        }
+        /* key(Key1; "No.")
+         {
+         }
+         key(Key2; "Email Message Checksum")
+         {
+         }*/
     }
 
 

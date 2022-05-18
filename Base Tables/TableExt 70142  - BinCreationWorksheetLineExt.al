@@ -362,12 +362,12 @@ tableextension 70142 BinCreationWorksheetLineExt extends "Bin Creation Worksheet
 
         //Unsupported feature: Deletion on ""Location Code,Zone Code,Bin Code,Item No.,Variant Code"(Key)". Please convert manually.
 
-        key(Key1; "Worksheet Template Name", Name, "Location Code", "Line No.")
-        {
-        }
-        key(Key2; "Location Code", "Zone Code", "Bin Code", "Item No.", "Variant Code")
-        {
-        }
+        /* key(Key1; "Worksheet Template Name", Name, "Location Code", "Line No.")
+         {
+         }
+         key(Key2; "Location Code", "Zone Code", "Bin Code", "Item No.", "Variant Code")
+         {
+         }*/
     }
 
 
