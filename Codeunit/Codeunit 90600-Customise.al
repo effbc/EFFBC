@@ -344,7 +344,7 @@ codeunit 90600 Customise
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnBeforePostOutput', '', false, false)]
     local procedure OnBeforePostOutput(var ItemJnlLine: Record "Item Journal Line")
     var
-        "--QC--"1102154004 : Integer;
+        "--QC--": Integer;
         InspectJnlLine: Codeunit 33000253;
         InspectHeader: Record 33000269;
         ProdOrderRtngLine2: Record 5409;
@@ -478,6 +478,7 @@ codeunit 90600 Customise
     PROCEDURE ExcludeQualityItems(VAR ItemLedgEntry2: Record 32; Inbound: Boolean);
     VAR
         AcceptedQty: Decimal;
+        ItemJnlLine: Record "Item Journal Line";
     BEGIN
 
         IF ItemLedgEntry2.FINDSET THEN
@@ -665,50 +666,48 @@ codeunit 90600 Customise
 
 
     //<<Codeunit40opn>>
-    /*[EventSubscriber(ObjectType::Codeunit, Codeunit::LogInManagement, 'OnBeforeCompanyOpen', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::LogInManagement, 'OnBeforeCompanyOpen', '', false, false)]
     local procedure OnBeforeCompanyOpen()
-      var
+    var
         WSHShell: Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{72C24DD5-D70A-438B-8A42-98424B88AFB8}:'Windows Script Host Object Model'.WshShell";
-         WshEnvironment : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{F48229AF-E28C-42B5-BB92-E114E62BDD54}:'Windows Script Host Object Model'.WshEnvironment";
-         EnvironmentPath: Text;
-         ActiveSession : Record 2000000110;
-         Asteric : Label 'ENU=''';
-       begin
-                  //>>Pranavi
-         //IF NOT (USERID IN['EFFTRONICS\VIJAYA','ERPSERVER\ADMINISTRATOR']) THEN
-         //BEGIN*
-         IF NOT (USERID IN['ERPSERVER\ADMINISTRATOR','EFFTRONICS\TPRIYANKA','EFFTRONICS\ANILKUMAR','EFFTRONICS\20TE106','EFFTRONICS\DURGAMAHESWARI','EFFTRONICS\20TE128','EFFTRONICS\GRAVI','EFFTRONICS\20TE099']) THEN
-         BEGIN
-           IF (CURRENTCLIENTTYPE = CLIENTTYPE::Windows) THEN
-           BEGIN
-             IF /ISCLEAR(WSHShell) THEN
+        WshEnvironment: Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{F48229AF-E28C-42B5-BB92-E114E62BDD54}:'Windows Script Host Object Model'.WshEnvironment";
+        EnvironmentPath: Text;
+        ActiveSession: Record 2000000110;
+        Asteric: Label 'ENU=''';
+    begin
+        //>>Pranavi
+        //IF NOT (USERID IN['EFFTRONICS\VIJAYA','ERPSERVER\ADMINISTRATOR']) THEN
+        //BEGIN*
+        IF NOT (USERID IN ['ERPSERVER\ADMINISTRATOR', 'EFFTRONICS\TPRIYANKA', 'EFFTRONICS\ANILKUMAR', 'EFFTRONICS\20TE106', 'EFFTRONICS\DURGAMAHESWARI', 'EFFTRONICS\20TE128', 'EFFTRONICS\GRAVI', 'EFFTRONICS\20TE099']) THEN BEGIN
+            IF (CURRENTCLIENTTYPE = CLIENTTYPE::Windows) THEN BEGIN
+                IF /ISCLEAR(WSHShell) THEN
                //CREATE(WSHShell,FALSE,TRUE);
-             EnvironmentPath:='Process';
-            WshEnvironment := WSHShell.Environment(EnvironmentPath);
-             EnvironmentPath := Asteric+'@'+UPPERCASE(WshEnvironment.Item('ComputerName'))+'*'+Asteric;
-             IF STRLEN(EnvironmentPath) > 3 THEN
-             BEGIN
-               ActiveSession.RESET;
-               ActiveSession.SETRANGE("User ID",USERID);
-               ActiveSession.SETRANGE("Client Type",ActiveSession."Client Type"::"Windows Client");
-               ActiveSession.SETFILTER("Client Computer Name",EnvironmentPath);
-               ActiveSession.SETFILTER("Session ID",'<>%1',SESSIONID);
-               IF ActiveSession.COUNT > 0 THEN
-                 ERROR('You are Already Logged-In!');
-             END;
-           END ELSE IF CURRENTCLIENTTYPE = CLIENTTYPE::Web THEN BEGIN
-             ActiveSession.RESET;
-             ActiveSession.SETRANGE("User ID",USERID);
-             ActiveSession.SETRANGE("Client Type",ActiveSession."Client Type"::"Web Client");
-             ActiveSession.SETFILTER("Session ID",'<>%1',SESSIONID);
-             IF ActiveSession.COUNT > 0 THEN
-               ERROR('You are Already Logged-In!');
-           END;
+             EnvironmentPath := 'Process';
+                WshEnvironment := WSHShell.Environment(EnvironmentPath);
+                EnvironmentPath := Asteric + '@' + UPPERCASE(WshEnvironment.Item('ComputerName')) + '*' + Asteric;
+                IF STRLEN(EnvironmentPath) > 3 THEN BEGIN
+                    ActiveSession.RESET;
+                    ActiveSession.SETRANGE("User ID", USERID);
+                    ActiveSession.SETRANGE("Client Type", ActiveSession."Client Type"::"Windows Client");
+                    ActiveSession.SETFILTER("Client Computer Name", EnvironmentPath);
+                    ActiveSession.SETFILTER("Session ID", '<>%1', SESSIONID);
+                    IF ActiveSession.COUNT > 0 THEN
+                        ERROR('You are Already Logged-In!');
+                END;
+            END ELSE
+                IF CURRENTCLIENTTYPE = CLIENTTYPE::Web THEN BEGIN
+                    ActiveSession.RESET;
+                    ActiveSession.SETRANGE("User ID", USERID);
+                    ActiveSession.SETRANGE("Client Type", ActiveSession."Client Type"::"Web Client");
+                    ActiveSession.SETFILTER("Session ID", '<>%1', SESSIONID);
+                    IF ActiveSession.COUNT > 0 THEN
+                        ERROR('You are Already Logged-In!');
+                END;
 
-          //ERROR(USERID+'Temperarily ERP access is denied by ERP Team.\Please contact ERP Team!');
-         END;
-         //<<Pranavi
-       end;*/
+            //ERROR(USERID+'Temperarily ERP access is denied by ERP Team.\Please contact ERP Team!');
+        END;
+        //<<Pranavi
+    end;
     //<<Codeunit40clos<<
 
 
@@ -770,8 +769,8 @@ codeunit 90600 Customise
             Selection := STRMENU(Text000, 3);
             IF Selection = 0 THEN
                 EXIT;
-            Ship := Selection IN [1, 3];
-            Invoice := Selection IN [2, 3];
+            SalesHeader.Ship := Selection IN [1, 3];
+            SalesHeader.Invoice := Selection IN [2, 3];
         END;
     end;
     //<<Codeunit81clos<<
@@ -1277,6 +1276,7 @@ codeunit 90600 Customise
     PROCEDURE QualityCheckInspect();
     VAR
         PurchRcptLine3: Record 121;
+        //PurchRcptLine: Record 121;
         TotalQty: Decimal;
     BEGIN
         IF PurchLine."Quality Before Receipt" THEN BEGIN
@@ -1434,214 +1434,214 @@ codeunit 90600 Customise
     //<<Codeunit90clos<<
 
     //<<Codeunit90opn>>
-    /*  [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnCheckExternalDocumentNumberOnAfterSetFilters', '', false, false)]
-      local procedure OnCheckExternalDocumentNumberOnAfterSetFilters(var VendLedgEntry: Record "Vendor Ledger Entry"; PurchaseHeader: Record "Purchase Header")
-      begin
-          VendLedgEntry.SETRANGE(VendLedgEntry."Posting Date", DMY2DATE(1, 4, FIN_YEAR), DMY2DATE(31, 3, FIN_YEAR + 1));//EFFUPG
-      end;
-      //<<Codeunit87clos<<
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnCheckExternalDocumentNumberOnAfterSetFilters', '', false, false)]
+    local procedure OnCheckExternalDocumentNumberOnAfterSetFilters(var VendLedgEntry: Record "Vendor Ledger Entry"; PurchaseHeader: Record "Purchase Header")
+    begin
+        VendLedgEntry.SETRANGE(VendLedgEntry."Posting Date", DMY2DATE(1, 4, FIN_YEAR), DMY2DATE(31, 3, FIN_YEAR + 1));//EFFUPG
+    end;
+    //<<Codeunit87clos<<
 
-      //<<Codeunit86opn>>
-      PROCEDURE BOI_AlertMail();
-      VAR
-          IH: Record 60024;
-          "Mail-Id": Record 2000000120;
-          MIH: Record 50001;
-          MIL: Record 50002;
-          Count: Integer;
-      BEGIN
-          // Created by Rakesh on 29-Nov-14 for Mail code for Alerting BOI inward
-          Item.RESET;
-          Item.SETFILTER(Item."No.", PurchLine."No.");
-          IF Item.FINDFIRST THEN BEGIN
-              IF (PurchHeader."Sale Order No" <> '') THEN BEGIN
-            //changes by Ahamed on 01-DEC-14
-           { mail_to := 'sales@efftronics.com,padmaja@efftronics.com,vsngeetha@efftronics.com,qainward@efftronics.com,purchase@efftronics.com,';
-                  mail_to := mail_to + 'pmurali@efftronics.com,prasanthi@efftronics.com,erp@efftronics.com,pmsubhani@efftronics.com,cuspm@efftronics.com,bharat@efftronics.com,dineel@efftronics.com';
-                  mail_from := 'erp@efftronics.com';
-                  subject := 'Reg: Bought out Item - ' + PurchLine.Description + ' inwarded';
-                  body := '';
+    //<<Codeunit86opn>>
+    /* PROCEDURE BOI_AlertMail();
+     VAR
+         IH: Record 60024;
+         "Mail-Id": Record 2000000120;
+         MIH: Record 50001;
+         MIL: Record 50002;
+         Count: Integer;
+     BEGIN
+         // Created by Rakesh on 29-Nov-14 for Mail code for Alerting BOI inward
+         Item.RESET;
+         Item.SETFILTER(Item."No.", PurchLine."No.");
+         IF Item.FINDFIRST THEN BEGIN
+             IF (PurchHeader."Sale Order No" <> '') THEN BEGIN
+           //changes by Ahamed on 01-DEC-14
+          { mail_to := 'sales@efftronics.com,padmaja@efftronics.com,vsngeetha@efftronics.com,qainward@efftronics.com,purchase@efftronics.com,';
+                 mail_to := mail_to + 'pmurali@efftronics.com,prasanthi@efftronics.com,erp@efftronics.com,pmsubhani@efftronics.com,cuspm@efftronics.com,bharat@efftronics.com,dineel@efftronics.com';
+                 mail_from := 'erp@efftronics.com';
+                 subject := 'Reg: Bought out Item - ' + PurchLine.Description + ' inwarded';
+                 body := '';
 
-                  SMTP_mail.CreateMessage('ERP', mail_from, mail_to, subject, body, TRUE);
-                  SMTP_mail.AppendBody('<html><head><style> divone{background-color: white; width: 700px; padding: 20px; border-style:solid ; border-color:#666699;  margin: 20px;} </style></head>');
-                  SMTP_mail.AppendBody('<body><div style="border-color:#666699;  margin: 20px; border-width:15px;   border-style:solid; padding: 20px; width: 600px;"><label><font size="6">Bought Out Item Inwarded</font></label>');
-                  SMTP_mail.AppendBody('<hr style=solid; color= #3333CC>');
-                  SMTP_mail.AppendBody('<h>Dear Sir/Madam,</h><br>');
-                  SMTP_mail.AppendBody('<P> BOUT Item Status Details </P>');
-                  //IF (PurchHeader."No." = PurchLine."Document No.")
-                  //BEGIN
-
-                  SMTP_mail.AppendBody('<table border="1" style="border-collapse:collapse; width:100%; font-size:10pt;"><tr><td width="40%"><b> Item Description </b> </td><td>' + PurchLine.Description + '</td></tr>');
-                  SMTP_mail.AppendBody('<tr><td><b> Item Number </b> </td><td>' + ItemJnlLine."Item No." + '</td></tr>');
-                  SMTP_mail.AppendBody('<tr><td><b>Purchase Order No </b>    </td><td>' + PurchHeader."No." + '</td></tr>');
-                  SMTP_mail.AppendBody('<tr><td><b>Sale Order No    </b> </td><td>' + PurchHeader."Sale Order No" + '</td></tr>');
-                  salesheader.RESET;
-                  salesheader.SETFILTER(salesheader."No.", PurchHeader."Sale Order No");
-                  IF salesheader.FINDFIRST THEN BEGIN
-                      SMTP_mail.AppendBody('<tr><td><b>Customer Name   </b> </td><td>' + salesheader."Sell-to Customer Name" + '</td></tr>');
-                  END;
-                  // added by vishnu Priya for the Schedule line number Items addition on 05-Sept-2018
-                  /*Schedule.RESET;
-                  Schedule.SETFILTER("Document No.",PurchHeader."Sale Order No");
-                  Schedule.SETFILTER("No.",PurchLine."No.");
-                  IF Schedule.FINDSET THEN
-                    BEGIN
-                      SMTP_mail.AppendBody('<tr><td><b> Sale Order Line Number </b></td><td>'+FORMAT(Schedule."Document Line No.")+'</td></tr>');
-                      SMTP_mail.AppendBody('<tr><td><b> Schedule Line Number </b></td><td>'+FORMAT(Schedule."Line No.")+'</td></tr>');
-                      END;
-                  // end by vishnu priya
-                  SMTP_mail.AppendBody('<tr><td><b> Received quantity </b></td><td>' + FORMAT(PurchLine."Qty. to Receive") + '</td></tr>');
-                  SMTP_mail.AppendBody('<tr><td><b> To be recieved quantity  </b> </td><td>' + FORMAT(PurchLine.Quantity - (PurchLine."Quantity Received" + PurchLine."Qty. to Receive")) + '</td></tr>');
-                  SMTP_mail.AppendBody('<tr><td><b> Total Ordered Quantity</b></td><td>' + FORMAT(PurchLine.Quantity) + '</td></tr>');
-                  SMTP_mail.AppendBody('<tr><td><b> Total Received Quantity</b></td><td>' + FORMAT(PurchLine."Quantity Received" + PurchLine."Qty. to Receive") + '</td></tr></table>');
-                  SMTP_mail.AppendBody('<br>');
-                  SMTP_mail.AppendBody('<p align ="left"> Regards,<br>ERP Team </p>');
-                  SMTP_mail.AppendBody('<br><p align = "center">::::Note: Auto Generated mail from ERP:::: </b></P></div></body></html>');
-                  SMTP_mail.Send;}
-            //end by ahmed
-          END;
-          IF (PurchLine."Location Code" = 'R&D STR') OR (PurchLine."Location Code" = 'CS STR') THEN
-          BEGIN
-             IH.RESET;
-             IH.SETRANGE(IH."No.",PurchLine."Indent No.");
-             IF IH.FINDFIRST THEN
-             BEGIN
-                "Mail-Id".RESET;
-                "Mail-Id".SETRANGE("Mail-Id"."User Name",IH."Person Code");
-                 IF "Mail-Id".FINDFIRST THEN  BEGIN
-                    mail_to := "Mail-Id".MailID ;
-                 END;
-                //  mail_to := 'vijaya@efftronics.com';
-                 mail_from :='erp@efftronics.com';
-                 subject :='ERP- YOUR INDENTED ITEM ('+PurchLine.Description+') inwarded';
-                 body:='';
-
-                 SMTP_mail.CreateMessage('ERP',mail_from,mail_to,subject,body,TRUE);
+                 SMTP_mail.CreateMessage('ERP', mail_from, mail_to, subject, body, TRUE);
                  SMTP_mail.AppendBody('<html><head><style> divone{background-color: white; width: 700px; padding: 20px; border-style:solid ; border-color:#666699;  margin: 20px;} </style></head>');
-                 SMTP_mail.AppendBody('<body><div style="border-color:#666699;  margin: 20px; border-width:15px;   border-style:solid; padding: 20px; width: 600px;"><label><font size="6">Item Inwarded to Stores</font></label>');
+                 SMTP_mail.AppendBody('<body><div style="border-color:#666699;  margin: 20px; border-width:15px;   border-style:solid; padding: 20px; width: 600px;"><label><font size="6">Bought Out Item Inwarded</font></label>');
                  SMTP_mail.AppendBody('<hr style=solid; color= #3333CC>');
                  SMTP_mail.AppendBody('<h>Dear Sir/Madam,</h><br>');
-                  SMTP_mail.AppendBody('<P> Item Status Details </P>');
-                 SMTP_mail.AppendBody('<table border="1" style="border-collapse:collapse; width:100%; font-size:10pt;"><tr><td width="40%"><b> Item Description </b> </td><td>'+PurchLine.Description+'</td></tr>');
-                 SMTP_mail.AppendBody('<tr><td><b> Inward DATE & TIME </b> </td><td>'+FORMAT((TODAY),0,4)+FORMAT(TIME)+'</td></tr>');
-                  SMTP_mail.AppendBody('<tr><td><b> Indent Number </b> </td><td>' +PurchLine."Indent No."+'</td></tr>');
-                 SMTP_mail.AppendBody('<tr><td><b>Purchase Order No </b></td><td>'+PurchHeader."No."+'</td></tr>');
-                 SMTP_mail.AppendBody('<tr><td><b>Vendor Name </b>    </td><td>'+ PurchHeader."Buy-from Vendor Name" +'</td></tr>');
-                 SMTP_mail.AppendBody('<tr><td><b> Received quantity </b></td><td>'+FORMAT(PurchLine."Qty. to Receive")+'</td></tr>');
-                 "Mail-Id".RESET;
-                 "Mail-Id".SETRANGE("Mail-Id"."User Name",USERID);
-                 IF "Mail-Id".FINDFIRST THEN  BEGIN
-                     SMTP_mail.AppendBody('<tr><td><b> Inward By </b></td><td>'+"Mail-Id"."User Name"+'</td></tr>');
+                 SMTP_mail.AppendBody('<P> BOUT Item Status Details </P>');
+                 //IF (PurchHeader."No." = PurchLine."Document No.")
+                 //BEGIN
+
+                 SMTP_mail.AppendBody('<table border="1" style="border-collapse:collapse; width:100%; font-size:10pt;"><tr><td width="40%"><b> Item Description </b> </td><td>' + PurchLine.Description + '</td></tr>');
+                 SMTP_mail.AppendBody('<tr><td><b> Item Number </b> </td><td>' + ItemJnlLine."Item No." + '</td></tr>');
+                 SMTP_mail.AppendBody('<tr><td><b>Purchase Order No </b>    </td><td>' + PurchHeader."No." + '</td></tr>');
+                 SMTP_mail.AppendBody('<tr><td><b>Sale Order No    </b> </td><td>' + PurchHeader."Sale Order No" + '</td></tr>');
+                 salesheader.RESET;
+                 salesheader.SETFILTER(salesheader."No.", PurchHeader."Sale Order No");
+                 IF salesheader.FINDFIRST THEN BEGIN
+                     SMTP_mail.AppendBody('<tr><td><b>Customer Name   </b> </td><td>' + salesheader."Sell-to Customer Name" + '</td></tr>');
                  END;
-                 SMTP_mail.AppendBody('</table>');
+                 // added by vishnu Priya for the Schedule line number Items addition on 05-Sept-2018
+                 /*Schedule.RESET;
+                 Schedule.SETFILTER("Document No.",PurchHeader."Sale Order No");
+                 Schedule.SETFILTER("No.",PurchLine."No.");
+                 IF Schedule.FINDSET THEN
+                   BEGIN
+                     SMTP_mail.AppendBody('<tr><td><b> Sale Order Line Number </b></td><td>'+FORMAT(Schedule."Document Line No.")+'</td></tr>');
+                     SMTP_mail.AppendBody('<tr><td><b> Schedule Line Number </b></td><td>'+FORMAT(Schedule."Line No.")+'</td></tr>');
+                     END;
+                 // end by vishnu priya
+                 SMTP_mail.AppendBody('<tr><td><b> Received quantity </b></td><td>' + FORMAT(PurchLine."Qty. to Receive") + '</td></tr>');
+                 SMTP_mail.AppendBody('<tr><td><b> To be recieved quantity  </b> </td><td>' + FORMAT(PurchLine.Quantity - (PurchLine."Quantity Received" + PurchLine."Qty. to Receive")) + '</td></tr>');
+                 SMTP_mail.AppendBody('<tr><td><b> Total Ordered Quantity</b></td><td>' + FORMAT(PurchLine.Quantity) + '</td></tr>');
+                 SMTP_mail.AppendBody('<tr><td><b> Total Received Quantity</b></td><td>' + FORMAT(PurchLine."Quantity Received" + PurchLine."Qty. to Receive") + '</td></tr></table>');
                  SMTP_mail.AppendBody('<br>');
                  SMTP_mail.AppendBody('<p align ="left"> Regards,<br>ERP Team </p>');
                  SMTP_mail.AppendBody('<br><p align = "center">::::Note: Auto Generated mail from ERP:::: </b></P></div></body></html>');
-                 SMTP_mail.AddBCC('vijaya@efftronics.com');
-                 SMTP_mail.Send;
-            END;
-          END;
+                 SMTP_mail.Send;}
+           //end by ahmed
+         END;
+         IF (PurchLine."Location Code" = 'R&D STR') OR (PurchLine."Location Code" = 'CS STR') THEN
+         BEGIN
+            IH.RESET;
+            IH.SETRANGE(IH."No.",PurchLine."Indent No.");
+            IF IH.FINDFIRST THEN
+            BEGIN
+               "Mail-Id".RESET;
+               "Mail-Id".SETRANGE("Mail-Id"."User Name",IH."Person Code");
+                IF "Mail-Id".FINDFIRST THEN  BEGIN
+                   mail_to := "Mail-Id".MailID ;
+                END;
+               //  mail_to := 'vijaya@efftronics.com';
+                mail_from :='erp@efftronics.com';
+                subject :='ERP- YOUR INDENTED ITEM ('+PurchLine.Description+') inwarded';
+                body:='';
+
+                SMTP_mail.CreateMessage('ERP',mail_from,mail_to,subject,body,TRUE);
+                SMTP_mail.AppendBody('<html><head><style> divone{background-color: white; width: 700px; padding: 20px; border-style:solid ; border-color:#666699;  margin: 20px;} </style></head>');
+                SMTP_mail.AppendBody('<body><div style="border-color:#666699;  margin: 20px; border-width:15px;   border-style:solid; padding: 20px; width: 600px;"><label><font size="6">Item Inwarded to Stores</font></label>');
+                SMTP_mail.AppendBody('<hr style=solid; color= #3333CC>');
+                SMTP_mail.AppendBody('<h>Dear Sir/Madam,</h><br>');
+                 SMTP_mail.AppendBody('<P> Item Status Details </P>');
+                SMTP_mail.AppendBody('<table border="1" style="border-collapse:collapse; width:100%; font-size:10pt;"><tr><td width="40%"><b> Item Description </b> </td><td>'+PurchLine.Description+'</td></tr>');
+                SMTP_mail.AppendBody('<tr><td><b> Inward DATE & TIME </b> </td><td>'+FORMAT((TODAY),0,4)+FORMAT(TIME)+'</td></tr>');
+                 SMTP_mail.AppendBody('<tr><td><b> Indent Number </b> </td><td>' +PurchLine."Indent No."+'</td></tr>');
+                SMTP_mail.AppendBody('<tr><td><b>Purchase Order No </b></td><td>'+PurchHeader."No."+'</td></tr>');
+                SMTP_mail.AppendBody('<tr><td><b>Vendor Name </b>    </td><td>'+ PurchHeader."Buy-from Vendor Name" +'</td></tr>');
+                SMTP_mail.AppendBody('<tr><td><b> Received quantity </b></td><td>'+FORMAT(PurchLine."Qty. to Receive")+'</td></tr>');
+                "Mail-Id".RESET;
+                "Mail-Id".SETRANGE("Mail-Id"."User Name",USERID);
+                IF "Mail-Id".FINDFIRST THEN  BEGIN
+                    SMTP_mail.AppendBody('<tr><td><b> Inward By </b></td><td>'+"Mail-Id"."User Name"+'</td></tr>');
+                END;
+                SMTP_mail.AppendBody('</table>');
+                SMTP_mail.AppendBody('<br>');
+                SMTP_mail.AppendBody('<p align ="left"> Regards,<br>ERP Team </p>');
+                SMTP_mail.AppendBody('<br><p align = "center">::::Note: Auto Generated mail from ERP:::: </b></P></div></body></html>');
+                SMTP_mail.AddBCC('vijaya@efftronics.com');
+                SMTP_mail.Send;
+           END;
+         END;
 
 
-        END;
-        // end by Rakesh
-      END;
+       END;
+       // end by Rakesh
+     END;
 
-      EVENT RecordSet::WillChangeField@9(cFields : Integer;Fields : Variant;adStatus : Integer;pRecordset : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
-      BEGIN
-      END;
+     EVENT RecordSet::WillChangeField@9(cFields : Integer;Fields : Variant;adStatus : Integer;pRecordset : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
+     BEGIN
+     END;
 
-      EVENT RecordSet::FieldChangeComplete@10(cFields : Integer;Fields : Variant;pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
-      BEGIN
-      END;
+     EVENT RecordSet::FieldChangeComplete@10(cFields : Integer;Fields : Variant;pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
+     BEGIN
+     END;
 
-      EVENT RecordSet::WillChangeRecord@11(adReason : Integer;cRecords : Integer;adStatus : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
-      BEGIN
-      END;
+     EVENT RecordSet::WillChangeRecord@11(adReason : Integer;cRecords : Integer;adStatus : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
+     BEGIN
+     END;
 
-      EVENT RecordSet::RecordChangeComplete@12(adReason : Integer;cRecords : Integer;pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
-      BEGIN
-      END;
+     EVENT RecordSet::RecordChangeComplete@12(adReason : Integer;cRecords : Integer;pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
+     BEGIN
+     END;
 
-      EVENT RecordSet::WillChangeRecordset@13(adReason : Integer;adStatus : Integer;pRecordset : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
-      BEGIN
-      END;
+     EVENT RecordSet::WillChangeRecordset@13(adReason : Integer;adStatus : Integer;pRecordset : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
+     BEGIN
+     END;
 
-      EVENT RecordSet::RecordsetChangeComplete(adReason : Integer;pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
-      BEGIN
-      END;
+     EVENT RecordSet::RecordsetChangeComplete(adReason : Integer;pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
+     BEGIN
+     END;
 
-      EVENT RecordSet::WillMove@15(adReason : Integer;adStatus : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
-      BEGIN
-      END;
+     EVENT RecordSet::WillMove@15(adReason : Integer;adStatus : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
+     BEGIN
+     END;
 
-      EVENT RecordSet::MoveComplete@16(adReason : Integer;pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
-      BEGIN
-      END;
+     EVENT RecordSet::MoveComplete@16(adReason : Integer;pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
+     BEGIN
+     END;
 
-      EVENT RecordSet::EndOfRecordset@17(VAR fMoreData : Boolean;adStatus : Integer;pRecordset : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
-      BEGIN
-      END;
+     EVENT RecordSet::EndOfRecordset@17(VAR fMoreData : Boolean;adStatus : Integer;pRecordset : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
+     BEGIN
+     END;
 
-      EVENT RecordSet::FetchProgress@18(Progress : Integer;MaxProgress : Integer;adStatus : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
-      BEGIN
-      END;
+     EVENT RecordSet::FetchProgress@18(Progress : Integer;MaxProgress : Integer;adStatus : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
+     BEGIN
+     END;
 
-      EVENT RecordSet::FetchComplete@19(pError@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
-      BEGIN
-      END;
+     EVENT RecordSet::FetchComplete@19(pError@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pRecordset@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset");
+     BEGIN
+     END;
 
-      EVENT SQLConnection::InfoMessage@0(pError@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
-      BEGIN
-      END;
+     EVENT SQLConnection::InfoMessage@0(pError@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
+     BEGIN
+     END;
 
-      EVENT SQLConnection::BeginTransComplete@1(TransactionLevel@1102152003 : Integer;pError@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
-      BEGIN
-      END;
+     EVENT SQLConnection::BeginTransComplete@1(TransactionLevel@1102152003 : Integer;pError@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
+     BEGIN
+     END;
 
-      EVENT SQLConnection::CommitTransComplete@3(pError@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
-      BEGIN
-      END;
+     EVENT SQLConnection::CommitTransComplete@3(pError@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
+     BEGIN
+     END;
 
-      EVENT SQLConnection::RollbackTransComplete@2(pError@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
-      BEGIN
-      END;
+     EVENT SQLConnection::RollbackTransComplete@2(pError@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
+     BEGIN
+     END;
 
-      EVENT SQLConnection::WillExecute@4(VAR Source@1102152007 : Text;CursorType@1102152006 : Integer;LockType@1102152005 : Integer;VAR Options@1102152004 : Integer;adStatus@1102152003 : Integer;pCommand@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{B08400BD-F9D1-4D02-B856-71D5DBA123E9}:'Microsoft ActiveX Data Objects 2.8 Library'._Command";pRecordset@1102152001 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset";pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
-      BEGIN
-      END;
+     EVENT SQLConnection::WillExecute@4(VAR Source@1102152007 : Text;CursorType@1102152006 : Integer;LockType@1102152005 : Integer;VAR Options@1102152004 : Integer;adStatus@1102152003 : Integer;pCommand@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{B08400BD-F9D1-4D02-B856-71D5DBA123E9}:'Microsoft ActiveX Data Objects 2.8 Library'._Command";pRecordset@1102152001 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset";pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
+     BEGIN
+     END;
 
-      EVENT SQLConnection::ExecuteComplete@5(RecordsAffected : Integer;pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152003 : Integer;pCommand@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{B08400BD-F9D1-4D02-B856-71D5DBA123E9}:'Microsoft ActiveX Data Objects 2.8 Library'._Command";pRecordset@1102152001 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset";pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
-      BEGIN
-      END;
+     EVENT SQLConnection::ExecuteComplete@5(RecordsAffected : Integer;pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152003 : Integer;pCommand@1102152002 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{B08400BD-F9D1-4D02-B856-71D5DBA123E9}:'Microsoft ActiveX Data Objects 2.8 Library'._Command";pRecordset@1102152001 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000556-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Recordset";pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
+     BEGIN
+     END;
 
-      EVENT SQLConnection::WillConnect@6(VAR ConnectionString : Text;VAR UserID : Text;VAR Password : Text;VAR Options : Integer;adStatus : Integer;pConnection : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
-      BEGIN
-      END;
+     EVENT SQLConnection::WillConnect@6(VAR ConnectionString : Text;VAR UserID : Text;VAR Password : Text;VAR Options : Integer;adStatus : Integer;pConnection : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
+     BEGIN
+     END;
 
-      EVENT SQLConnection::ConnectComplete@7(pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
-      BEGIN
-      END;
+     EVENT SQLConnection::ConnectComplete@7(pError : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000500-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'.Error";adStatus@1102152001 : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
+     BEGIN
+     END;
 
-      EVENT SQLConnection::Disconnect@8(adStatus : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
-      BEGIN
-      END;
+     EVENT SQLConnection::Disconnect@8(adStatus : Integer;pConnection@1102152000 : Automation "{2A75196C-D9EB-4129-B803-931327F72D5C} 2.8:{00000550-0000-0010-8000-00AA006D2EA4}:'Microsoft ActiveX Data Objects 2.8 Library'._Connection");
+     BEGIN
+     END;
 
-      BEGIN
-      {
-        CommaRemoval(FORMAT(ROUND(PurchInvLine."VAT Amount",0.01)))+''','''+//commented for merging purpose
-              IF DATE2DMY(WORKDATE,2)>3 THEN
-                FIN_YEAR:=DATE2DMY(WORKDATE,3)
-              ELSE
-                FIN_YEAR:=DATE2DMY(WORKDATE,3)-1
-               VendLedgEntry.SETRANGE(VendLedgEntry."Posting Date",DMY2DATE(04,01,FIN_YEAR),DMY2DATE(03,31,FIN_YEAR+1));
-        //B2B
-        //Deleted Var(SQLConnection, RecordSet Automation Variables, Commented code related to SQLConnection, RecordSet
-        //B2B
-        UPGREV2.0    Commented code uncommented line number 1172.
-      }
-      END;
-      end;*/
+     BEGIN
+     {
+       CommaRemoval(FORMAT(ROUND(PurchInvLine."VAT Amount",0.01)))+''','''+//commented for merging purpose
+             IF DATE2DMY(WORKDATE,2)>3 THEN
+               FIN_YEAR:=DATE2DMY(WORKDATE,3)
+             ELSE
+               FIN_YEAR:=DATE2DMY(WORKDATE,3)-1
+              VendLedgEntry.SETRANGE(VendLedgEntry."Posting Date",DMY2DATE(04,01,FIN_YEAR),DMY2DATE(03,31,FIN_YEAR+1));
+       //B2B
+       //Deleted Var(SQLConnection, RecordSet Automation Variables, Commented code related to SQLConnection, RecordSet
+       //B2B
+       UPGREV2.0    Commented code uncommented line number 1172.
+     }
+     END;
+     end;*/
     //<<Codeunit90clos<<
 
 
@@ -1750,6 +1750,8 @@ codeunit 90600 Customise
     //<<Codeunit414opn<<
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", 'OnBeforeReopenSalesDoc', '', false, false)]
     local procedure OnBeforeReopenSalesDoc(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var IsHandled: Boolean)
+    var
+        SalesLine: Record "Sales Line";
     begin
         WITH SalesHeader DO BEGIN
             IF Status = Status::Open THEN
@@ -1788,9 +1790,12 @@ codeunit 90600 Customise
     //<<Codeunit415opn<<
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Purchase Document", 'OnCodeOnAfterCheckPurchaseReleaseRestrictions', '', false, false)]
     local procedure OnCodeOnAfterCheckPurchaseReleaseRestrictions(var PurchaseHeader: Record "Purchase Header"; var IsHandled: Boolean)
+    var
+        PurchaseLine: Record "Purchase Line";
+        Text008: label 'ENU=Qc is not checked for Item %1';
     begin
-        PurchaseLine.SETRANGE("Document Type", "Document Type");
-        PurchaseLine.SETRANGE("Document No.", "No.");
+        PurchaseLine.SETRANGE("Document Type", PurchaseHeader."Document Type");
+        PurchaseLine.SETRANGE("Document No.", PurchaseHeader."No.");
         PurchaseLine.SETFILTER(Type, '%1', PurchaseLine.Type::Item);
         IF PurchaseLine.FINDFIRST THEN
             IF PurchaseLine."QC Enabled" = FALSE THEN
@@ -1807,15 +1812,16 @@ codeunit 90600 Customise
     local procedure OnCodeOnBeforeModifyHeader(var PurchaseHeader: Record "Purchase Header"; var PurchaseLine: Record "Purchase Line"; PreviewMode: Boolean; var LinesWereModified: Boolean)
     begin
         //B2B
-        "Release Date Time" := CURRENTDATETIME;
+        PurchaseHeader."Release Date Time" := CURRENTDATETIME;
         //B2B
-        "Released By" := USERID;
+        PurchaseHeader."Released By" := USERID;
 
         // Added by Pranavi on 11-Feb-2017
-        IF "First Release DateTime" = 0DT THEN
-            "First Release DateTime" := CURRENTDATETIME;
-        IF "First Release By" = '' THEN
-            "First Release By" := USERID;
+        IF PurchaseHeader."First Release DateTime" = 0DT THEN
+            PurchaseHeader."First Release DateTime" := CURRENTDATETIME;
+        IF PurchaseHeader."First Release By" = '' THEN
+            PurchaseHeader."First Release By" := USERID;
+
         // End by Pranavi on 11-Feb-2017
     end;
 
@@ -1825,11 +1831,11 @@ codeunit 90600 Customise
 
 
     //<<Codeunit1252opn>>
-    PROCEDURE MatchManuallyREverse@1102152000(VAR SelectedBankAccReconciliationLine@1004 : Record 274; VAR SelectedBankAccountLedgerEntry@1003 : Record 271);
+    PROCEDURE MatchManuallyREverse(VAR SelectedBankAccReconciliationLine: Record 274; VAR SelectedBankAccountLedgerEntry: Record 271);
     VAR
-        BankAccReconciliationLine@1006 : Record 274;
-      BankAccountLedgerEntry@1002 : Record 271;
-      BankAccEntrySetReconNo@1000 : Codeunit 375;
+        BankAccReconciliationLine: Record 274;
+        BankAccountLedgerEntry: Record 271;
+        BankAccEntrySetReconNo: Codeunit 375;
     BEGIN
 
         IF SelectedBankAccReconciliationLine.FINDFIRST THEN BEGIN
@@ -1851,11 +1857,11 @@ codeunit 90600 Customise
         END;
     END;
 
-    PROCEDURE RemoveMatchReverse@1102152001(VAR SelectedBankAccReconciliationLine@1001 : Record 274; VAR SelectedBankAccountLedgerEntry@1000 : Record 271);
+    PROCEDURE RemoveMatchReverse(VAR SelectedBankAccReconciliationLine: Record 274; VAR SelectedBankAccountLedgerEntry: Record 271);
     VAR
-        BankAccReconciliationLine@1004 : Record 274;
-      BankAccountLedgerEntry@1003 : Record 271;
-      BankAccEntrySetReconNo@1002 : Codeunit 375;
+        BankAccReconciliationLine: Record 274;
+        BankAccountLedgerEntry: Record 271;
+        BankAccEntrySetReconNo: Codeunit 375;
     BEGIN
         /*{
         IF SelectedBankAccReconciliationLine.FINDSET THEN
@@ -1915,45 +1921,9 @@ codeunit 90600 Customise
 
 
 
-    //<<Codeunit5063opn>>
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, 'OnGetNextOccurrenceNo', '', false, false)]
-    local procedure OnGetNextOccurrenceNo(TableId: Integer; DocType: Option; DocNo: Code[20]; var OccurenceNo: Integer)
-    begin
-        //B2B
-        DATABASE::"Service Header";
-        BEGIN
-            ServiceHeaderArchive.LOCKTABLE;
-            ServiceHeaderArchive.SETRANGE("Document Type", DocType);
-            ServiceHeaderArchive.SETRANGE("No.", DocNo);
-            IF ServiceHeaderArchive.FINDLAST THEN
-                EXIT(ServiceHeaderArchive."Doc. No. Occurrence" + 1)
-            ELSE
-                EXIT(1);
-        END;
-        //B2B
-    end;
-    //<<Codeunit5063clos<<
 
 
-    //<<Codeunit5063opn>>
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, 'OnGetNextVersionNo', '', false, false)]
-    local procedure OnGetNextVersionNo(TableId: Integer; DocType: Option; DocNo: Code[20]; DocNoOccurrence: Integer; var VersionNo: Integer)
-    begin
-        //B2B
-        DATABASE::"Service Header";
-        BEGIN
-            ServiceHeaderArchive.LOCKTABLE;
-            ServiceHeaderArchive.SETRANGE("Document Type", DocType);
-            ServiceHeaderArchive.SETRANGE("No.", DocNo);
-            ServiceHeaderArchive.SETRANGE("Doc. No. Occurrence", DocNoOccurrence);
-            IF ServiceHeaderArchive.FINDLAST THEN
-                EXIT(ServiceHeaderArchive."Version No." + 1)
-            ELSE
-                EXIT(1);
-        END;
-        //B2B
-    end;
-    //<<Codeunit5063clos<<
+
 
     //<<Codeunit5063opn>>
     [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, 'OnBeforeSalesHeaderArchiveInsert', '', false, false)]
@@ -2021,9 +1991,9 @@ codeunit 90600 Customise
 
     //<<Codeunit5063clos<<
 
-    //<<Codeunit231opn>>
+    //<<Codeunit5063opn>>
     [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, 'OnGetNextOccurrenceNo', '', false, false)]
-    local procedure OnGetNextOccurrenceNo(TableId: Integer; DocType: Option; DocNo: Code[20]; var OccurenceNo: Integer)
+    local procedure OnGetNextOccurrenceNo1(TableId: Integer; DocType: Option; DocNo: Code[20]; var OccurenceNo: Integer)
     begin
         //B2B
         DATABASE::"Service Header";
@@ -2038,12 +2008,12 @@ codeunit 90600 Customise
         END;
         //B2B
     end;
-    //<<Codeunit1252clos<<
+    //<<Codeunit5063clos<<
 
 
     //<<Codeunit5063opn>>
     [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, 'OnGetNextVersionNo', '', false, false)]
-    local procedure OnGetNextVersionNo(TableId: Integer; DocType: Option; DocNo: Code[20]; DocNoOccurrence: Integer; var VersionNo: Integer)
+    local procedure OnGetNextVersionNo1(TableId: Integer; DocType: Option; DocNo: Code[20]; DocNoOccurrence: Integer; var VersionNo: Integer)
     var
         ServiceHeaderArchive: Record 60015;
     begin
@@ -2373,9 +2343,6 @@ codeunit 90600 Customise
 
 
     //<<Codeunit5817opn>>
-       BEGIN
-    END;
-
     PROCEDURE "UpdatePurchLineG/L"(PurchLine: Record 39; UndoQty: Decimal; UndoQtyBase@1005 : Decimal);
     VAR
         xPurchLine: Record 39;
@@ -2461,22 +2428,22 @@ codeunit 90600 Customise
 
 
     //<<Codeunit59320opn>>
-    PROCEDURE "--SH1.0--"@1000000002();
+    PROCEDURE "--SH1.0--"();
     BEGIN
     END;
 
-    PROCEDURE CreateSerItemForScheduleItems@1000000004(SalesHeader@1000 : Record 36; SalesLine@1003 : Record 37; SalesShipmentLine@1008 : Record 111; Schedule@1000000002 : Record 60095);
+    PROCEDURE CreateSerItemForScheduleItems(SalesHeader: Record 36; SalesLine: Record 37; SalesShipmentLine: Record 111; Schedule: Record 60095);
     VAR
-        ItemTrackingCode@1005 : Record 6502;
-      BOMComp@1001 : Record 90;
-      BOMComp2@1002 : Record 90;
-      TrackingLinesExist@1006 : Boolean;
-        x@1007 : Integer;
-        BOMComponent@1102152000 : Record 90;
-      "---SH1.0--"@1000000000 : Integer;
-        Schedule2@1000000001 : Record 60095;
-      ItemLedgerEntry@1000000003 : Record 32;
-      SerItemLoc@1000000004 : Record 5940;
+        ItemTrackingCode: Record 6502;
+        BOMComp: Record 90;
+        BOMComp2: Record 90;
+        TrackingLinesExist: Boolean;
+        x: Integer;
+        BOMComponent: Record 90;
+        "---SH1.0--": Integer;
+        Schedule2: Record 60095;
+        ItemLedgerEntry: Record 32;
+        SerItemLoc: Record 5940;
     BEGIN
         Schedule2 := Schedule;
         ServMgtSetup.GET;
@@ -2632,36 +2599,36 @@ codeunit 90600 Customise
 
 
     //<<Codeunit6500opn>>
-    PROCEDURE FindInInventoryNew@1102152000(ItemNo@1000 : Code[20];VariantCode@1001 : Code[20];SerialNo@1002 : Code[20];LocationCode@1102154000 : Code[20];LotNo@1102152000 : Code[20]) : Boolean;
+    PROCEDURE FindInInventoryNew(ItemNo: Code[20]; VariantCode: Code[20]; SerialNo: Code[20]; LocationCode: Code[20]; LotNo: Code[20]): Boolean;
     VAR
-      ItemLedgerEntry@1004 : Record 32;
+        ItemLedgerEntry: Record 32;
     BEGIN
-      ItemLedgerEntry.RESET;
-      ItemLedgerEntry.SETCURRENTKEY("Item No.",Open,"Variant Code",Positive);
-      ItemLedgerEntry.SETRANGE("Item No.",ItemNo);
-      ItemLedgerEntry.SETRANGE(Open,TRUE);
-      ItemLedgerEntry.SETRANGE("Variant Code",VariantCode);
-      //B2B-Rasool
-      ItemLedgerEntry.SETRANGE("Location Code",LocationCode);
-      ItemLedgerEntry.SETRANGE(Positive,TRUE);
-      IF SerialNo <> '' THEN
-        ItemLedgerEntry.SETRANGE("Serial No.",SerialNo);
-      IF LotNo <> '' THEN
-        ItemLedgerEntry.SETRANGE("Serial No.",LotNo);
-      EXIT(ItemLedgerEntry.FINDFIRST);
+        ItemLedgerEntry.RESET;
+        ItemLedgerEntry.SETCURRENTKEY("Item No.", Open, "Variant Code", Positive);
+        ItemLedgerEntry.SETRANGE("Item No.", ItemNo);
+        ItemLedgerEntry.SETRANGE(Open, TRUE);
+        ItemLedgerEntry.SETRANGE("Variant Code", VariantCode);
+        //B2B-Rasool
+        ItemLedgerEntry.SETRANGE("Location Code", LocationCode);
+        ItemLedgerEntry.SETRANGE(Positive, TRUE);
+        IF SerialNo <> '' THEN
+            ItemLedgerEntry.SETRANGE("Serial No.", SerialNo);
+        IF LotNo <> '' THEN
+            ItemLedgerEntry.SETRANGE("Serial No.", LotNo);
+        EXIT(ItemLedgerEntry.FINDFIRST);
     END;
     //<<Codeunit6500clos<<
 
 
     //<<Codeunit6620opn>>
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::Copy Document Mgt, 'OnCopyPurchDocUpdateHeaderOnBeforeUpdateVendLedgerEntry', '', false, false)]
-     local procedure OnCopyPurchDocUpdateHeaderOnBeforeUpdateVendLedgerEntry(var ToPurchaseHeader: Record "Purchase Header"; FromDocType: Option; FromDocNo: Code[20])
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Copy Document Mgt.", 'OnCopyPurchDocUpdateHeaderOnBeforeUpdateVendLedgerEntry', '', false, false)]
+    local procedure OnCopyPurchDocUpdateHeaderOnBeforeUpdateVendLedgerEntry(var ToPurchaseHeader: Record "Purchase Header"; FromDocType: Option; FromDocNo: Code[20])
     begin
-               IF FromDocType = PurchDocType::"Posted Invoice" THEN    // Condition Added by Pranavi on 23-May-2016
-          BEGIN
+        IF FromDocType = PurchDocType::"Posted Invoice" THEN    // Condition Added by Pranavi on 23-May-2016
+   BEGIN
             "Applies-to Doc. Type" := "Applies-to Doc. Type"::Invoice;
             "Applies-to Doc. No." := FromDocNo;
-          END
+        END
     end;
     //<<Codeunit6620clos<<
 
@@ -2714,336 +2681,326 @@ codeunit 90600 Customise
         IF ("from Mail1" <> '') AND ("to mail1" <> '') THEN
             mail.NewCDOMessage("from Mail1", "to mail1", Mail_Subject1, Mail_Body1, Attachment2);
         IF ("from Mail1" <> '') AND ("to mail2" <> '') THEN
-            mail.NewCDOMessage("from Mail1", "to mail2", Mail_Subject1, Mail_Body1, Attachment1);
+            mail.NewCDOMessage("from Mail1", "to mail2", Mail_Subject1, Mail_Body1, Attachment1)
 
-    END
-
-
-       //For Receipt
-       else
+        else
 
 
-        
-         BEGIN
 
-          GJL.SETRANGE(GJL."Posting Date",WORKDATE);
-          GJL.SETRANGE(GJL."Journal Batch Name",GenJnlLine."Journal Batch Name");
-          GJL.SETFILTER(GJL."Account Type",'Bank Account');
-          IF GJL.FINDFIRST THEN
-          BEGIN
-          BA.SETRANGE(BA."No.",GJL."Account No.");
-          IF BA.FINDFIRST THEN
-          bankacc:=BA.Name;
-          END
-         ELSE
-         ERROR('Specify Workdate same as Posting Date & Bank Account for this Receipt');
-          GJL.RESET;
-          GJL.SETRANGE(GJL."Journal Batch Name",GenJnlLine."Journal Batch Name");
-          GJL.SETFILTER(GJL."Account Type",'Customer');
-          IF GJL.FINDSET THEN
-          REPEAT
-          Mail_Body:='';
-      //   IF GJL."Sale Order No"='' THEN
-      //   ERROR('Please enter Sale Order No.');
-          prevno:=GJL."Sale Order No";
-          IF (prevno<>salno)THEN BEGIN
-             INVVAL:=0;
-             RECVAL:=0;
-             salno:=FORMAT(GJL."Sale Order No");
-              END;
-           recamt+=ABS(GJL.Amount);
-           invno+=', '+GJL."Invoice no";
-            UNTIL GJL.NEXT=0;
-             //END;
-
-      Mail_Body+='RECEIPT DETAILS  :';
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+=FORMAT(charline);
-
-              cust.SETRANGE(cust."No.",GJL."Account No.");
-               IF cust.FINDFIRST THEN
-                Mail_Subject:='ERP- Receipt From the Customer '+cust.Name;
-
-      IF (GJL."Payment Type"=GJL."Payment Type"::Advance) THEN
-      BEGIN
-      Mail_Body+='ADVANCE FROM CUSTOMER';
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+=FORMAT(charline);
-      END;
-
-      Mail_Body+='Customer Name                       : '+ FORMAT(cust.Name);
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+='Customer Type                       : '+ FORMAT(cust."Customer Posting Group");
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+='Received Amount                     : '+ FORMAT(ROUND(recamt,1));
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+=FORMAT(charline);
-
-      IF (GJL."Payment Type"=GJL."Payment Type"::Advance) THEN
-      BEGIN
-      sh.SETRANGE(sh."No.",GJL."Sale Order No");
-      IF sh.FINDFIRST THEN
-      orderval:=sh."Sale Order Total Amount";
-      Mail_Body+='Sale Order No.                      : '+ FORMAT(salno);
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+='Sale Order Value                    : '+ FORMAT(ROUND(orderval,1));
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+='Bank Account                        : '+ FORMAT(bankacc);
-      Mail_Body+=FORMAT(charline);
-
-             CLE.RESET;
-             CLE.SETRANGE(CLE."Customer No.",GJL."Account No.");
-             CLE.SETRANGE(CLE."Sale Order no",GJL."Sale Order No");
-             IF CLE.FINDSET THEN
-             REPEAT
-             CLE.CALCFIELDS(CLE.Amount);
-             RECVAL+=ABS(CLE.Amount);
-             UNTIL CLE.NEXT=0;
-      Mail_Body+='Total Received Value for this Order : '+ FORMAT(ROUND(RECVAL+recamt,1));
-           Mail_Body+=FORMAT(charline);
-           Mail_Body+=FORMAT(charline);
-           Mail_Body+=FORMAT(charline);
-
-      END
-      ELSE
-      BEGIN
-
-               SIH.RESET;
-               SIH.SETRANGE(SIH."Sell-to Customer No.",GJL."Account No.");
-               SIH.SETRANGE(SIH."Order No.",GJL."Sale Order No");
-               IF  SIH.FINDSET THEN
-               REPEAT
-               SIH.CALCFIELDS(SIH."Total Invoiced Amount");
-               INVVAL+=SIH."Total Invoiced Amount";
-               orderval:=SIH."Sale Order Total Amount";
-               cusorderno:=SIH."Customer OrderNo.";
-               UNTIL SIH.NEXT=0;
+     //For Receipt
 
 
-      Mail_Body+='Sale Order No.                      : '+ FORMAT(salno);
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+='Sale Order Value                    : '+ FORMAT(orderval);
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+=FORMAT(charline);
+     BEGIN
 
-      Mail_Body+='Total Invoiced Value                : '+ FORMAT(ROUND(INVVAL,1));
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+='Customer Order No.                  : '+ FORMAT(cusorderno);
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+='Bank Account                        : '+ FORMAT(bankacc);
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+='Invoice No.                         : '+ FORMAT(COPYSTR(invno,2,STRLEN(invno)-1));
-      Mail_Body+=FORMAT(charline);
-      Mail_Body+=FORMAT(charline);
-
-
-             CLE.RESET;
-             CLE.SETRANGE(CLE."Customer No.",GJL."Account No.");
-             CLE.SETRANGE(CLE."Sale Order no",GJL."Sale Order No");
-             IF CLE.FINDSET THEN
-             REPEAT
-             CLE.CALCFIELDS(CLE.Amount);
-             RECVAL+=ABS(CLE.Amount);
-             UNTIL CLE.NEXT=0;
-      Mail_Body+='Total Received Value for this Order : '+ FORMAT(ROUND(RECVAL+recamt,1));
-           Mail_Body+=FORMAT(charline);
-           per:=((ROUND(RECVAL+recamt,1))/ROUND(INVVAL,1))*100;
-           IF (per>101) THEN
-           ERROR('Total received percent is greater than 100 for this sale Order');
-      Mail_Body+='Total Received Percent              : '+ FORMAT(ROUND(per,0.1,'>'))+' %';
-           Mail_Body+=FORMAT(charline);
-           Mail_Body+=FORMAT(charline);
-      END;
-
-      //cust.RESET
-      cust.SETRANGE(cust."No.",GJL."Account No.");
-      IF cust.FINDFIRST THEN
-      cust.CALCFIELDS(cust."Balance (LCY)");
-      Mail_Body+='Previous Customer Balance           : '+ FORMAT(ROUND(cust."Balance (LCY)",1));
-           Mail_Body+=FORMAT(charline);
-      Mail_Body+='Total Customer Balance              : '+ FORMAT(ROUND(cust."Balance (LCY)"-recamt,1));
-           Mail_Body+=FORMAT(charline);
-
-        //   END;
-      // END;
-
-           "Mail-Id".SETRANGE("Mail-Id"."User Security ID",USERID);//B2B
-           IF "Mail-Id".FINDFIRST THEN
-           "from Mail":="Mail-Id".MailID;
-           // "to mail":='erp@efftronics.com';
-        "to mail":='dir@efftronics.com,cvmohan@efftronics.com,anilkumar@efftronics.com,sitarajyam@efftronics.com,';
-       "to mail"+='renukach@efftronics.com,rajani@efftronics.com';
-      "to mail"+='ravi@efftronics.com,samba@efftronics.com,baji@efftronics.com,prasannat@efftronics.com,';
-      "to mail"+='anuradhag@efftronics.com,chandi@efftronics.com,anulatha@efftronics.com,milind@efftronics.com,srasc@efftronics.com';
-
-      //  "to mail"+='sal@efftronics.com';
-           GenJnlPostBatch.RUN(GenJnlLine);
-
-      CLE.RESET;
-      CLE.SETRANGE(CLE."Customer No.",GJL."Account No.");
-      IF CLE.FINDFIRST THEN
-      REPORT.RUN(50180,FALSE,FALSE,CLE);
-      REPORT.SAVEASPDF(50180,'\\erpserver\ErpAttachments\Cust.Pdf',CLE);
-      Attachment:='\\erpserver\ErpAttachments\Cust.Pdf';
-
-        IF ( "from Mail"<>'') AND ("to mail"<>'') THEN
-        mail.NewCDOMessage("from Mail","to mail",Mail_Subject,Mail_Body,Attachment);
-      END;
-
-        charline:=10;
-         IF (GenJnlLine."Journal Batch Name"='BRV(CUST)')THEN
-          BEGIN
-             IF ((GenJnlLine."Account Type"=GenJnlLine."Account Type"::"Bank Account")AND
-                (GenJnlLine."Bal. Account Type"=GenJnlLine."Bal. Account Type"::Customer))
-              THEN  BEGIN
-              cust.SETRANGE(cust."No.",GenJnlLine."Bal. Account No.");
-              IF cust.FINDFIRST THEN
-               Mail_Subject:='ERP- '+'Receipt From the Customer '+cust.Name;
-            IF GenJnlLine."Cheque No."='' THEN
-            ERROR('You Need To Enter Cheque no.');
-           IF (GenJnlLine."Payment Type"<>GenJnlLine."Payment Type"::Contra) AND
-              (GenJnlLine."Payment Type"<>GenJnlLine."Payment Type"::Advance)THEN
-             BEGIN
-              IF(GenJnlLine."Sale invoice order no"='') THEN
-               ERROR('You must Select Sal invoice Order No.')
-              ELSE
-               Mail_Body+='Sale Order No.          : '+ GenJnlLine."Sale Order No";
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Customer Order No.      : '+ GenJnlLine."Customer Ord no";
-               Mail_Body+=FORMAT(charline);
-               glentry.SETRANGE(glentry."Debit Amount",1,1000000000);
-               glentry.SETRANGE(glentry."Document No.",GenJnlLine."Sale invoice order no");
-               IF glentry.FINDFIRST THEN BEGIN
-               Mail_Body+='Invoice No.             : '+FORMAT(glentry."External Document No.");
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Invoiced Amount         : '+FORMAT(glentry."Debit Amount");
-               END;
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Received Amount         : '+ FORMAT(GenJnlLine."Debit Amount");
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Receipt Date            : '+FORMAT((TODAY),0,4);
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Invoiced Date           : '+FORMAT((glentry."Posting Date"),0,4);
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Amount Received in Days : '+FORMAT(TODAY-(glentry."Posting Date"));
-               Mail_Body+=FORMAT(charline);
-               user.SETRANGE(user."User Security ID",cust."Salesperson Code");//B2B
-               IF user.FINDFIRST THEN
-               Mail_Body+='Sales Executive         : '+user."User Name";//B2B
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='***** Auto Mail Generated From ERP *****';
-             END;
-           IF (GenJnlLine."Payment Type"=GenJnlLine."Payment Type"::Contra) THEN
-            BEGIN
-            Mail_Body:='Security Deposit :' + FORMAT(GenJnlLine."Debit Amount");
-           END;
-          IF (GenJnlLine."Payment Type"=GenJnlLine."Payment Type"::Advance)  THEN
-           BEGIN
-            IF (GenJnlLine."Sale Order No"='') THEN
-            ERROR('You must select the Sale Order No.in Advance field');
-            Mail_Body:='Advance Amount :'+ FORMAT(GenJnlLine."Debit Amount");
-            Mail_Body+=FORMAT(charline);
-            Mail_Body+='Sale Order No. :'+ GenJnlLine."Sale Order No";
-             Mail_Body+=FORMAT(charline);
-             Mail_Body+='***** Auto Mail Generated From ERP*****';
-           END;
-           "Mail-Id".SETRANGE("Mail-Id"."User Security ID",USERID);//B2B
-           IF "Mail-Id".FINDFIRST THEN
-           "from Mail":="Mail-Id".MailID;
-         "to mail"+='dir@efftronics.com,baji@efftronics.com,ravi@efftronics.com,';
-          "to mail"+='anilkumar@efftronics.com,cvmohan@efftronics.com,rajani@efftronics.com';
-
-            GenJnlPostBatch.RUN(GenJnlLine)
+            GJL.SETRANGE(GJL."Posting Date", WORKDATE);
+            GJL.SETRANGE(GJL."Journal Batch Name", GenJnlLine."Journal Batch Name");
+            GJL.SETFILTER(GJL."Account Type", 'Bank Account');
+            IF GJL.FINDFIRST THEN BEGIN
+                BA.SETRANGE(BA."No.", GJL."Account No.");
+                IF BA.FINDFIRST THEN
+                    bankacc := BA.Name;
             END
+            ELSE
+                ERROR('Specify Workdate same as Posting Date & Bank Account for this Receipt');
+            GJL.RESET;
+            GJL.SETRANGE(GJL."Journal Batch Name", GenJnlLine."Journal Batch Name");
+            GJL.SETFILTER(GJL."Account Type", 'Customer');
+            IF GJL.FINDSET THEN
+                REPEAT
+                    Mail_Body := '';
+                    //   IF GJL."Sale Order No"='' THEN
+                    //   ERROR('Please enter Sale Order No.');
+                    prevno := GJL."Sale Order No";
+                    IF (prevno <> salno) THEN BEGIN
+                        INVVAL := 0;
+                        RECVAL := 0;
+                        salno := FORMAT(GJL."Sale Order No");
+                    END;
+                    recamt += ABS(GJL.Amount);
+                    invno += ', ' + GJL."Invoice no";
+                UNTIL GJL.NEXT = 0;
+            //END;
 
-         ELSE IF((GenJnlLine."Account Type"=GenJnlLine."Account Type"::Customer)AND
-         (GenJnlLine."Bal. Account Type"=GenJnlLine."Bal. Account Type"::"Bank Account"))
-          THEN BEGIN
-              cust.SETRANGE(cust."No.",GenJnlLine."Account No.");
-              IF cust.FINDFIRST THEN
-               Mail_Subject:='<ERP> '+'Receipt From the Customer '+cust.Name;
+            Mail_Body += 'RECEIPT DETAILS  :';
+            Mail_Body += FORMAT(charline);
+            Mail_Body += FORMAT(charline);
 
-           IF (GenJnlLine."Payment Type"<>GenJnlLine."Payment Type"::Contra) AND
-              (GenJnlLine."Payment Type"<>GenJnlLine."Payment Type"::Advance)THEN
-             BEGIN
-              IF(GenJnlLine."Sale invoice order no"='') THEN
-               ERROR('You must Select Sal invoice Order No.')
-               ELSE
-               Mail_Body+='Sale Order No.          : '+ GenJnlLine."Sale Order No";
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Customer Order No.      : '+ GenJnlLine."Customer Ord no";
-               Mail_Body+=FORMAT(charline);
-               glentry.SETRANGE(glentry."Debit Amount",1,1000000000);
-               glentry.SETRANGE(glentry."Document No.",GenJnlLine."Sale invoice order no");
-               IF glentry.FINDFIRST THEN  BEGIN
-               Mail_Body+='Sale Order No.          : '+ GenJnlLine."Customer Ord no";
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Invoice No.             : '+FORMAT(glentry."External Document No.");
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Invoiced Amount         : '+FORMAT(glentry."Debit Amount");
-               Mail_Body+=FORMAT(charline);
-                END;
-               Mail_Body+='Received Amount         : '+ FORMAT(GenJnlLine."Credit Amount");
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Receipt Date            : '+FORMAT((TODAY),0,4);
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Invoiced Date           : '+FORMAT(glentry."Posting Date");
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='Amount Received in Days : '+FORMAT(TODAY-(glentry."Posting Date"));
-               Mail_Body+=FORMAT(charline);
-               user.SETRANGE(user."User Security ID",cust."Salesperson Code");//B2B
-               IF user.FINDFIRST THEN
-               Mail_Body+='Sales Executive         : '+user."User Name";//B2B
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+=FORMAT(charline);
-               Mail_Body+='***** Auto Mail Generated From ERP *****';
-               END;
-           IF (GenJnlLine."Payment Type"=GenJnlLine."Payment Type"::Contra) THEN
-            BEGIN
-             Mail_Body:='Security Deposit :' + FORMAT(GenJnlLine."Debit Amount");
-           END;
-          IF (GenJnlLine."Payment Type"=GenJnlLine."Payment Type"::Advance)  THEN
-           BEGIN
-            IF (GenJnlLine."Sale Order No"='') THEN
-            ERROR('You must select the Sale Order No.in Advance field');
-            Mail_Body:='Advance Amount :'+ FORMAT(GenJnlLine."Credit Amount");
-            Mail_Body+=FORMAT(charline);
-            Mail_Body+='Sale Order No. :'+ GenJnlLine."Sale Order No";
-            Mail_Body+=FORMAT(charline);
-             Mail_Body+='***** Auto Mail Generated From ERP*****';
+            cust.SETRANGE(cust."No.", GJL."Account No.");
+            IF cust.FINDFIRST THEN
+                Mail_Subject := 'ERP- Receipt From the Customer ' + cust.Name;
+
+            IF (GJL."Payment Type" = GJL."Payment Type"::Advance) THEN BEGIN
+                Mail_Body += 'ADVANCE FROM CUSTOMER';
+                Mail_Body += FORMAT(charline);
+                Mail_Body += FORMAT(charline);
             END;
-           "Mail-Id".SETRANGE("Mail-Id"."User Security ID",USERID);//B2B
-           IF "Mail-Id".FINDFIRST THEN
-           "from Mail":="Mail-Id".MailID;
-           "to mail"+='dir@efftronics.com,anuradhag@efftronics.com,baji@efftronics.com,ravi@efftronics.com,';
-           "to mail"+='anilkumar@efftronics.com,cvmohan@efftronics.com,rajani@efftronics.com';
 
-             GenJnlPostBatch.RUN(GenJnlLine);
-              END
-          ELSE
-           ERROR('PLEASE CHOOSE ANOTHER BRV');
-           END;
-        IF ( "from Mail"<>'') AND ("to mail"<>'') THEN
-       mail.NewCDOMessage("from Mail","to mail",Mail_Subject,Mail_Body,'');
+            Mail_Body += 'Customer Name                       : ' + FORMAT(cust.Name);
+            Mail_Body += FORMAT(charline);
+            Mail_Body += 'Customer Type                       : ' + FORMAT(cust."Customer Posting Group");
+            Mail_Body += FORMAT(charline);
+            Mail_Body += 'Received Amount                     : ' + FORMAT(ROUND(recamt, 1));
+            Mail_Body += FORMAT(charline);
+            Mail_Body += FORMAT(charline);
 
-      IF (GenJnlLine."Journal Batch Name"='BRV(EMP)') THEN BEGIN
-            IF (GenJnlLine."Account No."='37200')OR (GenJnlLine."Bal. Account No."='37200')OR
-               (GenJnlLine."Account No."='24200')OR(GenJnlLine."Bal. Account No."='24200') THEN
-               GenJnlPostBatch.RUN(GenJnlLine)
-           ELSE
-           ERROR('PLEASE CHOOSE ANOTHER BRV');
+            IF (GJL."Payment Type" = GJL."Payment Type"::Advance) THEN BEGIN
+                sh.SETRANGE(sh."No.", GJL."Sale Order No");
+                IF sh.FINDFIRST THEN
+                    orderval := sh."Sale Order Total Amount";
+                Mail_Body += 'Sale Order No.                      : ' + FORMAT(salno);
+                Mail_Body += FORMAT(charline);
+                Mail_Body += 'Sale Order Value                    : ' + FORMAT(ROUND(orderval, 1));
+                Mail_Body += FORMAT(charline);
+                Mail_Body += 'Bank Account                        : ' + FORMAT(bankacc);
+                Mail_Body += FORMAT(charline);
+
+                CLE.RESET;
+                CLE.SETRANGE(CLE."Customer No.", GJL."Account No.");
+                CLE.SETRANGE(CLE."Sale Order no", GJL."Sale Order No");
+                IF CLE.FINDSET THEN
+                    REPEAT
+                        CLE.CALCFIELDS(CLE.Amount);
+                        RECVAL += ABS(CLE.Amount);
+                    UNTIL CLE.NEXT = 0;
+                Mail_Body += 'Total Received Value for this Order : ' + FORMAT(ROUND(RECVAL + recamt, 1));
+                Mail_Body += FORMAT(charline);
+                Mail_Body += FORMAT(charline);
+                Mail_Body += FORMAT(charline);
+
+            END
+            ELSE BEGIN
+
+                SIH.RESET;
+                SIH.SETRANGE(SIH."Sell-to Customer No.", GJL."Account No.");
+                SIH.SETRANGE(SIH."Order No.", GJL."Sale Order No");
+                IF SIH.FINDSET THEN
+                    REPEAT
+                        SIH.CALCFIELDS(SIH."Total Invoiced Amount");
+                        INVVAL += SIH."Total Invoiced Amount";
+                        orderval := SIH."Sale Order Total Amount";
+                        cusorderno := SIH."Customer OrderNo.";
+                    UNTIL SIH.NEXT = 0;
+
+
+                Mail_Body += 'Sale Order No.                      : ' + FORMAT(salno);
+                Mail_Body += FORMAT(charline);
+                Mail_Body += 'Sale Order Value                    : ' + FORMAT(orderval);
+                Mail_Body += FORMAT(charline);
+                Mail_Body += FORMAT(charline);
+
+                Mail_Body += 'Total Invoiced Value                : ' + FORMAT(ROUND(INVVAL, 1));
+                Mail_Body += FORMAT(charline);
+                Mail_Body += FORMAT(charline);
+                Mail_Body += 'Customer Order No.                  : ' + FORMAT(cusorderno);
+                Mail_Body += FORMAT(charline);
+                Mail_Body += 'Bank Account                        : ' + FORMAT(bankacc);
+                Mail_Body += FORMAT(charline);
+                Mail_Body += 'Invoice No.                         : ' + FORMAT(COPYSTR(invno, 2, STRLEN(invno) - 1));
+                Mail_Body += FORMAT(charline);
+                Mail_Body += FORMAT(charline);
+
+
+                CLE.RESET;
+                CLE.SETRANGE(CLE."Customer No.", GJL."Account No.");
+                CLE.SETRANGE(CLE."Sale Order no", GJL."Sale Order No");
+                IF CLE.FINDSET THEN
+                    REPEAT
+                        CLE.CALCFIELDS(CLE.Amount);
+                        RECVAL += ABS(CLE.Amount);
+                    UNTIL CLE.NEXT = 0;
+                Mail_Body += 'Total Received Value for this Order : ' + FORMAT(ROUND(RECVAL + recamt, 1));
+                Mail_Body += FORMAT(charline);
+                per := ((ROUND(RECVAL + recamt, 1)) / ROUND(INVVAL, 1)) * 100;
+                IF (per > 101) THEN
+                    ERROR('Total received percent is greater than 100 for this sale Order');
+                Mail_Body += 'Total Received Percent              : ' + FORMAT(ROUND(per, 0.1, '>')) + ' %';
+                Mail_Body += FORMAT(charline);
+                Mail_Body += FORMAT(charline);
+            END;
+
+            //cust.RESET
+            cust.SETRANGE(cust."No.", GJL."Account No.");
+            IF cust.FINDFIRST THEN
+                cust.CALCFIELDS(cust."Balance (LCY)");
+            Mail_Body += 'Previous Customer Balance           : ' + FORMAT(ROUND(cust."Balance (LCY)", 1));
+            Mail_Body += FORMAT(charline);
+            Mail_Body += 'Total Customer Balance              : ' + FORMAT(ROUND(cust."Balance (LCY)" - recamt, 1));
+            Mail_Body += FORMAT(charline);
+
+            //   END;
+            // END;
+
+            "Mail-Id".SETRANGE("Mail-Id"."User Security ID", USERID);//B2B
+            IF "Mail-Id".FINDFIRST THEN
+                "from Mail" := "Mail-Id".MailID;
+            // "to mail":='erp@efftronics.com';
+            "to mail" := 'dir@efftronics.com,cvmohan@efftronics.com,anilkumar@efftronics.com,sitarajyam@efftronics.com,';
+            "to mail" += 'renukach@efftronics.com,rajani@efftronics.com';
+            "to mail" += 'ravi@efftronics.com,samba@efftronics.com,baji@efftronics.com,prasannat@efftronics.com,';
+            "to mail" += 'anuradhag@efftronics.com,chandi@efftronics.com,anulatha@efftronics.com,milind@efftronics.com,srasc@efftronics.com';
+
+            //  "to mail"+='sal@efftronics.com';
+            GenJnlPostBatch.RUN(GenJnlLine);
+
+            CLE.RESET;
+            CLE.SETRANGE(CLE."Customer No.", GJL."Account No.");
+            IF CLE.FINDFIRST THEN
+                REPORT.RUN(50180, FALSE, FALSE, CLE);
+            REPORT.SAVEASPDF(50180, '\\erpserver\ErpAttachments\Cust.Pdf', CLE);
+            Attachment := '\\erpserver\ErpAttachments\Cust.Pdf';
+
+            IF ("from Mail" <> '') AND ("to mail" <> '') THEN
+                mail.NewCDOMessage("from Mail", "to mail", Mail_Subject, Mail_Body, Attachment);
         END;
 
-      IF (GenJnlLine."Journal Batch Name"='BRV(OTH)')THEN BEGIN
-            IF (GenJnlLine."Account No."='37200')OR (GenJnlLine."Bal. Account No."='37200')OR
-               (GenJnlLine."Account No."='24200')OR(GenJnlLine."Bal. Account No."='24200')OR
-               (GenJnlLine."Account Type"=GenJnlLine."Account Type"::Customer)OR
-               (GenJnlLine."Bal. Account Type"=GenJnlLine."Bal. Account Type"::Customer) THEN
-            ERROR('PLEASE CHOOSE ANOTHER BRV')
+        charline := 10;
+        IF (GenJnlLine."Journal Batch Name" = 'BRV(CUST)') THEN BEGIN
+            IF ((GenJnlLine."Account Type" = GenJnlLine."Account Type"::"Bank Account") AND
+               (GenJnlLine."Bal. Account Type" = GenJnlLine."Bal. Account Type"::Customer))
+             THEN BEGIN
+                cust.SETRANGE(cust."No.", GenJnlLine."Bal. Account No.");
+                IF cust.FINDFIRST THEN
+                    Mail_Subject := 'ERP- ' + 'Receipt From the Customer ' + cust.Name;
+                IF GenJnlLine."Cheque No." = '' THEN
+                    ERROR('You Need To Enter Cheque no.');
+                IF (GenJnlLine."Payment Type" <> GenJnlLine."Payment Type"::Contra) AND
+                   (GenJnlLine."Payment Type" <> GenJnlLine."Payment Type"::Advance) THEN BEGIN
+                    IF (GenJnlLine."Sale invoice order no" = '') THEN
+                        ERROR('You must Select Sal invoice Order No.')
+                    ELSE
+                        Mail_Body += 'Sale Order No.          : ' + GenJnlLine."Sale Order No";
+                    Mail_Body += FORMAT(charline);
+                    Mail_Body += 'Customer Order No.      : ' + GenJnlLine."Customer Ord no";
+                    Mail_Body += FORMAT(charline);
+                    glentry.SETRANGE(glentry."Debit Amount", 1, 1000000000);
+                    glentry.SETRANGE(glentry."Document No.", GenJnlLine."Sale invoice order no");
+                    IF glentry.FINDFIRST THEN BEGIN
+                        Mail_Body += 'Invoice No.             : ' + FORMAT(glentry."External Document No.");
+                        Mail_Body += FORMAT(charline);
+                        Mail_Body += 'Invoiced Amount         : ' + FORMAT(glentry."Debit Amount");
+                    END;
+                    Mail_Body += FORMAT(charline);
+                    Mail_Body += 'Received Amount         : ' + FORMAT(GenJnlLine."Debit Amount");
+                    Mail_Body += FORMAT(charline);
+                    Mail_Body += 'Receipt Date            : ' + FORMAT((TODAY), 0, 4);
+                    Mail_Body += FORMAT(charline);
+                    Mail_Body += 'Invoiced Date           : ' + FORMAT((glentry."Posting Date"), 0, 4);
+                    Mail_Body += FORMAT(charline);
+                    Mail_Body += 'Amount Received in Days : ' + FORMAT(TODAY - (glentry."Posting Date"));
+                    Mail_Body += FORMAT(charline);
+                    user.SETRANGE(user."User Security ID", cust."Salesperson Code");//B2B
+                    IF user.FINDFIRST THEN
+                        Mail_Body += 'Sales Executive         : ' + user."User Name";//B2B
+                    Mail_Body += FORMAT(charline);
+                    Mail_Body += FORMAT(charline);
+                    Mail_Body += '***** Auto Mail Generated From ERP *****';
+                END;
+                IF (GenJnlLine."Payment Type" = GenJnlLine."Payment Type"::Contra) THEN BEGIN
+                    Mail_Body := 'Security Deposit :' + FORMAT(GenJnlLine."Debit Amount");
+                END;
+                IF (GenJnlLine."Payment Type" = GenJnlLine."Payment Type"::Advance) THEN BEGIN
+                    IF (GenJnlLine."Sale Order No" = '') THEN
+                        ERROR('You must select the Sale Order No.in Advance field');
+                    Mail_Body := 'Advance Amount :' + FORMAT(GenJnlLine."Debit Amount");
+                    Mail_Body += FORMAT(charline);
+                    Mail_Body += 'Sale Order No. :' + GenJnlLine."Sale Order No";
+                    Mail_Body += FORMAT(charline);
+                    Mail_Body += '***** Auto Mail Generated From ERP*****';
+                END;
+                "Mail-Id".SETRANGE("Mail-Id"."User Security ID", USERID);//B2B
+                IF "Mail-Id".FINDFIRST THEN
+                    "from Mail" := "Mail-Id".MailID;
+                "to mail" += 'dir@efftronics.com,baji@efftronics.com,ravi@efftronics.com,';
+                "to mail" += 'anilkumar@efftronics.com,cvmohan@efftronics.com,rajani@efftronics.com';
 
-  
+                GenJnlPostBatch.RUN(GenJnlLine)
+            END
+
+            ELSE
+                IF ((GenJnlLine."Account Type" = GenJnlLine."Account Type"::Customer) AND
+           (GenJnlLine."Bal. Account Type" = GenJnlLine."Bal. Account Type"::"Bank Account"))
+            THEN BEGIN
+                    cust.SETRANGE(cust."No.", GenJnlLine."Account No.");
+                    IF cust.FINDFIRST THEN
+                        Mail_Subject := '<ERP> ' + 'Receipt From the Customer ' + cust.Name;
+
+                    IF (GenJnlLine."Payment Type" <> GenJnlLine."Payment Type"::Contra) AND
+                       (GenJnlLine."Payment Type" <> GenJnlLine."Payment Type"::Advance) THEN BEGIN
+                        IF (GenJnlLine."Sale invoice order no" = '') THEN
+                            ERROR('You must Select Sal invoice Order No.')
+                        ELSE
+                            Mail_Body += 'Sale Order No.          : ' + GenJnlLine."Sale Order No";
+                        Mail_Body += FORMAT(charline);
+                        Mail_Body += 'Customer Order No.      : ' + GenJnlLine."Customer Ord no";
+                        Mail_Body += FORMAT(charline);
+                        glentry.SETRANGE(glentry."Debit Amount", 1, 1000000000);
+                        glentry.SETRANGE(glentry."Document No.", GenJnlLine."Sale invoice order no");
+                        IF glentry.FINDFIRST THEN BEGIN
+                            Mail_Body += 'Sale Order No.          : ' + GenJnlLine."Customer Ord no";
+                            Mail_Body += FORMAT(charline);
+                            Mail_Body += 'Invoice No.             : ' + FORMAT(glentry."External Document No.");
+                            Mail_Body += FORMAT(charline);
+                            Mail_Body += 'Invoiced Amount         : ' + FORMAT(glentry."Debit Amount");
+                            Mail_Body += FORMAT(charline);
+                        END;
+                        Mail_Body += 'Received Amount         : ' + FORMAT(GenJnlLine."Credit Amount");
+                        Mail_Body += FORMAT(charline);
+                        Mail_Body += 'Receipt Date            : ' + FORMAT((TODAY), 0, 4);
+                        Mail_Body += FORMAT(charline);
+                        Mail_Body += 'Invoiced Date           : ' + FORMAT(glentry."Posting Date");
+                        Mail_Body += FORMAT(charline);
+                        Mail_Body += 'Amount Received in Days : ' + FORMAT(TODAY - (glentry."Posting Date"));
+                        Mail_Body += FORMAT(charline);
+                        user.SETRANGE(user."User Security ID", cust."Salesperson Code");//B2B
+                        IF user.FINDFIRST THEN
+                            Mail_Body += 'Sales Executive         : ' + user."User Name";//B2B
+                        Mail_Body += FORMAT(charline);
+                        Mail_Body += FORMAT(charline);
+                        Mail_Body += '***** Auto Mail Generated From ERP *****';
+                    END;
+                    IF (GenJnlLine."Payment Type" = GenJnlLine."Payment Type"::Contra) THEN BEGIN
+                        Mail_Body := 'Security Deposit :' + FORMAT(GenJnlLine."Debit Amount");
+                    END;
+                    IF (GenJnlLine."Payment Type" = GenJnlLine."Payment Type"::Advance) THEN BEGIN
+                        IF (GenJnlLine."Sale Order No" = '') THEN
+                            ERROR('You must select the Sale Order No.in Advance field');
+                        Mail_Body := 'Advance Amount :' + FORMAT(GenJnlLine."Credit Amount");
+                        Mail_Body += FORMAT(charline);
+                        Mail_Body += 'Sale Order No. :' + GenJnlLine."Sale Order No";
+                        Mail_Body += FORMAT(charline);
+                        Mail_Body += '***** Auto Mail Generated From ERP*****';
+                    END;
+                    "Mail-Id".SETRANGE("Mail-Id"."User Security ID", USERID);//B2B
+                    IF "Mail-Id".FINDFIRST THEN
+                        "from Mail" := "Mail-Id".MailID;
+                    "to mail" += 'dir@efftronics.com,anuradhag@efftronics.com,baji@efftronics.com,ravi@efftronics.com,';
+                    "to mail" += 'anilkumar@efftronics.com,cvmohan@efftronics.com,rajani@efftronics.com';
+
+                    GenJnlPostBatch.RUN(GenJnlLine);
+                END
+                ELSE
+                    ERROR('PLEASE CHOOSE ANOTHER BRV');
+        END;
+        IF ("from Mail" <> '') AND ("to mail" <> '') THEN
+            mail.NewCDOMessage("from Mail", "to mail", Mail_Subject, Mail_Body, '');
+
+        IF (GenJnlLine."Journal Batch Name" = 'BRV(EMP)') THEN BEGIN
+            IF (GenJnlLine."Account No." = '37200') OR (GenJnlLine."Bal. Account No." = '37200') OR
+               (GenJnlLine."Account No." = '24200') OR (GenJnlLine."Bal. Account No." = '24200') THEN
+                GenJnlPostBatch.RUN(GenJnlLine)
+            ELSE
+                ERROR('PLEASE CHOOSE ANOTHER BRV');
+        END;
+
+        IF (GenJnlLine."Journal Batch Name" = 'BRV(OTH)') THEN BEGIN
+            IF (GenJnlLine."Account No." = '37200') OR (GenJnlLine."Bal. Account No." = '37200') OR
+               (GenJnlLine."Account No." = '24200') OR (GenJnlLine."Bal. Account No." = '24200') OR
+               (GenJnlLine."Account Type" = GenJnlLine."Account Type"::Customer) OR
+               (GenJnlLine."Bal. Account Type" = GenJnlLine."Bal. Account Type"::Customer) THEN
+                ERROR('PLEASE CHOOSE ANOTHER BRV')
+
+
+        end;
     end;
 
     //<<Codeunit231clos<<
@@ -3051,84 +3008,84 @@ codeunit 90600 Customise
 
 
     //<<Codeunit270opn>>
-      PROCEDURE TemplateSelection1(RecurringJnl : Boolean);
+    PROCEDURE TemplateSelection1(RecurringJnl: Boolean);
     VAR
-      ResJnlTemplate : Record 206;
-      ResJnlLine : Record 207;
-      JnlSelected : Boolean;
+        ResJnlTemplate: Record 206;
+        ResJnlLine: Record 207;
+        JnlSelected: Boolean;
     BEGIN
-      JnlSelected := TRUE;
+        JnlSelected := TRUE;
 
-      ResJnlTemplate.RESET;
-      ResJnlTemplate.SETRANGE(Recurring,RecurringJnl);
+        ResJnlTemplate.RESET;
+        ResJnlTemplate.SETRANGE(Recurring, RecurringJnl);
 
-      CASE ResJnlTemplate.COUNT OF
-        0:
-          BEGIN
-            ResJnlTemplate.INIT;
-            ResJnlTemplate.Recurring := RecurringJnl;
-            IF NOT RecurringJnl THEN BEGIN
-              ResJnlTemplate.Name := Text000;
-              ResJnlTemplate.Description := Text001;
-            END ELSE BEGIN
-              ResJnlTemplate.Name := Text002;
-              ResJnlTemplate.Description := Text003;
-            END;
-            ResJnlTemplate.VALIDATE("Page ID");
-            ResJnlTemplate.INSERT;
-            COMMIT;
-          END;
-        1:
-          ResJnlTemplate.FINDFIRST;
-        ELSE
-          JnlSelected := PAGE.RUNMODAL(0,ResJnlTemplate) = ACTION::LookupOK;
-      END;
-      IF JnlSelected THEN BEGIN
-        ResJnlLine.FILTERGROUP := 2;
-        ResJnlLine.SETRANGE("Journal Template Name",ResJnlTemplate.Name);
-        ResJnlLine.FILTERGROUP := 0;
-        PAGE.RUN(60210,ResJnlLine);
-      END;
+        CASE ResJnlTemplate.COUNT OF
+            0:
+                BEGIN
+                    ResJnlTemplate.INIT;
+                    ResJnlTemplate.Recurring := RecurringJnl;
+                    IF NOT RecurringJnl THEN BEGIN
+                        ResJnlTemplate.Name := Text000;
+                        ResJnlTemplate.Description := Text001;
+                    END ELSE BEGIN
+                        ResJnlTemplate.Name := Text002;
+                        ResJnlTemplate.Description := Text003;
+                    END;
+                    ResJnlTemplate.VALIDATE("Page ID");
+                    ResJnlTemplate.INSERT;
+                    COMMIT;
+                END;
+            1:
+                ResJnlTemplate.FINDFIRST;
+            ELSE
+                JnlSelected := PAGE.RUNMODAL(0, ResJnlTemplate) = ACTION::LookupOK;
+        END;
+        IF JnlSelected THEN BEGIN
+            ResJnlLine.FILTERGROUP := 2;
+            ResJnlLine.SETRANGE("Journal Template Name", ResJnlTemplate.Name);
+            ResJnlLine.FILTERGROUP := 0;
+            PAGE.RUN(60210, ResJnlLine);
+        END;
     END;
 
-    PROCEDURE temp(RecurringJnl : Boolean);
+    PROCEDURE temp(RecurringJnl: Boolean);
     VAR
-      ResJnlTemplate : Record 206;
-      ResJnlLine : Record 207;
-      JnlSelected : Boolean;
+        ResJnlTemplate: Record 206;
+        ResJnlLine: Record 207;
+        JnlSelected: Boolean;
     BEGIN
-      JnlSelected := TRUE;
+        JnlSelected := TRUE;
 
-      ResJnlTemplate.RESET;
-      ResJnlTemplate.SETRANGE(Recurring,RecurringJnl);
+        ResJnlTemplate.RESET;
+        ResJnlTemplate.SETRANGE(Recurring, RecurringJnl);
 
-      CASE ResJnlTemplate.COUNT OF
-        0:
-          BEGIN
-            ResJnlTemplate.INIT;
-            ResJnlTemplate.Recurring := RecurringJnl;
-            IF NOT RecurringJnl THEN BEGIN
-              ResJnlTemplate.Name := Text000;
-              ResJnlTemplate.Description := Text001;
-            END ELSE BEGIN
-              ResJnlTemplate.Name := Text002;
-              ResJnlTemplate.Description := Text003;
-            END;
-            ResJnlTemplate.VALIDATE("Page ID");
-            ResJnlTemplate.INSERT;
-            COMMIT;
-          END;
-        1:
-          ResJnlTemplate.FINDFIRST;
-        ELSE
-          JnlSelected := PAGE.RUNMODAL(0,ResJnlTemplate) = ACTION::LookupOK;
-      END;
-      IF JnlSelected THEN BEGIN
-        ResJnlLine.FILTERGROUP := 2;
-        ResJnlLine.SETRANGE("Journal Template Name",ResJnlTemplate.Name);
-        ResJnlLine.FILTERGROUP := 0;
-        PAGE.RUN(ResJnlTemplate."Page ID",ResJnlLine);
-      END;
+        CASE ResJnlTemplate.COUNT OF
+            0:
+                BEGIN
+                    ResJnlTemplate.INIT;
+                    ResJnlTemplate.Recurring := RecurringJnl;
+                    IF NOT RecurringJnl THEN BEGIN
+                        ResJnlTemplate.Name := Text000;
+                        ResJnlTemplate.Description := Text001;
+                    END ELSE BEGIN
+                        ResJnlTemplate.Name := Text002;
+                        ResJnlTemplate.Description := Text003;
+                    END;
+                    ResJnlTemplate.VALIDATE("Page ID");
+                    ResJnlTemplate.INSERT;
+                    COMMIT;
+                END;
+            1:
+                ResJnlTemplate.FINDFIRST;
+            ELSE
+                JnlSelected := PAGE.RUNMODAL(0, ResJnlTemplate) = ACTION::LookupOK;
+        END;
+        IF JnlSelected THEN BEGIN
+            ResJnlLine.FILTERGROUP := 2;
+            ResJnlLine.SETRANGE("Journal Template Name", ResJnlTemplate.Name);
+            ResJnlLine.FILTERGROUP := 0;
+            PAGE.RUN(ResJnlTemplate."Page ID", ResJnlLine);
+        END;
     END;
 
 
@@ -3137,298 +3094,296 @@ codeunit 90600 Customise
 
 
     //<<Codeunit86opn>>
-     PROCEDURE PurchHeaderBuyFromtemp(VAR AddrArray : ARRAY [8] OF Text[50];VAR PurchHeader : Record 38);
+    PROCEDURE PurchHeaderBuyFromtemp(VAR AddrArray: ARRAY[8] OF Text[50]; VAR PurchHeader: Record 38);
     BEGIN
-      WITH PurchHeader DO
-        FormatAddr(
-          AddrArray,"Buy-from Vendor Name","Buy-from Vendor Name 2",'',"Buy-from Address","Buy-from Address 2",
-          "Buy-from City","Buy-from Post Code","Buy-from County","Buy-from Country/Region Code");
+        WITH PurchHeader DO
+            FormatAddr(
+              AddrArray, "Buy-from Vendor Name", "Buy-from Vendor Name 2", '', "Buy-from Address", "Buy-from Address 2",
+              "Buy-from City", "Buy-from Post Code", "Buy-from County", "Buy-from Country/Region Code");
     END;
 
-    PROCEDURE ChangeCurrency(Amt : Decimal) AmountText : Text[30];
+    PROCEDURE ChangeCurrency(Amt: Decimal) AmountText: Text[30];
     VAR
-      I : Integer;
-      s : Text[30];
-      j : Integer;
+        I: Integer;
+        s: Text[30];
+        j: Integer;
     BEGIN
-      AmountText:=FORMAT(Amt,0,'<Precision,0:0><Standard Format,2>');
-      FOR I:=1 TO 10 DO
-      BEGIN
-      IF STRLEN(AmountText)>(3*I) THEN
-      BEGIN
-      s:=INSSTR(AmountText,',',STRLEN(AmountText)-(3*I-1));
-      AmountText :=s;
-      END
-      ELSE
-      I:=10;
+        AmountText := FORMAT(Amt, 0, '<Precision,0:0><Standard Format,2>');
+        FOR I := 1 TO 10 DO BEGIN
+            IF STRLEN(AmountText) > (3 * I) THEN BEGIN
+                s := INSSTR(AmountText, ',', STRLEN(AmountText) - (3 * I - 1));
+                AmountText := s;
+            END
+            ELSE
+                I := 10;
 
-      END;
+        END;
     END;
 
-    PROCEDURE Location(VAR AddrArray : ARRAY [8] OF Text[50];VAR LocationLRec : Record 14);
+    PROCEDURE Location(VAR AddrArray: ARRAY[8] OF Text[50]; VAR LocationLRec: Record 14);
     BEGIN
-      WITH LocationLRec DO
-        FormatAddr(
-          AddrArray,Name,"Name 2",'',Address,"Address 2",
-          City,"Post Code",County,'');
+        WITH LocationLRec DO
+            FormatAddr(
+              AddrArray, Name, "Name 2", '', Address, "Address 2",
+              City, "Post Code", County, '');
     END;
     //<<Codeunit87clos<<
 
-    
+
 
     //<<Codeunit86opn>>
-   
-    LOCAL PROCEDURE CloseBankAccLedgEntryReverse(BankAccReconLine : Record 274;VAR AppliedAmount : Decimal);
-    BEGIN
-      BankAccLedgEntry.RESET;
-      BankAccLedgEntry.SETCURRENTKEY("Bank Account No.",Open);
-      BankAccLedgEntry.SETRANGE("Bank Account No.",BankAccReconLine."Bank Account No.");
-      BankAccLedgEntry.SETRANGE("Entry No.",BankAccReconLine."Bank Acc LE");//REverse
-      BankAccLedgEntry.SETRANGE(Open,TRUE);
-      BankAccLedgEntry.SETRANGE(
-        "Statement Status",BankAccLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
-      BankAccLedgEntry.SETRANGE("Statement No.",BankAccReconLine."Statement No.");
-      //BankAccLedgEntry.SETRANGE("Statement Line No.",BankAccReconLine."Statement Line No.");
-      IF BankAccLedgEntry.FIND('-') THEN
-        REPEAT
-          AppliedAmount += BankAccReconLine."Statement Amount";//BankAccLedgEntry."Remaining Amount";
-          BankAccLedgEntry."Remaining Amount" -= BankAccReconLine."Statement Amount";
-          IF BankAccLedgEntry."Remaining Amount" =  0 THEN BEGIN
-            BankAccLedgEntry.Open := FALSE;
-            BankAccLedgEntry."Statement Status" := BankAccLedgEntry."Statement Status"::Closed;
-          END;
-          //BankAccLedgEntry."Statement No." := '';//Reverse//BRS1.1
-          BankAccLedgEntry.MODIFY;
 
-          CheckLedgEntry.RESET;
-          CheckLedgEntry.SETCURRENTKEY("Bank Account Ledger Entry No.");
-          CheckLedgEntry.SETRANGE(
-            "Bank Account Ledger Entry No.",BankAccLedgEntry."Entry No.");
-          CheckLedgEntry.SETRANGE(Open,TRUE);
-          IF CheckLedgEntry.FIND('-') THEN
+    LOCAL PROCEDURE CloseBankAccLedgEntryReverse(BankAccReconLine: Record 274; VAR AppliedAmount: Decimal);
+    BEGIN
+        BankAccLedgEntry.RESET;
+        BankAccLedgEntry.SETCURRENTKEY("Bank Account No.", Open);
+        BankAccLedgEntry.SETRANGE("Bank Account No.", BankAccReconLine."Bank Account No.");
+        BankAccLedgEntry.SETRANGE("Entry No.", BankAccReconLine."Bank Acc LE");//REverse
+        BankAccLedgEntry.SETRANGE(Open, TRUE);
+        BankAccLedgEntry.SETRANGE(
+          "Statement Status", BankAccLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
+        BankAccLedgEntry.SETRANGE("Statement No.", BankAccReconLine."Statement No.");
+        //BankAccLedgEntry.SETRANGE("Statement Line No.",BankAccReconLine."Statement Line No.");
+        IF BankAccLedgEntry.FIND('-') THEN
             REPEAT
-              CheckLedgEntry.TESTFIELD(Open,TRUE);
-              CheckLedgEntry.TESTFIELD(
-                "Statement Status",
-                CheckLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
-              CheckLedgEntry.TESTFIELD("Statement No.",'');
-              CheckLedgEntry.TESTFIELD("Statement Line No.",0);
-              CheckLedgEntry.Open := FALSE;
-              CheckLedgEntry."Statement Status" := CheckLedgEntry."Statement Status"::Closed;
-              CheckLedgEntry.MODIFY;
-            UNTIL CheckLedgEntry.NEXT = 0;
-        UNTIL BankAccLedgEntry.NEXT = 0;
+                AppliedAmount += BankAccReconLine."Statement Amount";//BankAccLedgEntry."Remaining Amount";
+                BankAccLedgEntry."Remaining Amount" -= BankAccReconLine."Statement Amount";
+                IF BankAccLedgEntry."Remaining Amount" = 0 THEN BEGIN
+                    BankAccLedgEntry.Open := FALSE;
+                    BankAccLedgEntry."Statement Status" := BankAccLedgEntry."Statement Status"::Closed;
+                END;
+                //BankAccLedgEntry."Statement No." := '';//Reverse//BRS1.1
+                BankAccLedgEntry.MODIFY;
+
+                CheckLedgEntry.RESET;
+                CheckLedgEntry.SETCURRENTKEY("Bank Account Ledger Entry No.");
+                CheckLedgEntry.SETRANGE(
+                  "Bank Account Ledger Entry No.", BankAccLedgEntry."Entry No.");
+                CheckLedgEntry.SETRANGE(Open, TRUE);
+                IF CheckLedgEntry.FIND('-') THEN
+                    REPEAT
+                        CheckLedgEntry.TESTFIELD(Open, TRUE);
+                        CheckLedgEntry.TESTFIELD(
+                          "Statement Status",
+                          CheckLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
+                        CheckLedgEntry.TESTFIELD("Statement No.", '');
+                        CheckLedgEntry.TESTFIELD("Statement Line No.", 0);
+                        CheckLedgEntry.Open := FALSE;
+                        CheckLedgEntry."Statement Status" := CheckLedgEntry."Statement Status"::Closed;
+                        CheckLedgEntry.MODIFY;
+                    UNTIL CheckLedgEntry.NEXT = 0;
+            UNTIL BankAccLedgEntry.NEXT = 0;
     END;
 
-   
+
     //<<Codeunit370clos<<
 
     //<<Codeunit375opn>>
-  
 
-    PROCEDURE SetReconNoReverse(VAR BankAccLedgEntry : Record 271;VAR BankAccReconLine : Record 274);
+
+    PROCEDURE SetReconNoReverse(VAR BankAccLedgEntry: Record 271; VAR BankAccReconLine: Record 274);
     BEGIN
-      BankAccLedgEntry.TESTFIELD(Open,TRUE);
-      //BankAccLedgEntry.TESTFIELD("Statement Status",BankAccLedgEntry."Statement Status"::Open);
-      //BankAccLedgEntry.TESTFIELD("Statement No.",'');
-      //BankAccLedgEntry.TESTFIELD("Statement Line No.",0);
-      BankAccLedgEntry.TESTFIELD("Bank Account No.",BankAccReconLine."Bank Account No.");
-      BankAccLedgEntry."Statement Status" :=
-        BankAccLedgEntry."Statement Status"::"Bank Acc. Entry Applied";
-      BankAccLedgEntry."Statement No." := BankAccReconLine."Statement No.";
-      //BankAccLedgEntry."Statement Line No." := BankAccReconLine."Statement Line No.";
-      BankAccLedgEntry.MODIFY;
+        BankAccLedgEntry.TESTFIELD(Open, TRUE);
+        //BankAccLedgEntry.TESTFIELD("Statement Status",BankAccLedgEntry."Statement Status"::Open);
+        //BankAccLedgEntry.TESTFIELD("Statement No.",'');
+        //BankAccLedgEntry.TESTFIELD("Statement Line No.",0);
+        BankAccLedgEntry.TESTFIELD("Bank Account No.", BankAccReconLine."Bank Account No.");
+        BankAccLedgEntry."Statement Status" :=
+          BankAccLedgEntry."Statement Status"::"Bank Acc. Entry Applied";
+        BankAccLedgEntry."Statement No." := BankAccReconLine."Statement No.";
+        //BankAccLedgEntry."Statement Line No." := BankAccReconLine."Statement Line No.";
+        BankAccLedgEntry.MODIFY;
 
-      CheckLedgEntry.RESET;
-      CheckLedgEntry.SETCURRENTKEY("Bank Account Ledger Entry No.");
-      CheckLedgEntry.SETRANGE("Bank Account Ledger Entry No.",BankAccLedgEntry."Entry No.");
-      CheckLedgEntry.SETRANGE(Open,TRUE);
-      IF CheckLedgEntry.FIND('-') THEN
-        REPEAT
-          CheckLedgEntry.TESTFIELD("Statement Status",CheckLedgEntry."Statement Status"::Open);
-          CheckLedgEntry.TESTFIELD("Statement No.",'');
-          CheckLedgEntry.TESTFIELD("Statement Line No.",0);
-          CheckLedgEntry."Statement Status" :=
-            CheckLedgEntry."Statement Status"::"Bank Acc. Entry Applied";
-          CheckLedgEntry."Statement No." := '';
-          CheckLedgEntry."Statement Line No." := 0;
-          CheckLedgEntry.MODIFY;
-        UNTIL CheckLedgEntry.NEXT = 0;
+        CheckLedgEntry.RESET;
+        CheckLedgEntry.SETCURRENTKEY("Bank Account Ledger Entry No.");
+        CheckLedgEntry.SETRANGE("Bank Account Ledger Entry No.", BankAccLedgEntry."Entry No.");
+        CheckLedgEntry.SETRANGE(Open, TRUE);
+        IF CheckLedgEntry.FIND('-') THEN
+            REPEAT
+                CheckLedgEntry.TESTFIELD("Statement Status", CheckLedgEntry."Statement Status"::Open);
+                CheckLedgEntry.TESTFIELD("Statement No.", '');
+                CheckLedgEntry.TESTFIELD("Statement Line No.", 0);
+                CheckLedgEntry."Statement Status" :=
+                  CheckLedgEntry."Statement Status"::"Bank Acc. Entry Applied";
+                CheckLedgEntry."Statement No." := '';
+                CheckLedgEntry."Statement Line No." := 0;
+                CheckLedgEntry.MODIFY;
+            UNTIL CheckLedgEntry.NEXT = 0;
     END;
 
-    PROCEDURE ApplyEntriesReverse(VAR BankAccReconLine : Record 274;VAR BankAccLedgEntry : Record 271;Relation : 'One-to-One,One-to-Many') : Boolean;
+    PROCEDURE ApplyEntriesReverse(VAR BankAccReconLine: Record 274; VAR BankAccLedgEntry: Record 271; Relation:'One-to-One,One-to-Many'): Boolean;
     VAR
-      BankAccReconLine2 : Record 274;
-      AmtExceedsErr : TextConst 'ENU=You cann''t apply more than %1, current value is %2.';
+        BankAccReconLine2: Record 274;
+        AmtExceedsErr: Label 'ENU=You cann''t apply more than %1, current value is %2.';
     BEGIN
-      BankAccLedgEntry.LOCKTABLE;
-      CheckLedgEntry.LOCKTABLE;
-      BankAccReconLine.LOCKTABLE;
-      BankAccReconLine.FIND;
+        BankAccLedgEntry.LOCKTABLE;
+        CheckLedgEntry.LOCKTABLE;
+        BankAccReconLine.LOCKTABLE;
+        BankAccReconLine.FIND;
 
-     /* {
-      IF BankAccLedgEntry.IsApplied THEN
-        EXIT(FALSE);
+        /* {
+         IF BankAccLedgEntry.IsApplied THEN
+           EXIT(FALSE);
 
-      IF (Relation = Relation::"One-to-One") AND (BankAccReconLine."Applied Entries" > 0) THEN
-        EXIT(FALSE);
-      }*/
-      BankAccReconLine.TESTFIELD(BankAccReconLine."Bank Acc LE",0);
-      BankAccReconLine.TESTFIELD(Type,BankAccReconLine.Type::"Bank Account Ledger Entry");
-      //>>B2BN1.0 11Jan2019
-      BankAccReconLine2.RESET;
-      BankAccReconLine2.SETCURRENTKEY("Bank Acc LE");
-      BankAccReconLine2.SETRANGE("Bank Acc LE",BankAccLedgEntry."Entry No.");
-      BankAccReconLine2.SETRANGE("Statement No.",BankAccReconLine."Statement No.");
-      BankAccReconLine2.CALCSUMS("Applied Amount");
-      IF ABS((BankAccReconLine2."Applied Amount" + BankAccReconLine."Statement Amount")) > ABS(BankAccLedgEntry."Remaining Amount") THEN
-        ERROR(AmtExceedsErr,
-          (ABS(BankAccLedgEntry."Remaining Amount") - ABS(BankAccReconLine2."Applied Amount")),
-          (ABS(BankAccReconLine2."Applied Amount") + ABS(BankAccReconLine."Statement Amount")));
-      //<<B2BN1.0 11Jan2019
-      BankAccReconLine."Ready for Application" := TRUE;
-      SetReconNoReverse(BankAccLedgEntry,BankAccReconLine);
-      BankAccReconLine."Applied Amount" := BankAccReconLine."Statement Amount";
-      //BankAccLedgEntry."Remaining Amount";
-      BankAccReconLine."Applied Entries" := BankAccReconLine."Applied Entries" + 1;
-      BankAccReconLine."Bank Acc LE" := BankAccLedgEntry."Entry No.";
-      BankAccReconLine.VALIDATE("Statement Amount");
-      BankAccReconLine.MODIFY;
-      EXIT(TRUE);
+         IF (Relation = Relation::"One-to-One") AND (BankAccReconLine."Applied Entries" > 0) THEN
+           EXIT(FALSE);
+         }*/
+        BankAccReconLine.TESTFIELD(BankAccReconLine."Bank Acc LE", 0);
+        BankAccReconLine.TESTFIELD(Type, BankAccReconLine.Type::"Bank Account Ledger Entry");
+        //>>B2BN1.0 11Jan2019
+        BankAccReconLine2.RESET;
+        BankAccReconLine2.SETCURRENTKEY("Bank Acc LE");
+        BankAccReconLine2.SETRANGE("Bank Acc LE", BankAccLedgEntry."Entry No.");
+        BankAccReconLine2.SETRANGE("Statement No.", BankAccReconLine."Statement No.");
+        BankAccReconLine2.CALCSUMS("Applied Amount");
+        IF ABS((BankAccReconLine2."Applied Amount" + BankAccReconLine."Statement Amount")) > ABS(BankAccLedgEntry."Remaining Amount") THEN
+            ERROR(AmtExceedsErr,
+              (ABS(BankAccLedgEntry."Remaining Amount") - ABS(BankAccReconLine2."Applied Amount")),
+              (ABS(BankAccReconLine2."Applied Amount") + ABS(BankAccReconLine."Statement Amount")));
+        //<<B2BN1.0 11Jan2019
+        BankAccReconLine."Ready for Application" := TRUE;
+        SetReconNoReverse(BankAccLedgEntry, BankAccReconLine);
+        BankAccReconLine."Applied Amount" := BankAccReconLine."Statement Amount";
+        //BankAccLedgEntry."Remaining Amount";
+        BankAccReconLine."Applied Entries" := BankAccReconLine."Applied Entries" + 1;
+        BankAccReconLine."Bank Acc LE" := BankAccLedgEntry."Entry No.";
+        BankAccReconLine.VALIDATE("Statement Amount");
+        BankAccReconLine.MODIFY;
+        EXIT(TRUE);
     END;
 
-    PROCEDURE RemoveApplicationReverse(VAR BankAccLedgEntry : Record 271);
+    PROCEDURE RemoveApplicationReverse(VAR BankAccLedgEntry: Record 271);
     VAR
-      BankAccReconLine : Record 274;
+        BankAccReconLine: Record 274;
     BEGIN
-      BankAccLedgEntry.LOCKTABLE;
-      CheckLedgEntry.LOCKTABLE;
-      BankAccReconLine.LOCKTABLE;
-      /*{
-      IF NOT BankAccReconLine.GET(
-           BankAccReconLine."Statement Type"::"Bank Reconciliation",
-           BankAccLedgEntry."Bank Account No.",
-           BankAccLedgEntry."Statement No.",BankAccLedgEntry."Statement Line No.")
-      THEN
-        EXIT;
-      }*/
-      BankAccReconLine.RESET;
-      BankAccReconLine.SETRANGE("Bank Acc LE",BankAccLedgEntry."Entry No.");
-      BankAccReconLine.SETRANGE("Statement No.",BankAccLedgEntry."Statement No.");
-      IF BankAccReconLine.FINDSET THEN BEGIN
-        REPEAT
-          BankAccReconLine."Applied Amount" -= BankAccReconLine."Statement Amount";//reverse
-          BankAccReconLine."Applied Entries" := 0;//BankAccReconLine."Applied Entries" - 1;
-          BankAccReconLine."Bank Acc LE" := 0;
-          BankAccReconLine.VALIDATE("Statement Amount");
-          BankAccReconLine.MODIFY;
-        UNTIL BankAccReconLine.NEXT = 0;
-        RemoveReconNoReverse(BankAccLedgEntry,BankAccReconLine,TRUE);
-      END;
-      //BankAccReconLine.TESTFIELD("Statement Type",BankAccReconLine."Statement Type"::"Bank Reconciliation");
-      //BankAccReconLine.TESTFIELD(Type,BankAccReconLine.Type::"Bank Account Ledger Entry");
-      //RemoveReconNoReverse(BankAccLedgEntry,BankAccReconLine,TRUE);
-    END;
-     
-
-    PROCEDURE RemoveReconNoReverse(VAR BankAccLedgEntry : Record 271;VAR BankAccReconLine : Record 274;Test : Boolean);
-    BEGIN
-      BankAccLedgEntry.TESTFIELD(Open,TRUE);
-      IF Test THEN BEGIN
-        BankAccLedgEntry.TESTFIELD(
-          "Statement Status",BankAccLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
-        BankAccLedgEntry.TESTFIELD("Statement No.",BankAccReconLine."Statement No.");
-        //BankAccLedgEntry.TESTFIELD("Statement Line No.",BankAccReconLine."Statement Line No.");
-      END;
-      BankAccLedgEntry.TESTFIELD("Bank Account No.",BankAccReconLine."Bank Account No.");
-      BankAccLedgEntry."Statement Status" := BankAccLedgEntry."Statement Status"::Open;
-      BankAccLedgEntry."Statement No." := '';
-      BankAccLedgEntry."Statement Line No." := 0;
-      BankAccLedgEntry.MODIFY;
-
-      CheckLedgEntry.RESET;
-      CheckLedgEntry.SETCURRENTKEY("Bank Account Ledger Entry No.");
-      CheckLedgEntry.SETRANGE("Bank Account Ledger Entry No.",BankAccLedgEntry."Entry No.");
-      CheckLedgEntry.SETRANGE(Open,TRUE);
-      IF CheckLedgEntry.FIND('-') THEN
-        REPEAT
-          IF Test THEN BEGIN
-            CheckLedgEntry.TESTFIELD(
-              "Statement Status",CheckLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
-            CheckLedgEntry.TESTFIELD("Statement No.",'');
-            CheckLedgEntry.TESTFIELD("Statement Line No.",0);
-          END;
-          CheckLedgEntry."Statement Status" := CheckLedgEntry."Statement Status"::Open;
-          CheckLedgEntry."Statement No." := '';
-          CheckLedgEntry."Statement Line No." := 0;
-          CheckLedgEntry.MODIFY;
-        UNTIL CheckLedgEntry.NEXT = 0;
+        BankAccLedgEntry.LOCKTABLE;
+        CheckLedgEntry.LOCKTABLE;
+        BankAccReconLine.LOCKTABLE;
+        /*{
+        IF NOT BankAccReconLine.GET(
+             BankAccReconLine."Statement Type"::"Bank Reconciliation",
+             BankAccLedgEntry."Bank Account No.",
+             BankAccLedgEntry."Statement No.",BankAccLedgEntry."Statement Line No.")
+        THEN
+          EXIT;
+        }*/
+        BankAccReconLine.RESET;
+        BankAccReconLine.SETRANGE("Bank Acc LE", BankAccLedgEntry."Entry No.");
+        BankAccReconLine.SETRANGE("Statement No.", BankAccLedgEntry."Statement No.");
+        IF BankAccReconLine.FINDSET THEN BEGIN
+            REPEAT
+                BankAccReconLine."Applied Amount" -= BankAccReconLine."Statement Amount";//reverse
+                BankAccReconLine."Applied Entries" := 0;//BankAccReconLine."Applied Entries" - 1;
+                BankAccReconLine."Bank Acc LE" := 0;
+                BankAccReconLine.VALIDATE("Statement Amount");
+                BankAccReconLine.MODIFY;
+            UNTIL BankAccReconLine.NEXT = 0;
+            RemoveReconNoReverse(BankAccLedgEntry, BankAccReconLine, TRUE);
+        END;
+        //BankAccReconLine.TESTFIELD("Statement Type",BankAccReconLine."Statement Type"::"Bank Reconciliation");
+        //BankAccReconLine.TESTFIELD(Type,BankAccReconLine.Type::"Bank Account Ledger Entry");
+        //RemoveReconNoReverse(BankAccLedgEntry,BankAccReconLine,TRUE);
     END;
 
-    PROCEDURE RemoveApplicationReverseSingle(VAR BankAccLedgEntry : Record 271;BankAccReconLine2 : Record 274);
+
+    PROCEDURE RemoveReconNoReverse(VAR BankAccLedgEntry: Record 271; VAR BankAccReconLine: Record 274; Test: Boolean);
+    BEGIN
+        BankAccLedgEntry.TESTFIELD(Open, TRUE);
+        IF Test THEN BEGIN
+            BankAccLedgEntry.TESTFIELD(
+              "Statement Status", BankAccLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
+            BankAccLedgEntry.TESTFIELD("Statement No.", BankAccReconLine."Statement No.");
+            //BankAccLedgEntry.TESTFIELD("Statement Line No.",BankAccReconLine."Statement Line No.");
+        END;
+        BankAccLedgEntry.TESTFIELD("Bank Account No.", BankAccReconLine."Bank Account No.");
+        BankAccLedgEntry."Statement Status" := BankAccLedgEntry."Statement Status"::Open;
+        BankAccLedgEntry."Statement No." := '';
+        BankAccLedgEntry."Statement Line No." := 0;
+        BankAccLedgEntry.MODIFY;
+
+        CheckLedgEntry.RESET;
+        CheckLedgEntry.SETCURRENTKEY("Bank Account Ledger Entry No.");
+        CheckLedgEntry.SETRANGE("Bank Account Ledger Entry No.", BankAccLedgEntry."Entry No.");
+        CheckLedgEntry.SETRANGE(Open, TRUE);
+        IF CheckLedgEntry.FIND('-') THEN
+            REPEAT
+                IF Test THEN BEGIN
+                    CheckLedgEntry.TESTFIELD(
+                      "Statement Status", CheckLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
+                    CheckLedgEntry.TESTFIELD("Statement No.", '');
+                    CheckLedgEntry.TESTFIELD("Statement Line No.", 0);
+                END;
+                CheckLedgEntry."Statement Status" := CheckLedgEntry."Statement Status"::Open;
+                CheckLedgEntry."Statement No." := '';
+                CheckLedgEntry."Statement Line No." := 0;
+                CheckLedgEntry.MODIFY;
+            UNTIL CheckLedgEntry.NEXT = 0;
+    END;
+
+    PROCEDURE RemoveApplicationReverseSingle(VAR BankAccLedgEntry: Record 271; BankAccReconLine2: Record 274);
     VAR
-      BankAccReconLine3 : Record 274;
+        BankAccReconLine3: Record 274;
     BEGIN
-      BankAccLedgEntry.LOCKTABLE;
-      CheckLedgEntry.LOCKTABLE;
+        BankAccLedgEntry.LOCKTABLE;
+        CheckLedgEntry.LOCKTABLE;
 
 
-      BankAccReconLine2.TESTFIELD("Statement Type",BankAccReconLine2."Statement Type"::"Bank Reconciliation");
-      BankAccReconLine2.TESTFIELD(Type,BankAccReconLine2.Type::"Bank Account Ledger Entry");
+        BankAccReconLine2.TESTFIELD("Statement Type", BankAccReconLine2."Statement Type"::"Bank Reconciliation");
+        BankAccReconLine2.TESTFIELD(Type, BankAccReconLine2.Type::"Bank Account Ledger Entry");
 
-      // verify bank account Ledger entry applied more than one entry or not >>
-      BankAccReconLine3.RESET;
+        // verify bank account Ledger entry applied more than one entry or not >>
+        BankAccReconLine3.RESET;
 
-      BankAccReconLine3.SETRANGE("Bank Account No.",BankAccReconLine2."Bank Account No.");
-      BankAccReconLine3.SETRANGE("Statement No.",BankAccReconLine2."Statement No.");
-      BankAccReconLine3.SETFILTER("Statement Line No.",'<>%1',BankAccReconLine2."Statement Line No.");
-      BankAccReconLine3.SETRANGE("Bank Acc LE",BankAccLedgEntry."Entry No.");
-      IF NOT BankAccReconLine3.FINDFIRST THEN
-        RemoveReconNoReverseSingle(BankAccLedgEntry,BankAccReconLine2,TRUE);
-      // verify bank account Ledger entry applied more than one entry or not <<
+        BankAccReconLine3.SETRANGE("Bank Account No.", BankAccReconLine2."Bank Account No.");
+        BankAccReconLine3.SETRANGE("Statement No.", BankAccReconLine2."Statement No.");
+        BankAccReconLine3.SETFILTER("Statement Line No.", '<>%1', BankAccReconLine2."Statement Line No.");
+        BankAccReconLine3.SETRANGE("Bank Acc LE", BankAccLedgEntry."Entry No.");
+        IF NOT BankAccReconLine3.FINDFIRST THEN
+            RemoveReconNoReverseSingle(BankAccLedgEntry, BankAccReconLine2, TRUE);
+        // verify bank account Ledger entry applied more than one entry or not <<
 
-      BankAccReconLine2."Applied Amount" := 0 ;//BankAccLedgEntry."Remaining Amount";
-      BankAccReconLine2."Applied Entries" := 0;//BankAccReconLine."Applied Entries" - 1;
-      BankAccReconLine2."Bank Acc LE" := 0;
-      BankAccReconLine2.VALIDATE("Statement Amount");
-      BankAccReconLine2.MODIFY;
+        BankAccReconLine2."Applied Amount" := 0;//BankAccLedgEntry."Remaining Amount";
+        BankAccReconLine2."Applied Entries" := 0;//BankAccReconLine."Applied Entries" - 1;
+        BankAccReconLine2."Bank Acc LE" := 0;
+        BankAccReconLine2.VALIDATE("Statement Amount");
+        BankAccReconLine2.MODIFY;
     END;
 
-    PROCEDURE RemoveReconNoReverseSingle(VAR BankAccLedgEntry : Record 271;VAR BankAccReconLine : Record 274;Test : Boolean);
+    PROCEDURE RemoveReconNoReverseSingle(VAR BankAccLedgEntry: Record 271; VAR BankAccReconLine: Record 274; Test: Boolean);
     BEGIN
-      BankAccLedgEntry.TESTFIELD(Open,TRUE);
-      IF Test THEN BEGIN
-        BankAccLedgEntry.TESTFIELD(
-          "Statement Status",BankAccLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
-        BankAccLedgEntry.TESTFIELD("Statement No.",BankAccReconLine."Statement No.");
-        //BankAccLedgEntry.TESTFIELD("Statement Line No.",BankAccReconLine."Statement Line No.");
-      END;
-      BankAccLedgEntry.TESTFIELD("Bank Account No.",BankAccReconLine."Bank Account No.");
-      BankAccLedgEntry."Statement Status" := BankAccLedgEntry."Statement Status"::Open;
-      BankAccLedgEntry."Statement No." := '';
-      BankAccLedgEntry."Statement Line No." := 0;
-      BankAccLedgEntry.MODIFY;
+        BankAccLedgEntry.TESTFIELD(Open, TRUE);
+        IF Test THEN BEGIN
+            BankAccLedgEntry.TESTFIELD(
+              "Statement Status", BankAccLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
+            BankAccLedgEntry.TESTFIELD("Statement No.", BankAccReconLine."Statement No.");
+            //BankAccLedgEntry.TESTFIELD("Statement Line No.",BankAccReconLine."Statement Line No.");
+        END;
+        BankAccLedgEntry.TESTFIELD("Bank Account No.", BankAccReconLine."Bank Account No.");
+        BankAccLedgEntry."Statement Status" := BankAccLedgEntry."Statement Status"::Open;
+        BankAccLedgEntry."Statement No." := '';
+        BankAccLedgEntry."Statement Line No." := 0;
+        BankAccLedgEntry.MODIFY;
 
-      CheckLedgEntry.RESET;
-      CheckLedgEntry.SETCURRENTKEY("Bank Account Ledger Entry No.");
-      CheckLedgEntry.SETRANGE("Bank Account Ledger Entry No.",BankAccLedgEntry."Entry No.");
-      CheckLedgEntry.SETRANGE(Open,TRUE);
-      IF CheckLedgEntry.FIND('-') THEN
-        REPEAT
-          IF Test THEN BEGIN
-            CheckLedgEntry.TESTFIELD(
-              "Statement Status",CheckLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
-            CheckLedgEntry.TESTFIELD("Statement No.",'');
-            CheckLedgEntry.TESTFIELD("Statement Line No.",0);
-          END;
-          CheckLedgEntry."Statement Status" := CheckLedgEntry."Statement Status"::Open;
-          CheckLedgEntry."Statement No." := '';
-          CheckLedgEntry."Statement Line No." := 0;
-          CheckLedgEntry.MODIFY;
-        UNTIL CheckLedgEntry.NEXT = 0;
+        CheckLedgEntry.RESET;
+        CheckLedgEntry.SETCURRENTKEY("Bank Account Ledger Entry No.");
+        CheckLedgEntry.SETRANGE("Bank Account Ledger Entry No.", BankAccLedgEntry."Entry No.");
+        CheckLedgEntry.SETRANGE(Open, TRUE);
+        IF CheckLedgEntry.FIND('-') THEN
+            REPEAT
+                IF Test THEN BEGIN
+                    CheckLedgEntry.TESTFIELD(
+                      "Statement Status", CheckLedgEntry."Statement Status"::"Bank Acc. Entry Applied");
+                    CheckLedgEntry.TESTFIELD("Statement No.", '');
+                    CheckLedgEntry.TESTFIELD("Statement Line No.", 0);
+                END;
+                CheckLedgEntry."Statement Status" := CheckLedgEntry."Statement Status"::Open;
+                CheckLedgEntry."Statement No." := '';
+                CheckLedgEntry."Statement Line No." := 0;
+                CheckLedgEntry.MODIFY;
+            UNTIL CheckLedgEntry.NEXT = 0;
     END;
 
-       //<<Codeunit375clos<<
+    //<<Codeunit375clos<<
 
 
 
@@ -3437,175 +3392,177 @@ codeunit 90600 Customise
     //<<Codeunit379opn>>
 
     //<<Codeunit379opn>>
-   
 
-    PROCEDURE TenderCheckIfAnyExtText(VAR TenderLine : Record 60063;Unconditionally : Boolean) : Boolean;
+
+    PROCEDURE TenderCheckIfAnyExtText(VAR TenderLine: Record 60063; Unconditionally: Boolean): Boolean;
     VAR
-      TenderHeader : Record 60062;
-      ExtTextHeader : Record 279;
+        TenderHeader: Record 60062;
+        ExtTextHeader: Record 279;
     BEGIN
-      MakeUpdateRequired := FALSE;
-      IF TenderLine."Line No." <> 0 THEN
-        MakeUpdateRequired := DeleteTenderLines(TenderLine);
+        MakeUpdateRequired := FALSE;
+        IF TenderLine."Line No." <> 0 THEN
+            MakeUpdateRequired := DeleteTenderLines(TenderLine);
 
-      AutoText := FALSE;
+        AutoText := FALSE;
 
-      IF Unconditionally THEN
-        AutoText := TRUE
-      ELSE
-        CASE TenderLine.Type OF
-          TenderLine.Type::" ":
-            AutoText := TRUE;
-          TenderLine.Type::"G/L Account":
-            BEGIN
-              IF GLAcc.GET(TenderLine."No.") THEN
-                AutoText := GLAcc."Automatic Ext. Texts";
+        IF Unconditionally THEN
+            AutoText := TRUE
+        ELSE
+            CASE TenderLine.Type OF
+                TenderLine.Type::" ":
+                    AutoText := TRUE;
+                TenderLine.Type::"G/L Account":
+                    BEGIN
+                        IF GLAcc.GET(TenderLine."No.") THEN
+                            AutoText := GLAcc."Automatic Ext. Texts";
+                    END;
+                TenderLine.Type::Item:
+                    BEGIN
+                        IF Item.GET(TenderLine."No.") THEN
+                            AutoText := Item."Automatic Ext. Texts";
+                    END;
+                TenderLine.Type::Resource:
+                    BEGIN
+                        IF Res.GET(TenderLine."No.") THEN
+                            AutoText := Res."Automatic Ext. Texts";
+                    END;
             END;
-          TenderLine.Type::Item:
-            BEGIN
-              IF Item.GET(TenderLine."No.") THEN
-                AutoText := Item."Automatic Ext. Texts";
-            END;
-          TenderLine.Type::Resource:
-            BEGIN
-              IF Res.GET(TenderLine."No.") THEN
-                AutoText := Res."Automatic Ext. Texts";
-            END;
+
+        IF AutoText THEN BEGIN
+            ExtTextHeader.RESET;
+            TenderLine.TESTFIELD("Document No.");
+            TenderHeader.GET(TenderLine."Document No.");
+            //ExtTextHeader.SETRANGE("Table Name",27);
+            ExtTextHeader.SETRANGE("No.", TenderLine."No.");
+            ExtTextHeader.SETRANGE(Tender, TRUE);
+            //EXIT(ReadLines(ExtTextHeader,TenderHeader."Deposit Payment Date",TenderHeader."Language Code"));
+
         END;
+    end;
 
-      IF AutoText THEN BEGIN
-        ExtTextHeader.RESET;
-        TenderLine.TESTFIELD("Document No.");
-        TenderHeader.GET(TenderLine."Document No.");
-        //ExtTextHeader.SETRANGE("Table Name",27);
-        ExtTextHeader.SETRANGE("No.",TenderLine."No.");
-        ExtTextHeader.SETRANGE(Tender,TRUE);
-        //EXIT(ReadLines(ExtTextHeader,TenderHeader."Deposit Payment Date",TenderHeader."Language Code"));
-      
-    END;
-   
-    PROCEDURE InsertTenderExtText(VAR TenderLine : Record 60063);
+
+    PROCEDURE InsertTenderExtText(VAR TenderLine: Record 60063);
     VAR
-      ToTenderLine : Record 60063;
+        ToTenderLine: Record 60063;
     BEGIN
-      ToTenderLine.RESET;
-      ToTenderLine.SETRANGE("Document No.",TenderLine."Document No.");
-      ToTenderLine := TenderLine;
-      IF ToTenderLine.FIND('>') THEN BEGIN
-        LineSpacing :=
-          (ToTenderLine."Line No." - TenderLine."Line No.") DIV
-          (1 + TmpExtTextLine.COUNT);
-        IF LineSpacing = 0 THEN
-          ERROR(Text000);
-      END ELSE
-        LineSpacing := 10000;
+        ToTenderLine.RESET;
+        ToTenderLine.SETRANGE("Document No.", TenderLine."Document No.");
+        ToTenderLine := TenderLine;
+        IF ToTenderLine.FIND('>') THEN BEGIN
+            LineSpacing :=
+              (ToTenderLine."Line No." - TenderLine."Line No.") DIV
+              (1 + TmpExtTextLine.COUNT);
+            IF LineSpacing = 0 THEN
+                ERROR(Text000);
+        END ELSE
+            LineSpacing := 10000;
 
-      NextLineNo := TenderLine."Line No." + LineSpacing;
+        NextLineNo := TenderLine."Line No." + LineSpacing;
 
-      TmpExtTextLine.RESET;
-      IF TmpExtTextLine.FINDSET THEN BEGIN
-        REPEAT
-          ToTenderLine.INIT;
-          ToTenderLine."Document No." := TenderLine."Document No.";
-          ToTenderLine."Line No." := NextLineNo;
-          NextLineNo := NextLineNo + LineSpacing;
-          ToTenderLine.Description := TmpExtTextLine.Text;
-          //ToTenderLine."Attached to Line No." := TenderLine."Line No.";
-          ToTenderLine.INSERT;
-        UNTIL TmpExtTextLine.NEXT = 0;
-        MakeUpdateRequired := TRUE;
-      END;
-      TmpExtTextLine.DELETEALL;
+        TmpExtTextLine.RESET;
+        IF TmpExtTextLine.FINDSET THEN BEGIN
+            REPEAT
+                ToTenderLine.INIT;
+                ToTenderLine."Document No." := TenderLine."Document No.";
+                ToTenderLine."Line No." := NextLineNo;
+                NextLineNo := NextLineNo + LineSpacing;
+                ToTenderLine.Description := TmpExtTextLine.Text;
+                //ToTenderLine."Attached to Line No." := TenderLine."Line No.";
+                ToTenderLine.INSERT;
+            UNTIL TmpExtTextLine.NEXT = 0;
+            MakeUpdateRequired := TRUE;
+        END;
+        TmpExtTextLine.DELETEALL;
     END;
 
-    PROCEDURE DeleteTenderLines(VAR TenderLine : Record 60063) : Boolean;
+    PROCEDURE DeleteTenderLines(VAR TenderLine: Record 60063): Boolean;
     VAR
-      TenderLine2 : Record 60063;
+        TenderLine2: Record 60063;
     BEGIN
-      TenderLine2.SETRANGE("Document No.",TenderLine."Document No.");
-      //TenderLine2.SETRANGE("Attached to Line No.",TenderLine."Line No.");
-      TenderLine2 := TenderLine;
-      IF TenderLine2.FIND('>') THEN begin
-        REPEAT
-          TenderLine2.DELETE(TRUE);
-        UNTIL TenderLine2.NEXT = 0;
-        EXIT(TRUE);
-      end;
-      
+        TenderLine2.SETRANGE("Document No.", TenderLine."Document No.");
+        //TenderLine2.SETRANGE("Attached to Line No.",TenderLine."Line No.");
+        TenderLine2 := TenderLine;
+        IF TenderLine2.FIND('>') THEN begin
+            REPEAT
+                TenderLine2.DELETE(TRUE);
+            UNTIL TenderLine2.NEXT = 0;
+            EXIT(TRUE);
+        end;
+
     END;
-     
+
     //<<Codeunit379clos<<
-   
 
-  
+
+
 
     //<<Codeunit408opn>>
-     LOCAL PROCEDURE GetFilterFromDimValuesTable(VAR TempDimensionValue : TEMPORARY Record 349;VAR DimValueFilter : Text);
+    LOCAL PROCEDURE GetFilterFromDimValuesTable(VAR TempDimensionValue: TEMPORARY, Record 349; VAR DimValueFilter: Text);
     VAR
-      DimensionValue : Record 349;
-      RangeStartCode : Code[20];
-      PreviousCode : Code[20];
-      RangeStarted : Boolean;
-      Finished : Boolean;
+        DimensionValue: Record 349;
+        RangeStartCode: Code[20];
+        PreviousCode: Code[20];
+        RangeStarted: Boolean;
+        Finished: Boolean;
     BEGIN
-      WITH TempDimensionValue DO BEGIN
-        IF NOT ISTEMPORARY THEN
-          EXIT;
-        SETFILTER("Dimension Value Type",'%1|%2',"Dimension Value Type"::Standard,"Dimension Value Type"::Heading);
-        IF FINDSET THEN BEGIN
-          Finished := FALSE;
-          DimensionValue.SETRANGE("Dimension Code","Dimension Code");
-          DimensionValue.FINDSET;
-          DimValueFilter := '';
-          REPEAT
-            IF Code = DimensionValue.Code THEN BEGIN
-              IF NOT RangeStarted THEN BEGIN
-                RangeStarted := TRUE;
-                RangeStartCode := Code;
-              END;
-              PreviousCode := Code;
-              DimensionValue.NEXT;
-              IF NEXT = 0 THEN
-                Finished := TRUE;
-            END ELSE BEGIN
-              IF RangeStarted THEN BEGIN
-                AddRangeToFilter(DimValueFilter,RangeStartCode,PreviousCode);
-                RangeStarted := FALSE;
-              END;
-              REPEAT
-                DimensionValue.NEXT;
-              UNTIL DimensionValue.Code = Code;
-            END;
-          UNTIL Finished;
-          IF RangeStarted THEN
-            AddRangeToFilter(DimValueFilter,RangeStartCode,PreviousCode);
+        WITH TempDimensionValue DO BEGIN
+            IF NOT ISTEMPORARY THEN
+                EXIT;
+            SETFILTER("Dimension Value Type", '%1|%2', "Dimension Value Type"::Standard, "Dimension Value Type"::Heading);
+            IF FINDSET THEN BEGIN
+                Finished := FALSE;
+                DimensionValue.SETRANGE("Dimension Code", "Dimension Code");
+                DimensionValue.FINDSET;
+                DimValueFilter := '';
+                REPEAT
+                    IF Code = DimensionValue.Code THEN BEGIN
+                        IF NOT RangeStarted THEN BEGIN
+                            RangeStarted := TRUE;
+                            RangeStartCode := Code;
+                        END;
+                        PreviousCode := Code;
+                        DimensionValue.NEXT;
+                        IF NEXT = 0 THEN
+                            Finished := TRUE;
+                    END ELSE BEGIN
+                        IF RangeStarted THEN BEGIN
+                            AddRangeToFilter(DimValueFilter, RangeStartCode, PreviousCode);
+                            RangeStarted := FALSE;
+                        END;
+                        REPEAT
+                            DimensionValue.NEXT;
+                        UNTIL DimensionValue.Code = Code;
+                    END;
+                UNTIL Finished;
+                IF RangeStarted THEN
+                    AddRangeToFilter(DimValueFilter, RangeStartCode, PreviousCode);
+            END
         END
-      END
     END;
 
-    LOCAL PROCEDURE AddRangeToFilter(VAR DimValueFilter : Text;RangeStartCode : Code[20];RangeEndCode : Code[20]);
+    LOCAL PROCEDURE AddRangeToFilter(VAR DimValueFilter: Text; RangeStartCode: Code[20]; RangeEndCode: Code[20]);
     BEGIN
-      IF DimValueFilter <> '' THEN BEGIN
-        IF STRLEN(DimValueFilter) + 1 > MAXSTRLEN(DimValueFilter) THEN
-          ERROR(OverflowDimFilterErr);
-        DimValueFilter := DimValueFilter + '|';
-      END;
-      IF RangeStartCode = RangeEndCode THEN BEGIN
-        IF STRLEN(DimValueFilter) + STRLEN(RangeStartCode) > MAXSTRLEN(DimValueFilter) THEN
-          ERROR(OverflowDimFilterErr);
-        DimValueFilter := DimValueFilter + RangeStartCode;
-      END ELSE BEGIN
-        IF STRLEN(DimValueFilter) + STRLEN(RangeStartCode) + 2 + STRLEN(RangeEndCode) > MAXSTRLEN(DimValueFilter) THEN
-          ERROR(OverflowDimFilterErr);
-        DimValueFilter := DimValueFilter + RangeStartCode + '..' + RangeEndCode;
-      END;
+        IF DimValueFilter <> '' THEN BEGIN
+            IF STRLEN(DimValueFilter) + 1 > MAXSTRLEN(DimValueFilter) THEN
+                ERROR(OverflowDimFilterErr);
+            DimValueFilter := DimValueFilter + '|';
+        END;
+        IF RangeStartCode = RangeEndCode THEN BEGIN
+            IF STRLEN(DimValueFilter) + STRLEN(RangeStartCode) > MAXSTRLEN(DimValueFilter) THEN
+                ERROR(OverflowDimFilterErr);
+            DimValueFilter := DimValueFilter + RangeStartCode;
+        END ELSE BEGIN
+            IF STRLEN(DimValueFilter) + STRLEN(RangeStartCode) + 2 + STRLEN(RangeEndCode) > MAXSTRLEN(DimValueFilter) THEN
+                ERROR(OverflowDimFilterErr);
+            DimValueFilter := DimValueFilter + RangeStartCode + '..' + RangeEndCode;
+        END;
     END;
     //<<Codeunit408clos<<
 
-      
+
 
     //<<Codeunit414opn>>
-  
+
     //<<Codeunit87clos<<
 
     //<<Codeunit 12<<
@@ -3634,9 +3591,7 @@ codeunit 90600 Customise
 
 
 
-    PROCEDURE "--B2B--"();
-    BEGIN
-    END;
+
     //Codeunit12
     PROCEDURE CheckCashAccBalance(GenJnlLine2: Record 81);
     VAR
@@ -3827,9 +3782,9 @@ codeunit 90600 Customise
         RDSO_Value: Decimal;
         StrOrderLineDetails: Record 13795;
         Applied: Boolean;
-           OverflowDimFilterErr : label 'ENU=Conversion of dimension filter results in a filter that becomes too long.;ENN=Conversion of dimension filter results in a filter that becomes too long.';
+        OverflowDimFilterErr: label 'ENU=Conversion of dimension filter results in a filter that becomes too long.;ENN=Conversion of dimension filter results in a filter that becomes too long.';
 
 
-        
+
 
 }
